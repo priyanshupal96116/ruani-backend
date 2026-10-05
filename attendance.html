@@ -1,0 +1,924 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RUANI — Attendance</title>
+
+<script src="https://unpkg.com/html5-qrcode" type="text/javascript"></script>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left,#24135c,transparent 35%),
+    radial-gradient(circle at bottom right,#082d4f,transparent 35%),
+    #070914;
+  color:#fff;
+}
+
+.container{
+  max-width:1050px;
+  margin:auto;
+  padding:20px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.logo span{
+  color:#8b5cf6;
+}
+
+.back{
+  color:#fff;
+  text-decoration:none;
+  padding:10px 15px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+}
+
+.card{
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:18px;
+  backdrop-filter:blur(16px);
+}
+
+h1{
+  font-size:28px;
+  margin-bottom:7px;
+}
+
+.sub{
+  color:#9ca3b5;
+  margin-bottom:20px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:14px;
+  margin-bottom:18px;
+}
+
+.stat{
+  padding:18px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+}
+
+.stat small{
+  color:#9ca3b5;
+}
+
+.stat b{
+  display:block;
+  font-size:30px;
+  margin-top:8px;
+}
+
+.reader-wrap{
+  max-width:500px;
+  margin:auto;
+}
+
+#reader{
+  width:100%;
+  overflow:hidden;
+  border-radius:16px;
+}
+
+.scan-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:15px;
+}
+
+button{
+  border:0;
+  cursor:pointer;
+}
+
+.scan-btn{
+  flex:1;
+  padding:14px;
+  border-radius:12px;
+  background:#7c5cff;
+  color:#fff;
+  font-weight:bold;
+}
+
+.stop-btn{
+  flex:1;
+  padding:14px;
+  border-radius:12px;
+  background:rgba(255,70,70,.12);
+  color:#ff8888;
+  border:1px solid rgba(255,70,70,.2);
+}
+
+#qrFile{
+  display:none;
+}
+
+.message{
+  text-align:center;
+  margin-top:15px;
+  min-height:24px;
+  color:#aeb4c7;
+}
+
+.success{
+  color:#71f0a6;
+}
+
+.error{
+  color:#ff8585;
+}
+
+.attendance-item{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  padding:15px;
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  margin-bottom:10px;
+}
+
+.member-name{
+  font-weight:bold;
+}
+
+.time{
+  color:#9ca3b5;
+  font-size:12px;
+}
+
+.empty{
+  text-align:center;
+  color:#9299ad;
+  padding:25px;
+}
+
+@media(max-width:600px){
+
+  .container{
+    padding:14px;
+  }
+
+  .topbar{
+    margin-bottom:18px;
+  }
+
+  .logo{
+    font-size:25px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .scan-buttons{
+    flex-direction:column;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="topbar">
+
+    <div class="logo">
+      RUANI<span>.</span>
+    </div>
+
+    <a href="dashboard.html" class="back">
+      ← Dashboard
+    </a>
+
+  </div>
+
+
+  <div class="card">
+
+    <h1>QR Attendance</h1>
+
+    <p class="sub">
+      Scan a member QR code to mark attendance
+    </p>
+
+
+    <div class="stats">
+
+      <div class="stat">
+
+        <small>
+          Today's Attendance
+        </small>
+
+        <b id="todayCount">
+          0
+        </b>
+
+      </div>
+
+
+      <div class="stat">
+
+        <small>
+          Total Members
+        </small>
+
+        <b id="memberCount">
+          0
+        </b>
+
+      </div>
+
+    </div>
+
+
+    <div class="reader-wrap">
+
+      <div id="reader"></div>
+
+
+      <div class="scan-buttons">
+
+        <button
+          class="scan-btn"
+          id="startBtn"
+        >
+          📷 Start Camera
+        </button>
+
+        <button
+          class="stop-btn"
+          id="stopBtn"
+        >
+          Stop Camera
+        </button>
+
+      </div>
+
+
+      <input
+        type="file"
+        id="qrFile"
+        accept="image/*"
+      >
+
+
+      <button
+        class="scan-btn"
+        id="galleryBtn"
+        style="width:100%;margin-top:10px"
+      >
+        🖼️ Scan QR from Gallery
+      </button>
+
+
+      <div
+        class="message"
+        id="message"
+      ></div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2 style="margin-bottom:15px">
+      Today's Attendance
+    </h2>
+
+    <div id="attendanceList">
+
+      <div class="empty">
+        Loading attendance...
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+
+
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+import {
+  collection,
+  getDocs,
+  query,
+  where,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+let currentUser = null;
+
+let members = [];
+
+let scanner = null;
+
+let scanning = false;
+
+
+const message =
+  document.getElementById("message");
+
+
+function todayDate(){
+
+  const d = new Date();
+
+  const year =
+    d.getFullYear();
+
+  const month =
+    String(d.getMonth()+1)
+      .padStart(2,"0");
+
+  const day =
+    String(d.getDate())
+      .padStart(2,"0");
+
+  return `${year}-${month}-${day}`;
+
+}
+
+
+function showMessage(
+  text,
+  type=""
+){
+
+  message.textContent = text;
+
+  message.className =
+    "message " + type;
+
+}
+
+
+function escapeHtml(value){
+
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+async function loadMembers(){
+
+  const q = query(
+    collection(db,"members"),
+    where("ownerId","==",currentUser.uid)
+  );
+
+
+  const snap =
+    await getDocs(q);
+
+
+  members = [];
+
+
+  snap.forEach(item => {
+
+    members.push({
+      id:item.id,
+      ...item.data()
+    });
+
+  });
+
+
+  document.getElementById(
+    "memberCount"
+  ).textContent = members.length;
+
+}
+
+
+async function loadAttendance(){
+
+  const q = query(
+    collection(db,"attendance"),
+    where("ownerId","==",currentUser.uid),
+    where("date","==",todayDate())
+  );
+
+
+  const snap =
+    await getDocs(q);
+
+
+  document.getElementById(
+    "todayCount"
+  ).textContent = snap.size;
+
+
+  const list =
+    document.getElementById(
+      "attendanceList"
+    );
+
+
+  if(snap.empty){
+
+    list.innerHTML =
+      `<div class="empty">
+        No attendance yet today.
+      </div>`;
+
+    return;
+
+  }
+
+
+  const records = [];
+
+
+  snap.forEach(item => {
+
+    records.push({
+      id:item.id,
+      ...item.data()
+    });
+
+  });
+
+
+  records.sort((a,b) =>
+    String(b.timestamp || "")
+      .localeCompare(
+        String(a.timestamp || "")
+      )
+  );
+
+
+  list.innerHTML =
+    records.map(record => {
+
+      let time = "";
+
+      if(record.timestamp){
+
+        const d =
+          new Date(record.timestamp);
+
+        time =
+          d.toLocaleTimeString(
+            "en-IN",
+            {
+              hour:"2-digit",
+              minute:"2-digit"
+            }
+          );
+
+      }
+
+
+      return `
+        <div class="attendance-item">
+
+          <div class="member-name">
+            👤 ${escapeHtml(record.memberName)}
+          </div>
+
+          <div class="time">
+            ${time}
+          </div>
+
+        </div>
+      `;
+
+    }).join("");
+
+}
+
+
+async function checkDuplicate(
+  memberId
+){
+
+  const q = query(
+    collection(db,"attendance"),
+    where("ownerId","==",currentUser.uid),
+    where("memberId","==",memberId),
+    where("date","==",todayDate())
+  );
+
+
+  const snap =
+    await getDocs(q);
+
+
+  return !snap.empty;
+
+}
+
+
+async function handleQRCode(
+  qrId
+){
+
+  if(!qrId){
+
+    showMessage(
+      "QR code invalid hai.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  const member =
+    members.find(
+      m =>
+        m.id === qrId ||
+        m.qrId === qrId
+    );
+
+
+  if(!member){
+
+    showMessage(
+      "Member nahi mila.",
+      "error"
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    const duplicate =
+      await checkDuplicate(
+        member.id
+      );
+
+
+    if(duplicate){
+
+      showMessage(
+        `${member.name} ki attendance aaj already marked hai.`,
+        "error"
+      );
+
+      return;
+
+    }
+
+
+    await addDoc(
+      collection(db,"attendance"),
+      {
+        ownerId:currentUser.uid,
+        memberId:member.id,
+        memberName:
+          member.name || "Member",
+        date:todayDate(),
+        timestamp:
+          new Date().toISOString()
+      }
+    );
+
+
+    showMessage(
+      `✓ ${member.name} — Attendance Marked`,
+      "success"
+    );
+
+
+    await loadAttendance();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "Attendance save nahi hui: " +
+      error.message,
+      "error"
+    );
+
+  }
+
+}
+
+
+async function startScanner(){
+
+  if(scanning){
+
+    return;
+
+  }
+
+
+  try{
+
+    showMessage(
+      "Camera permission check ho rahi hai..."
+    );
+
+
+    const stream =
+      await navigator.mediaDevices
+        .getUserMedia({
+          video:{
+            facingMode:"environment"
+          }
+        });
+
+
+    stream
+      .getTracks()
+      .forEach(track =>
+        track.stop()
+      );
+
+
+    scanner =
+      new Html5Qrcode("reader");
+
+
+    await scanner.start(
+
+      {
+        facingMode:"environment"
+      },
+
+      {
+        fps:10,
+        qrbox:{
+          width:220,
+          height:220
+        }
+      },
+
+      async decodedText => {
+
+        await handleQRCode(
+          decodedText
+        );
+
+      },
+
+      () => {}
+
+    );
+
+
+    scanning = true;
+
+
+    showMessage(
+      "Camera ready — QR scan karo."
+    );
+
+
+  }catch(error){
+
+    console.error(error);
+
+    showMessage(
+      "Camera start nahi hua. Permission check karo.",
+      "error"
+    );
+
+  }
+
+}
+
+
+async function stopScanner(){
+
+  if(!scanner || !scanning){
+
+    return;
+
+  }
+
+
+  try{
+
+    await scanner.stop();
+
+    await scanner.clear();
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+
+  scanning = false;
+
+  scanner = null;
+
+
+  showMessage(
+    "Camera stopped."
+  );
+
+}
+
+
+document.getElementById(
+  "startBtn"
+).addEventListener(
+  "click",
+  startScanner
+);
+
+
+document.getElementById(
+  "stopBtn"
+).addEventListener(
+  "click",
+  stopScanner
+);
+
+
+const galleryBtn =
+  document.getElementById(
+    "galleryBtn"
+  );
+
+
+const qrFile =
+  document.getElementById(
+    "qrFile"
+  );
+
+
+galleryBtn.addEventListener(
+  "click",
+  () => {
+
+    qrFile.value = "";
+
+    qrFile.click();
+
+  }
+);
+
+
+qrFile.addEventListener(
+  "change",
+  async event => {
+
+    const file =
+      event.target.files[0];
+
+
+    if(!file){
+
+      return;
+
+    }
+
+
+    try{
+
+      showMessage(
+        "Image se QR scan ho raha hai..."
+      );
+
+
+      const imageScanner =
+        new Html5Qrcode(
+          "reader"
+        );
+
+
+      const decodedText =
+        await imageScanner
+          .scanFile(
+            file,
+            true
+          );
+
+
+      await imageScanner.clear();
+
+
+      await handleQRCode(
+        decodedText
+      );
+
+
+    }catch(error){
+
+      console.error(error);
+
+      showMessage(
+        "Image me valid QR nahi mila.",
+        "error"
+      );
+
+    }
+
+  }
+);
+
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    if(!user){
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    currentUser = user;
+
+
+    try{
+
+      await loadMembers();
+
+      await loadAttendance();
+
+    }catch(error){
+
+      console.error(error);
+
+      showMessage(
+        "Data load nahi hua: " +
+        error.message,
+        "error"
+      );
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>

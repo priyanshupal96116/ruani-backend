@@ -1,0 +1,2406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>S.R. Public School Orai | Excellence in Education</title>
+
+<meta name="description"
+content="S.R. Public School Orai - CBSE affiliated senior secondary school focused on academic excellence, values and holistic development.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+/* =========================
+   RESET
+========================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:#f7faf9;
+    color:#14201c;
+    overflow-x:hidden;
+}
+
+img{
+    width:100%;
+    display:block;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+button{
+    font-family:inherit;
+}
+
+/* =========================
+   VARIABLES
+========================= */
+
+:root{
+    --navy:#071b2f;
+    --navy2:#0d2942;
+    --green:#15956b;
+    --green2:#20b47f;
+    --light:#f5f9f7;
+    --white:#ffffff;
+    --text:#14201c;
+    --muted:#65736e;
+    --gold:#d4aa58;
+    --border:#e3ebe7;
+    --shadow:0 20px 60px rgba(5,31,24,.10);
+}
+
+/* =========================
+   LOADER
+========================= */
+
+.loader{
+    position:fixed;
+    inset:0;
+    background:var(--navy);
+    z-index:9999;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    transition:.7s;
+}
+
+.loader.hide{
+    opacity:0;
+    visibility:hidden;
+}
+
+.loader-box{
+    text-align:center;
+    color:white;
+}
+
+.loader-logo{
+    width:75px;
+    height:75px;
+    margin:auto;
+    border:2px solid rgba(255,255,255,.3);
+    border-top-color:var(--green2);
+    border-radius:50%;
+    animation:spin 1s linear infinite;
+}
+
+.loader p{
+    margin-top:18px;
+    letter-spacing:4px;
+    font-size:12px;
+    color:#b7cbc4;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+
+/* =========================
+   TOP BAR
+========================= */
+
+.topbar{
+    background:var(--navy);
+    color:#d9e6e1;
+    padding:10px 5%;
+    font-size:13px;
+}
+
+.topbar-inner{
+    max-width:1250px;
+    margin:auto;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.top-left,
+.top-right{
+    display:flex;
+    gap:22px;
+    align-items:center;
+}
+
+/* =========================
+   HEADER
+========================= */
+
+header{
+    position:sticky;
+    top:0;
+    z-index:1000;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(0,0,0,.06);
+}
+
+.navbar{
+    max-width:1250px;
+    margin:auto;
+    height:86px;
+    padding:0 5%;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.logo-circle{
+    width:54px;
+    height:54px;
+    border-radius:50%;
+    background:linear-gradient(145deg,#092744,#163f61);
+    border:3px solid var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-family:"Playfair Display",serif;
+    font-weight:bold;
+    font-size:17px;
+}
+
+.brand-text strong{
+    display:block;
+    font-size:17px;
+    color:var(--navy);
+}
+
+.brand-text span{
+    font-size:11px;
+    color:var(--green);
+    font-weight:700;
+    letter-spacing:1.3px;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:27px;
+}
+
+.nav-links a{
+    font-size:14px;
+    font-weight:600;
+    color:#30423c;
+    position:relative;
+}
+
+.nav-links a::after{
+    content:"";
+    position:absolute;
+    bottom:-8px;
+    left:0;
+    width:0;
+    height:2px;
+    background:var(--green);
+    transition:.3s;
+}
+
+.nav-links a:hover::after{
+    width:100%;
+}
+
+.nav-admission{
+    background:var(--green);
+    color:white !important;
+    padding:12px 18px;
+    border-radius:8px;
+}
+
+.nav-admission::after{
+    display:none;
+}
+
+.menu-btn{
+    display:none;
+    border:0;
+    background:none;
+    font-size:27px;
+    cursor:pointer;
+}
+
+/* =========================
+   HERO
+========================= */
+
+.hero{
+    min-height:calc(100vh - 96px);
+    position:relative;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+    background:
+    linear-gradient(90deg,
+    rgba(4,22,38,.94) 0%,
+    rgba(4,22,38,.78) 45%,
+    rgba(4,22,38,.28) 100%),
+    url("https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1800&q=85")
+    center/cover;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:450px;
+    height:450px;
+    right:-180px;
+    top:-150px;
+    background:rgba(32,180,127,.22);
+    border-radius:50%;
+    filter:blur(40px);
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:1250px;
+    width:100%;
+    margin:auto;
+    padding:90px 5%;
+}
+
+.hero-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:8px 14px;
+    border:1px solid rgba(255,255,255,.2);
+    border-radius:30px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(10px);
+    color:#d7f4e9;
+    font-size:12px;
+    font-weight:700;
+    letter-spacing:1px;
+    text-transform:uppercase;
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    color:white;
+    font-size:clamp(48px,7vw,88px);
+    line-height:1.02;
+    max-width:800px;
+    margin:25px 0;
+}
+
+.hero h1 span{
+    color:#55d3a4;
+}
+
+.hero p{
+    max-width:620px;
+    color:#d9e5e1;
+    font-size:18px;
+    line-height:1.8;
+}
+
+.hero-buttons{
+    display:flex;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-top:35px;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:10px;
+    padding:15px 23px;
+    border-radius:8px;
+    font-weight:700;
+    transition:.3s;
+    cursor:pointer;
+    border:1px solid transparent;
+}
+
+.btn-primary{
+    background:var(--green2);
+    color:white;
+    box-shadow:0 12px 30px rgba(32,180,127,.25);
+}
+
+.btn-primary:hover{
+    transform:translateY(-3px);
+    background:#29c48e;
+}
+
+.btn-outline{
+    color:white;
+    border-color:rgba(255,255,255,.3);
+    background:rgba(255,255,255,.06);
+}
+
+.btn-outline:hover{
+    background:white;
+    color:var(--navy);
+}
+
+.hero-bottom{
+    margin-top:65px;
+    display:flex;
+    gap:50px;
+    flex-wrap:wrap;
+}
+
+.hero-stat{
+    color:white;
+}
+
+.hero-stat strong{
+    font-family:"Playfair Display",serif;
+    font-size:30px;
+}
+
+.hero-stat span{
+    display:block;
+    color:#b9cbc5;
+    font-size:12px;
+    margin-top:3px;
+}
+
+/* =========================
+   SECTION
+========================= */
+
+section{
+    padding:100px 5%;
+}
+
+.container{
+    max-width:1250px;
+    margin:auto;
+}
+
+.section-heading{
+    max-width:700px;
+    margin-bottom:55px;
+}
+
+.eyebrow{
+    color:var(--green);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    margin-bottom:12px;
+}
+
+.section-heading h2{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(35px,5vw,55px);
+    line-height:1.1;
+    color:var(--navy);
+}
+
+.section-heading p{
+    color:var(--muted);
+    line-height:1.8;
+    margin-top:18px;
+}
+
+/* =========================
+   TRUST STRIP
+========================= */
+
+.trust{
+    background:white;
+    border-bottom:1px solid var(--border);
+}
+
+.trust-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.trust-item{
+    padding:30px 20px;
+    border-right:1px solid var(--border);
+}
+
+.trust-item:last-child{
+    border:0;
+}
+
+.trust-item strong{
+    display:block;
+    font-size:16px;
+    color:var(--navy);
+}
+
+.trust-item span{
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* =========================
+   ABOUT
+========================= */
+
+.about{
+    background:white;
+}
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:80px;
+    align-items:center;
+}
+
+.about-image{
+    position:relative;
+}
+
+.about-image img{
+    height:570px;
+    object-fit:cover;
+    border-radius:18px;
+}
+
+.experience{
+    position:absolute;
+    bottom:-25px;
+    right:-25px;
+    background:var(--navy);
+    color:white;
+    padding:28px;
+    border-radius:15px;
+    box-shadow:var(--shadow);
+}
+
+.experience strong{
+    display:block;
+    color:#60d6aa;
+    font-family:"Playfair Display",serif;
+    font-size:38px;
+}
+
+.experience span{
+    font-size:12px;
+    color:#c5d3ce;
+}
+
+.about-text p{
+    color:var(--muted);
+    line-height:1.9;
+    margin-bottom:20px;
+}
+
+.about-points{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin-top:30px;
+}
+
+.point{
+    padding:17px;
+    background:#f4f8f6;
+    border-radius:10px;
+    font-weight:700;
+    font-size:14px;
+}
+
+.point span{
+    color:var(--green);
+    margin-right:7px;
+}
+
+/* =========================
+   WHY US
+========================= */
+
+.why{
+    background:#f3f8f5;
+}
+
+.cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.card{
+    background:white;
+    padding:30px;
+    border:1px solid var(--border);
+    border-radius:16px;
+    transition:.35s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:var(--shadow);
+}
+
+.icon{
+    width:55px;
+    height:55px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:12px;
+    background:#e6f7f0;
+    color:var(--green);
+    font-size:25px;
+    margin-bottom:22px;
+}
+
+.card h3{
+    color:var(--navy);
+    margin-bottom:10px;
+}
+
+.card p{
+    color:var(--muted);
+    line-height:1.7;
+    font-size:14px;
+}
+
+/* =========================
+   ACADEMICS
+========================= */
+
+.academics{
+    background:var(--navy);
+    color:white;
+}
+
+.academics .section-heading h2{
+    color:white;
+}
+
+.academics .section-heading p{
+    color:#aebfb9;
+}
+
+.academic-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.academic-card{
+    position:relative;
+    min-height:300px;
+    overflow:hidden;
+    border-radius:16px;
+    background:#12334f;
+}
+
+.academic-card img{
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.academic-card:hover img{
+    transform:scale(1.08);
+}
+
+.academic-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-end;
+    padding:27px;
+    background:linear-gradient(transparent,rgba(0,0,0,.88));
+}
+
+.academic-overlay h3{
+    font-family:"Playfair Display",serif;
+    font-size:26px;
+}
+
+.academic-overlay p{
+    color:#d5e2de;
+    margin-top:7px;
+    font-size:13px;
+}
+
+/* =========================
+   FACILITIES
+========================= */
+
+.facilities{
+    background:white;
+}
+
+.facility-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.facility{
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:25px;
+    display:flex;
+    gap:17px;
+    align-items:flex-start;
+    transition:.3s;
+}
+
+.facility:hover{
+    border-color:#a6dbc8;
+    transform:translateY(-4px);
+}
+
+.facility-icon{
+    min-width:48px;
+    height:48px;
+    border-radius:10px;
+    background:var(--navy);
+    color:#68d9ad;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:21px;
+}
+
+.facility h3{
+    font-size:16px;
+    margin-bottom:6px;
+    color:var(--navy);
+}
+
+.facility p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.6;
+}
+
+/* =========================
+   STATS
+========================= */
+
+.stats{
+    background:
+    linear-gradient(90deg,rgba(7,27,47,.96),rgba(7,27,47,.88)),
+    url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1600&q=80")
+    center/cover;
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.stat{
+    text-align:center;
+    padding:30px;
+    border-right:1px solid rgba(255,255,255,.12);
+}
+
+.stat:last-child{
+    border:0;
+}
+
+.stat strong{
+    display:block;
+    font-family:"Playfair Display",serif;
+    font-size:50px;
+    color:#62d7aa;
+}
+
+.stat span{
+    color:white;
+    font-size:14px;
+}
+
+/* =========================
+   GALLERY
+========================= */
+
+.gallery{
+    background:#f5f8f6;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr;
+    grid-template-rows:260px 260px;
+    gap:14px;
+}
+
+.gallery-item{
+    overflow:hidden;
+    border-radius:13px;
+}
+
+.gallery-item:first-child{
+    grid-row:span 2;
+}
+
+.gallery-item img{
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.gallery-item:hover img{
+    transform:scale(1.07);
+}
+
+/* =========================
+   ADMISSION CTA
+========================= */
+
+.admission{
+    background:white;
+}
+
+.admission-box{
+    position:relative;
+    overflow:hidden;
+    border-radius:22px;
+    background:
+    linear-gradient(110deg,#08233b,#0c4053);
+    padding:65px;
+    color:white;
+}
+
+.admission-box::before{
+    content:"";
+    position:absolute;
+    width:350px;
+    height:350px;
+    right:-120px;
+    top:-150px;
+    background:rgba(32,180,127,.3);
+    border-radius:50%;
+    filter:blur(20px);
+}
+
+.admission-box h2{
+    position:relative;
+    z-index:1;
+    font-family:"Playfair Display",serif;
+    font-size:clamp(35px,5vw,55px);
+    max-width:700px;
+}
+
+.admission-box p{
+    position:relative;
+    z-index:1;
+    max-width:650px;
+    color:#c7d9d3;
+    margin:15px 0 25px;
+    line-height:1.8;
+}
+
+/* =========================
+   PRINCIPAL
+========================= */
+
+.principal{
+    background:#f5f8f6;
+}
+
+.principal-grid{
+    display:grid;
+    grid-template-columns:.7fr 1.3fr;
+    gap:60px;
+    align-items:center;
+}
+
+.principal-image{
+    height:430px;
+    border-radius:18px;
+    overflow:hidden;
+}
+
+.principal-image img{
+    height:100%;
+    object-fit:cover;
+}
+
+.quote{
+    font-family:"Playfair Display",serif;
+    font-size:29px;
+    line-height:1.45;
+    color:var(--navy);
+}
+
+.principal-text p{
+    color:var(--muted);
+    line-height:1.8;
+    margin:20px 0;
+}
+
+.principal-name{
+    font-weight:800;
+    color:var(--green);
+}
+
+/* =========================
+   TESTIMONIALS
+========================= */
+
+.testimonials{
+    background:white;
+}
+
+.testimonial-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.testimonial{
+    padding:30px;
+    background:#f7faf8;
+    border:1px solid var(--border);
+    border-radius:16px;
+}
+
+.stars{
+    color:#e4ad3c;
+    letter-spacing:3px;
+}
+
+.testimonial p{
+    margin:18px 0;
+    color:#52635d;
+    line-height:1.8;
+    font-size:14px;
+}
+
+.testimonial strong{
+    color:var(--navy);
+}
+
+/* =========================
+   CONTACT
+========================= */
+
+.contact{
+    background:var(--navy);
+    color:white;
+}
+
+.contact-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:60px;
+}
+
+.contact .section-heading h2{
+    color:white;
+}
+
+.contact .section-heading p{
+    color:#b6c8c2;
+}
+
+.contact-info{
+    display:grid;
+    gap:14px;
+}
+
+.contact-item{
+    display:flex;
+    gap:15px;
+    padding:20px;
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:12px;
+    background:rgba(255,255,255,.04);
+}
+
+.contact-item-icon{
+    width:45px;
+    height:45px;
+    border-radius:10px;
+    background:rgba(32,180,127,.15);
+    color:#61d7aa;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+.contact-item strong{
+    display:block;
+    margin-bottom:4px;
+}
+
+.contact-item span{
+    color:#b6c8c2;
+    font-size:13px;
+}
+
+.form{
+    background:white;
+    padding:30px;
+    border-radius:17px;
+}
+
+.form h3{
+    color:var(--navy);
+    margin-bottom:20px;
+}
+
+.form input,
+.form textarea,
+.form select{
+    width:100%;
+    padding:15px;
+    margin-bottom:13px;
+    border:1px solid #dce6e1;
+    border-radius:8px;
+    outline:none;
+    font-family:inherit;
+}
+
+.form textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.form input:focus,
+.form textarea:focus,
+.form select:focus{
+    border-color:var(--green);
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+footer{
+    background:#04121f;
+    color:#aabbb5;
+    padding:55px 5% 25px;
+}
+
+.footer-grid{
+    max-width:1250px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1.5fr 1fr 1fr;
+    gap:50px;
+}
+
+.footer-brand{
+    color:white;
+    font-family:"Playfair Display",serif;
+    font-size:28px;
+}
+
+.footer p{
+    margin-top:14px;
+    line-height:1.7;
+    font-size:13px;
+}
+
+.footer h4{
+    color:white;
+    margin-bottom:17px;
+}
+
+.footer a{
+    display:block;
+    margin-bottom:10px;
+    font-size:13px;
+}
+
+.footer a:hover{
+    color:#64d8ab;
+}
+
+.copyright{
+    max-width:1250px;
+    margin:40px auto 0;
+    padding-top:20px;
+    border-top:1px solid rgba(255,255,255,.08);
+    text-align:center;
+    font-size:12px;
+}
+
+/* =========================
+   FLOATING BUTTONS
+========================= */
+
+.float-buttons{
+    position:fixed;
+    right:18px;
+    bottom:20px;
+    z-index:999;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.float-btn{
+    width:53px;
+    height:53px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:21px;
+    box-shadow:0 10px 30px rgba(0,0,0,.18);
+    transition:.3s;
+}
+
+.float-btn:hover{
+    transform:scale(1.1);
+}
+
+.whatsapp{
+    background:#20b86b;
+}
+
+.call{
+    background:var(--navy);
+}
+
+/* =========================
+   REVEAL
+========================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(35px);
+    transition:opacity .8s ease,transform .8s ease;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* =========================
+   MOBILE
+========================= */
+
+@media(max-width:900px){
+
+    .topbar{
+        display:none;
+    }
+
+    .navbar{
+        height:75px;
+    }
+
+    .nav-links{
+        position:absolute;
+        top:75px;
+        left:0;
+        width:100%;
+        background:white;
+        display:none;
+        flex-direction:column;
+        align-items:stretch;
+        padding:18px 6%;
+        box-shadow:0 20px 30px rgba(0,0,0,.08);
+        gap:0;
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .nav-links a{
+        padding:15px 5px;
+        border-bottom:1px solid #edf1ef;
+    }
+
+    .nav-admission{
+        text-align:center;
+        margin-top:10px;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .hero{
+        min-height:760px;
+        background-position:65% center;
+    }
+
+    .hero-content{
+        padding-top:70px;
+    }
+
+    .hero h1{
+        font-size:52px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .trust-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .trust-item{
+        border-bottom:1px solid var(--border);
+    }
+
+    .about-grid,
+    .contact-grid,
+    .principal-grid{
+        grid-template-columns:1fr;
+        gap:40px;
+    }
+
+    .about-image img{
+        height:430px;
+    }
+
+    .cards{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .academic-grid{
+        grid-template-columns:1fr;
+    }
+
+    .academic-card{
+        min-height:330px;
+    }
+
+    .facility-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat{
+        border-bottom:1px solid rgba(255,255,255,.12);
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr 1fr;
+        grid-template-rows:220px 220px 220px;
+    }
+
+    .gallery-item:first-child{
+        grid-row:span 2;
+    }
+
+    .testimonial-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+        gap:30px;
+    }
+}
+
+@media(max-width:600px){
+
+    section{
+        padding:75px 5%;
+    }
+
+    .brand-text strong{
+        font-size:14px;
+    }
+
+    .brand-text span{
+        font-size:9px;
+    }
+
+    .logo-circle{
+        width:45px;
+        height:45px;
+        font-size:14px;
+    }
+
+    .hero{
+        min-height:730px;
+    }
+
+    .hero h1{
+        font-size:45px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .hero-bottom{
+        gap:25px;
+    }
+
+    .trust-grid{
+        grid-template-columns:1fr;
+    }
+
+    .trust-item{
+        border-right:0;
+    }
+
+    .about-points{
+        grid-template-columns:1fr;
+    }
+
+    .cards{
+        grid-template-columns:1fr;
+    }
+
+    .facility-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stat strong{
+        font-size:38px;
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr;
+        grid-template-rows:250px 220px 220px 220px;
+    }
+
+    .gallery-item:first-child{
+        grid-row:auto;
+    }
+
+    .admission-box{
+        padding:35px 25px;
+    }
+
+    .principal-image{
+        height:350px;
+    }
+
+    .quote{
+        font-size:23px;
+    }
+
+    .float-buttons{
+        right:12px;
+        bottom:14px;
+    }
+
+    .float-btn{
+        width:48px;
+        height:48px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- LOADER -->
+<div class="loader" id="loader">
+    <div class="loader-box">
+        <div class="loader-logo"></div>
+        <p>S.R. PUBLIC SCHOOL</p>
+    </div>
+</div>
+
+
+<!-- TOP BAR -->
+<div class="topbar">
+    <div class="topbar-inner">
+
+        <div class="top-left">
+            <span>CBSE Affiliated Senior Secondary School</span>
+            <span>📍 Orai, Jalaun</span>
+        </div>
+
+        <div class="top-right">
+            <span>📞 +91 9415592020</span>
+            <span>✉ srpublicschool.orai@gmail.com</span>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- HEADER -->
+<header>
+
+<nav class="navbar">
+
+    <a href="#home" class="brand">
+
+        <div class="logo-circle">
+            S.R.
+        </div>
+
+        <div class="brand-text">
+            <strong>S.R. PUBLIC SCHOOL</strong>
+            <span>ORAI • JALAUN • U.P.</span>
+        </div>
+
+    </a>
+
+
+    <div class="nav-links" id="navLinks">
+
+        <a href="#home">Home</a>
+        <a href="about.html">About</a>
+        <a href="#academics">Academics</a>
+        <a href="#facilities">Facilities</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+
+        <a
+        href="https://wa.me/919415592020?text=Hello%20S.R.%20Public%20School%2C%20I%20want%20to%20know%20about%20admission."
+        class="nav-admission">
+        Admission Enquiry
+        </a>
+
+    </div>
+
+
+    <button class="menu-btn" id="menuBtn">
+        ☰
+    </button>
+
+</nav>
+
+</header>
+
+
+<!-- HERO -->
+<section class="hero" id="home">
+
+    <div class="hero-content reveal">
+
+        <div class="hero-badge">
+            ✦ Admissions & Enquiries Welcome
+        </div>
+
+        <h1>
+            Where Young Minds
+            <span>Grow & Shine.</span>
+        </h1>
+
+        <p>
+            A nurturing learning environment where academic excellence,
+            confidence, discipline and values come together to prepare
+            students for a brighter future.
+        </p>
+
+
+        <div class="hero-buttons">
+
+            <a
+            href="https://wa.me/919415592020?text=Hello%20S.R.%20Public%20School%2C%20I%20want%20to%20enquire%20about%20admission."
+            class="btn btn-primary">
+                Start Admission Enquiry →
+            </a>
+
+            <a href="#about" class="btn btn-outline">
+                Explore Our School
+            </a>
+
+        </div>
+
+
+        <div class="hero-bottom">
+
+            <div class="hero-stat">
+                <strong>2011</strong>
+                <span>Established</span>
+            </div>
+
+            <div class="hero-stat">
+                <strong>CBSE</strong>
+                <span>Affiliated School</span>
+            </div>
+
+            <div class="hero-stat">
+                <strong>Senior</strong>
+                <span>Secondary Level</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- TRUST -->
+<section class="trust">
+
+<div class="container trust-grid">
+
+    <div class="trust-item">
+        <strong>CBSE Affiliated</strong>
+        <span>Recognised academic framework</span>
+    </div>
+
+    <div class="trust-item">
+        <strong>Holistic Development</strong>
+        <span>Academics + activities + values</span>
+    </div>
+
+    <div class="trust-item">
+        <strong>Modern Learning</strong>
+        <span>Technology supported education</span>
+    </div>
+
+    <div class="trust-item">
+        <strong>Student Focused</strong>
+        <span>Growth beyond textbooks</span>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ABOUT -->
+<section class="about" id="about">
+
+<div class="container about-grid">
+
+    <div class="about-image reveal">
+
+        <img
+        src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1000&q=85"
+        alt="Students learning">
+
+        <div class="experience">
+            <strong>15+</strong>
+            <span>Years of educational journey</span>
+        </div>
+
+    </div>
+
+
+    <div class="about-text reveal">
+
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                About Our School
+            </div>
+
+            <h2>
+                Education that builds
+                character & confidence.
+            </h2>
+
+        </div>
+
+
+        <p>
+            S.R. Public School Orai is committed to creating an environment
+            where students can learn, explore, question and grow with
+            confidence.
+        </p>
+
+        <p>
+            Our approach combines academic learning with activities,
+            discipline, creativity and values so that students develop
+            skills needed for both education and life.
+        </p>
+
+
+        <div class="about-points">
+
+            <div class="point">
+                <span>✓</span>
+                Academic Excellence
+            </div>
+
+            <div class="point">
+                <span>✓</span>
+                Co-Curricular Activities
+            </div>
+
+            <div class="point">
+                <span>✓</span>
+                Student Development
+            </div>
+
+            <div class="point">
+                <span>✓</span>
+                Value Based Education
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- WHY CHOOSE US -->
+<section class="why">
+
+<div class="container">
+
+    <div class="section-heading reveal">
+
+        <div class="eyebrow">
+            Why Choose S.R.
+        </div>
+
+        <h2>
+            More than a school.
+            A foundation for life.
+        </h2>
+
+        <p>
+            We believe education should develop not only knowledge,
+            but confidence, discipline, creativity and responsibility.
+        </p>
+
+    </div>
+
+
+    <div class="cards">
+
+        <div class="card reveal">
+
+            <div class="icon">🎓</div>
+
+            <h3>Academic Focus</h3>
+
+            <p>
+                A structured learning environment designed to help
+                students build strong academic foundations.
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="icon">🧠</div>
+
+            <h3>Smart Learning</h3>
+
+            <p>
+                Technology and modern learning approaches help make
+                education more engaging and practical.
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="icon">🏆</div>
+
+            <h3>Holistic Growth</h3>
+
+            <p>
+                Students get opportunities beyond classrooms through
+                activities, sports, creativity and events.
+            </p>
+
+        </div>
+
+
+        <div class="card reveal">
+
+            <div class="icon">❤️</div>
+
+            <h3>Values & Discipline</h3>
+
+            <p>
+                We focus on building responsible, confident and
+                respectful young individuals.
+            </p>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ACADEMICS -->
+<section class="academics" id="academics">
+
+<div class="container">
+
+    <div class="section-heading reveal">
+
+        <div class="eyebrow">
+            Academic Journey
+        </div>
+
+        <h2>
+            Learning for every stage.
+        </h2>
+
+        <p>
+            A learning journey designed to help students progress
+            confidently through every academic stage.
+        </p>
+
+    </div>
+
+
+    <div class="academic-grid">
+
+        <div class="academic-card reveal">
+
+            <img
+            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=900&q=85"
+            alt="Primary learning">
+
+            <div class="academic-overlay">
+                <h3>Foundation Years</h3>
+                <p>
+                    Building curiosity, confidence and learning habits.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="academic-card reveal">
+
+            <img
+            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=85"
+            alt="Students classroom">
+
+            <div class="academic-overlay">
+                <h3>Middle School</h3>
+                <p>
+                    Developing concepts, reasoning and independent thinking.
+                </p>
+            </div>
+
+        </div>
+
+
+        <div class="academic-card reveal">
+
+            <img
+            src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=85"
+            alt="Senior students">
+
+            <div class="academic-overlay">
+                <h3>Senior Secondary</h3>
+                <p>
+                    Preparing students for higher education and future careers.
+                </p>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- FACILITIES -->
+<section class="facilities" id="facilities">
+
+<div class="container">
+
+    <div class="section-heading reveal">
+
+        <div class="eyebrow">
+            Campus & Facilities
+        </div>
+
+        <h2>
+            An environment made
+            for learning.
+        </h2>
+
+        <p>
+            Spaces and facilities that support academic,
+            physical and creative development.
+        </p>
+
+    </div>
+
+
+    <div class="facility-grid">
+
+        <div class="facility reveal">
+            <div class="facility-icon">🔬</div>
+            <div>
+                <h3>Science Laboratories</h3>
+                <p>Practical learning through experimentation and exploration.</p>
+            </div>
+        </div>
+
+
+        <div class="facility reveal">
+            <div class="facility-icon">📚</div>
+            <div>
+                <h3>Library</h3>
+                <p>A dedicated environment for reading and self-learning.</p>
+            </div>
+        </div>
+
+
+        <div class="facility reveal">
+            <div class="facility-icon">⚽</div>
+            <div>
+                <h3>Sports & Games</h3>
+                <p>Opportunities for physical activity, teamwork and discipline.</p>
+            </div>
+        </div>
+
+
+        <div class="facility reveal">
+            <div class="facility-icon">💻</div>
+            <div>
+                <h3>Technology Learning</h3>
+                <p>Technology-supported learning for today's students.</p>
+            </div>
+        </div>
+
+
+        <div class="facility reveal">
+            <div class="facility-icon">🎨</div>
+            <div>
+                <h3>Creative Activities</h3>
+                <p>Encouraging students to discover and express their talents.</p>
+            </div>
+        </div>
+
+
+        <div class="facility reveal">
+            <div class="facility-icon">🚌</div>
+            <div>
+                <h3>Student Support</h3>
+                <p>A supportive environment focused on student wellbeing.</p>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- STATS -->
+<section class="stats">
+
+<div class="container stats-grid">
+
+    <div class="stat reveal">
+        <strong>15+</strong>
+        <span>Years of Journey</span>
+    </div>
+
+    <div class="stat reveal">
+        <strong>CBSE</strong>
+        <span>Affiliation</span>
+    </div>
+
+    <div class="stat reveal">
+        <strong>65+</strong>
+        <span>Classrooms</span>
+    </div>
+
+    <div class="stat reveal">
+        <strong>4</strong>
+        <span>Science Labs</span>
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- GALLERY -->
+<section class="gallery" id="gallery">
+
+<div class="container">
+
+    <div class="section-heading reveal">
+
+        <div class="eyebrow">
+            School Life
+        </div>
+
+        <h2>
+            Moments that make
+            school memorable.
+        </h2>
+
+        <p>
+            Replace these demo images with the school's actual
+            campus, students, events and activity photographs.
+        </p>
+
+    </div>
+
+
+    <div class="gallery-grid">
+
+        <div class="gallery-item reveal">
+            <img
+            src="https://images.unsplash.com/photo-1577896851231-70ef18881754?auto=format&fit=crop&w=1000&q=85"
+            alt="School activity">
+        </div>
+
+        <div class="gallery-item reveal">
+            <img
+            src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=85"
+            alt="Classroom">
+        </div>
+
+        <div class="gallery-item reveal">
+            <img
+            src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=900&q=85"
+            alt="School campus">
+        </div>
+
+        <div class="gallery-item reveal">
+            <img
+            src="https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=900&q=85"
+            alt="Students">
+        </div>
+
+        <div class="gallery-item reveal">
+            <img
+            src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?auto=format&fit=crop&w=900&q=85"
+            alt="Students learning">
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- ADMISSION CTA -->
+<section class="admission">
+
+<div class="container">
+
+    <div class="admission-box reveal">
+
+        <h2>
+            Give your child a
+            stronger beginning.
+        </h2>
+
+        <p>
+            Connect with S.R. Public School to learn more about
+            admissions, academics and the learning environment.
+        </p>
+
+
+        <a
+        href="https://wa.me/919415592020?text=Hello%20Sir%2FMadam%2C%20I%20want%20to%20know%20about%20admission%20at%20S.R.%20Public%20School%20Orai."
+        class="btn btn-primary">
+
+            WhatsApp Admission Enquiry →
+
+        </a>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- PRINCIPAL -->
+<section class="principal">
+
+<div class="container principal-grid">
+
+    <div class="principal-image reveal">
+
+        <img
+        src="https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=900&q=85"
+        alt="School leadership">
+
+    </div>
+
+
+    <div class="principal-text reveal">
+
+        <div class="eyebrow">
+            Leadership
+        </div>
+
+        <div class="quote">
+            “Our aim is to create an environment where every child
+            gets the opportunity to learn, grow and become confident.”
+        </div>
+
+        <p>
+            We believe that a strong school combines quality education
+            with discipline, values, creativity and opportunities for
+            students to discover their strengths.
+        </p>
+
+        <div class="principal-name">
+            — School Leadership
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+
+<div class="container">
+
+    <div class="section-heading reveal">
+
+        <div class="eyebrow">
+            Parent Experience
+        </div>
+
+        <h2>
+            A school journey
+            families can trust.
+        </h2>
+
+    </div>
+
+
+    <div class="testimonial-grid">
+
+        <div class="testimonial reveal">
+
+            <div class="stars">★★★★★</div>
+
+            <p>
+                “A supportive environment where students get
+                opportunities to learn and participate in activities.”
+            </p>
+
+            <strong>Parent Review</strong>
+
+        </div>
+
+
+        <div class="testimonial reveal">
+
+            <div class="stars">★★★★★</div>
+
+            <p>
+                “The school focuses on academics as well as
+                overall development of students.”
+            </p>
+
+            <strong>Parent Review</strong>
+
+        </div>
+
+
+        <div class="testimonial reveal">
+
+            <div class="stars">★★★★★</div>
+
+            <p>
+                “A positive learning environment with dedicated
+                teachers and school activities.”
+            </p>
+
+            <strong>Parent Review</strong>
+
+        </div>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+
+<div class="container contact-grid">
+
+    <div>
+
+        <div class="section-heading reveal">
+
+            <div class="eyebrow">
+                Get In Touch
+            </div>
+
+            <h2>
+                Start your child's
+                journey with us.
+            </h2>
+
+            <p>
+                Have a question about admission or the school?
+                Send an enquiry and our team can assist you.
+            </p>
+
+        </div>
+
+
+        <div class="contact-info">
+
+            <div class="contact-item reveal">
+
+                <div class="contact-item-icon">📍</div>
+
+                <div>
+                    <strong>Campus</strong>
+                    <span>
+                        Kalpi Road, Orai, Jalaun, Uttar Pradesh – 285001
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="contact-item reveal">
+
+                <div class="contact-item-icon">📞</div>
+
+                <div>
+                    <strong>Call Us</strong>
+                    <span>
+                        +91 9415592020
+                    </span>
+                </div>
+
+            </div>
+
+
+            <div class="contact-item reveal">
+
+                <div class="contact-item-icon">✉</div>
+
+                <div>
+                    <strong>Email</strong>
+                    <span>
+                        srpublicschool.orai@gmail.com
+                    </span>
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="form reveal">
+
+        <h3>Admission Enquiry</h3>
+
+        <input
+        type="text"
+        id="name"
+        placeholder="Parent / Student Name">
+
+        <input
+        type="tel"
+        id="phone"
+        placeholder="Mobile Number">
+
+        <select id="class">
+            <option value="">Select Class</option>
+            <option>Nursery</option>
+            <option>LKG</option>
+            <option>UKG</option>
+            <option>Class I - V</option>
+            <option>Class VI - VIII</option>
+            <option>Class IX - X</option>
+            <option>Class XI - XII</option>
+        </select>
+
+        <textarea
+        id="message"
+        placeholder="Your enquiry..."></textarea>
+
+        <button
+        class="btn btn-primary"
+        style="width:100%;border:0"
+        onclick="sendEnquiry()">
+
+            Send Enquiry on WhatsApp →
+
+        </button>
+
+    </div>
+
+</div>
+
+</section>
+
+
+<!-- FOOTER -->
+<footer>
+
+<div class="footer-grid">
+
+    <div>
+
+        <div class="footer-brand">
+            S.R. Public School
+        </div>
+
+        <p>
+            A CBSE affiliated senior secondary school in Orai,
+            focused on academic learning, values and holistic
+            student development.
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <h4>Quick Links</h4>
+
+        <a href="#about">About School</a>
+        <a href="#academics">Academics</a>
+        <a href="#facilities">Facilities</a>
+        <a href="#gallery">Gallery</a>
+        <a href="#contact">Contact</a>
+
+    </div>
+
+
+    <div>
+
+        <h4>Contact</h4>
+
+        <a href="tel:+919415592020">
+            +91 9415592020
+        </a>
+
+        <a href="mailto:srpublicschool.orai@gmail.com">
+            srpublicschool.orai@gmail.com
+        </a>
+
+        <a href="#contact">
+            Kalpi Road, Orai, Jalaun
+        </a>
+
+    </div>
+
+</div>
+
+
+<div class="copyright">
+    © <span id="year"></span> S.R. Public School Orai. All Rights Reserved.
+</div>
+
+</footer>
+
+
+<!-- FLOATING BUTTONS -->
+
+<div class="float-buttons">
+
+    <a
+    class="float-btn whatsapp"
+    href="https://wa.me/919415592020?text=Hello%20S.R.%20Public%20School%2C%20I%20want%20to%20know%20about%20admission."
+    aria-label="WhatsApp">
+        💬
+    </a>
+
+    <a
+    class="float-btn call"
+    href="tel:+919415592020"
+    aria-label="Call">
+        ☎
+    </a>
+
+</div>
+
+
+<script>
+
+/* =========================
+   LOADER
+========================= */
+
+window.addEventListener("load",function(){
+
+    setTimeout(function(){
+
+        document
+        .getElementById("loader")
+        .classList.add("hide");
+
+    },700);
+
+});
+
+
+/* =========================
+   MOBILE MENU
+========================= */
+
+const menuBtn =
+document.getElementById("menuBtn");
+
+const navLinks =
+document.getElementById("navLinks");
+
+menuBtn.addEventListener("click",function(){
+
+    navLinks.classList.toggle("active");
+
+});
+
+
+document.querySelectorAll(".nav-links a")
+.forEach(function(link){
+
+    link.addEventListener("click",function(){
+
+        navLinks.classList.remove("active");
+
+    });
+
+});
+
+
+/* =========================
+   SCROLL REVEAL
+========================= */
+
+const revealElements =
+document.querySelectorAll(".reveal");
+
+const observer =
+new IntersectionObserver(
+function(entries){
+
+    entries.forEach(function(entry){
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("show");
+
+        }
+
+    });
+
+},
+{
+    threshold:0.12
+});
+
+
+revealElements.forEach(function(el){
+
+    observer.observe(el);
+
+});
+
+
+/* =========================
+   WHATSAPP FORM
+========================= */
+
+function sendEnquiry(){
+
+    const name =
+    document.getElementById("name").value.trim();
+
+    const phone =
+    document.getElementById("phone").value.trim();
+
+    const className =
+    document.getElementById("class").value;
+
+    const message =
+    document.getElementById("message").value.trim();
+
+
+    if(!name || !phone){
+
+        alert("Please enter your name and mobile number.");
+
+        return;
+
+    }
+
+
+    const text =
+    `Hello S.R. Public School Orai,
+
+I want to enquire about admission.
+
+Parent/Student Name: ${name}
+Mobile: ${phone}
+Class: ${className || "Not selected"}
+
+Message:
+${message || "I would like to know more about admission."}`;
+
+
+    const url =
+    "https://wa.me/919415592020?text="
+    + encodeURIComponent(text);
+
+
+    window.open(url,"_blank");
+
+}
+
+
+/* =========================
+   YEAR
+========================= */
+
+document.getElementById("year")
+.textContent = new Date().getFullYear();
+
+</script>
+
+</body>
+</html>

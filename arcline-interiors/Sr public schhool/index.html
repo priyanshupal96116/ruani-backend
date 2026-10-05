@@ -1,0 +1,1811 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>S.R. Public School | Orai</title>
+
+<meta name="description" content="S.R. Public School, Orai, Jalaun — quality education, academic development and holistic growth.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+    --navy:#071735;
+    --navy2:#0c2449;
+    --green:#159a6c;
+    --green2:#0d7e57;
+    --gold:#e6b85c;
+    --white:#ffffff;
+    --offwhite:#f6f8f6;
+    --text:#172238;
+    --muted:#687286;
+    --border:#e5e9ee;
+    --shadow:0 20px 60px rgba(7,23,53,.10);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    background:var(--offwhite);
+    color:var(--text);
+    line-height:1.7;
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+img{
+    display:block;
+    width:100%;
+}
+
+.container{
+    width:min(1180px,92%);
+    margin:auto;
+}
+
+/* ================= HEADER ================= */
+
+header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+    background:rgba(255,255,255,.94);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(7,23,53,.08);
+}
+
+.navbar{
+    height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo{
+    width:46px;
+    height:46px;
+    border-radius:50%;
+    background:linear-gradient(135deg,var(--navy),var(--green));
+    color:#fff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    font-size:17px;
+    box-shadow:0 8px 25px rgba(7,23,53,.18);
+}
+
+.brand-text{
+    display:flex;
+    flex-direction:column;
+    line-height:1.15;
+}
+
+.brand-text strong{
+    color:var(--navy);
+    font-size:17px;
+}
+
+.brand-text span{
+    color:var(--green);
+    font-size:9px;
+    letter-spacing:1.4px;
+    font-weight:800;
+    text-transform:uppercase;
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:26px;
+}
+
+.nav-links a{
+    color:#354158;
+    font-size:14px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    color:var(--green);
+}
+
+.nav-links .active{
+    color:var(--green);
+}
+
+.nav-admission{
+    background:var(--green);
+    color:white!important;
+    padding:11px 18px;
+    border-radius:30px;
+    box-shadow:0 8px 20px rgba(21,154,108,.22);
+}
+
+.nav-admission:hover{
+    background:var(--green2)!important;
+    transform:translateY(-2px);
+}
+
+.menu-btn{
+    display:none;
+    border:0;
+    background:none;
+    color:var(--navy);
+    font-size:28px;
+    cursor:pointer;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:760px;
+    padding-top:78px;
+    position:relative;
+    display:flex;
+    align-items:center;
+    overflow:hidden;
+
+    background:
+    linear-gradient(110deg,rgba(4,16,38,.94),rgba(7,23,53,.67)),
+    url("https://images.unsplash.com/photo-1580582932707-520aed937b7b?auto=format&fit=crop&w=1900&q=85")
+    center/cover;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    width:520px;
+    height:520px;
+    border-radius:50%;
+    background:rgba(21,154,108,.20);
+    filter:blur(90px);
+    right:-180px;
+    top:70px;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:300px;
+    height:300px;
+    border-radius:50%;
+    background:rgba(230,184,92,.12);
+    filter:blur(80px);
+    left:-120px;
+    bottom:-100px;
+}
+
+.hero-content{
+    position:relative;
+    z-index:2;
+    max-width:820px;
+    color:white;
+}
+
+.eyebrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+    font-weight:800;
+    margin-bottom:20px;
+}
+
+.eyebrow::before{
+    content:"";
+    width:34px;
+    height:2px;
+    background:var(--gold);
+}
+
+.hero h1{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(46px,7vw,82px);
+    line-height:1.04;
+    margin-bottom:25px;
+}
+
+.hero h1 span{
+    color:var(--gold);
+}
+
+.hero p{
+    max-width:690px;
+    color:rgba(255,255,255,.82);
+    font-size:18px;
+    margin-bottom:32px;
+}
+
+.hero-buttons{
+    display:flex;
+    gap:14px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:14px 23px;
+    border-radius:30px;
+    font-weight:700;
+    transition:.3s;
+}
+
+.btn-green{
+    background:var(--green);
+    color:#fff;
+}
+
+.btn-green:hover{
+    background:var(--green2);
+    transform:translateY(-3px);
+    box-shadow:0 12px 30px rgba(21,154,108,.30);
+}
+
+.btn-outline{
+    color:white;
+    border:1px solid rgba(255,255,255,.45);
+    background:rgba(255,255,255,.06);
+}
+
+.btn-outline:hover{
+    background:white;
+    color:var(--navy);
+}
+
+/* ================= TRUST BAR ================= */
+
+.trust{
+    background:white;
+    margin-top:-1px;
+    position:relative;
+    z-index:5;
+}
+
+.trust-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+}
+
+.trust-item{
+    padding:27px 18px;
+    text-align:center;
+    border-right:1px solid var(--border);
+}
+
+.trust-item:last-child{
+    border-right:0;
+}
+
+.trust-item strong{
+    display:block;
+    color:var(--navy);
+    font-size:25px;
+}
+
+.trust-item span{
+    color:var(--muted);
+    font-size:12px;
+}
+
+/* ================= COMMON SECTION ================= */
+
+section{
+    padding:90px 0;
+}
+
+.section-title{
+    margin-bottom:45px;
+}
+
+.section-title small{
+    color:var(--green);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-size:12px;
+    font-weight:800;
+}
+
+.section-title h2{
+    font-family:"Playfair Display",serif;
+    color:var(--navy);
+    font-size:clamp(35px,5vw,50px);
+    line-height:1.18;
+    margin-top:9px;
+}
+
+.section-title p{
+    max-width:650px;
+    color:var(--muted);
+    margin-top:13px;
+}
+
+/* ================= ABOUT ================= */
+
+.about{
+    background:white;
+}
+
+.about-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.about-image{
+    position:relative;
+}
+
+.about-image img{
+    height:500px;
+    object-fit:cover;
+    border-radius:25px;
+    box-shadow:var(--shadow);
+}
+
+.about-badge{
+    position:absolute;
+    right:-25px;
+    bottom:30px;
+    background:white;
+    border-radius:18px;
+    padding:20px 24px;
+    box-shadow:0 15px 40px rgba(0,0,0,.14);
+}
+
+.about-badge strong{
+    display:block;
+    color:var(--green);
+    font-size:30px;
+    line-height:1;
+}
+
+.about-badge span{
+    font-size:12px;
+    color:var(--muted);
+}
+
+.about-content h2{
+    font-family:"Playfair Display",serif;
+    color:var(--navy);
+    font-size:43px;
+    line-height:1.2;
+    margin:10px 0 18px;
+}
+
+.about-content p{
+    color:var(--muted);
+    margin-bottom:17px;
+}
+
+.read-more{
+    display:inline-flex;
+    margin-top:8px;
+    color:var(--green);
+    font-weight:800;
+}
+
+/* ================= WHY ================= */
+
+.why{
+    background:var(--offwhite);
+}
+
+.why-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:24px;
+}
+
+.card{
+    background:white;
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:32px;
+    transition:.35s;
+}
+
+.card:hover{
+    transform:translateY(-8px);
+    box-shadow:var(--shadow);
+}
+
+.card-icon{
+    width:58px;
+    height:58px;
+    border-radius:17px;
+    background:rgba(21,154,108,.10);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:26px;
+    margin-bottom:20px;
+}
+
+.card h3{
+    color:var(--navy);
+    font-size:20px;
+    margin-bottom:10px;
+}
+
+.card p{
+    color:var(--muted);
+    font-size:14px;
+}
+
+/* ================= ACADEMICS ================= */
+
+.academics{
+    background:var(--navy);
+    color:white;
+    overflow:hidden;
+    position:relative;
+}
+
+.academics::before{
+    content:"";
+    position:absolute;
+    width:500px;
+    height:500px;
+    border-radius:50%;
+    background:rgba(21,154,108,.12);
+    filter:blur(90px);
+    right:-180px;
+    top:-150px;
+}
+
+.academic-grid{
+    position:relative;
+    z-index:2;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:55px;
+    align-items:center;
+}
+
+.academics .section-title h2{
+    color:white;
+}
+
+.academics .section-title p{
+    color:rgba(255,255,255,.65);
+}
+
+.academic-list{
+    display:grid;
+    gap:14px;
+}
+
+.academic-item{
+    display:flex;
+    align-items:center;
+    gap:16px;
+    padding:18px;
+    border:1px solid rgba(255,255,255,.10);
+    background:rgba(255,255,255,.05);
+    border-radius:17px;
+}
+
+.academic-number{
+    width:43px;
+    height:43px;
+    border-radius:13px;
+    background:var(--green);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-weight:800;
+    color:white;
+}
+
+.academic-item h3{
+    font-size:16px;
+}
+
+.academic-item p{
+    color:rgba(255,255,255,.55);
+    font-size:12px;
+}
+
+/* ================= FACILITIES ================= */
+
+.facilities{
+    background:white;
+}
+
+.facility-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.facility-card{
+    position:relative;
+    min-height:240px;
+    overflow:hidden;
+    border-radius:21px;
+    background:#111;
+}
+
+.facility-card img{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.facility-card:hover img{
+    transform:scale(1.08);
+}
+
+.facility-overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:flex-end;
+    padding:22px;
+    background:linear-gradient(transparent,rgba(4,16,38,.92));
+}
+
+.facility-overlay h3{
+    color:white;
+    font-size:18px;
+}
+
+/* ================= STATS ================= */
+
+.stats{
+    background:var(--offwhite);
+}
+
+.stats-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.stat{
+    text-align:center;
+    padding:30px 15px;
+    background:white;
+    border-radius:20px;
+    border:1px solid var(--border);
+}
+
+.stat strong{
+    display:block;
+    color:var(--green);
+    font-size:38px;
+    line-height:1;
+    margin-bottom:8px;
+}
+
+.stat span{
+    color:var(--muted);
+    font-size:13px;
+}
+
+/* ================= GALLERY ================= */
+
+.gallery{
+    background:white;
+}
+
+.gallery-grid{
+    display:grid;
+    grid-template-columns:1.3fr 1fr 1fr;
+    grid-auto-rows:220px;
+    gap:15px;
+}
+
+.gallery-item{
+    overflow:hidden;
+    border-radius:18px;
+}
+
+.gallery-item:first-child{
+    grid-row:span 2;
+}
+
+.gallery-item img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transition:.5s;
+}
+
+.gallery-item:hover img{
+    transform:scale(1.07);
+}
+
+/* ================= ADMISSION CTA ================= */
+
+.admission-cta{
+    background:
+    linear-gradient(110deg,rgba(7,23,53,.95),rgba(7,23,53,.82)),
+    url("https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1800&q=85")
+    center/cover;
+}
+
+.cta-content{
+    text-align:center;
+    max-width:750px;
+    margin:auto;
+    color:white;
+}
+
+.cta-content small{
+    color:var(--gold);
+    text-transform:uppercase;
+    letter-spacing:2px;
+    font-weight:800;
+}
+
+.cta-content h2{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(38px,5vw,55px);
+    line-height:1.15;
+    margin:12px 0;
+}
+
+.cta-content p{
+    color:rgba(255,255,255,.70);
+    margin-bottom:28px;
+}
+
+/* ================= FOOTER ================= */
+
+footer{
+    background:#041126;
+    color:white;
+    padding:65px 0 25px;
+}
+
+.footer-grid{
+    display:grid;
+    grid-template-columns:1.4fr 1fr 1fr 1.2fr;
+    gap:45px;
+    padding-bottom:45px;
+    border-bottom:1px solid rgba(255,255,255,.10);
+}
+
+.footer-brand{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:18px;
+}
+
+.footer-brand strong{
+    font-size:16px;
+}
+
+footer h3{
+    font-size:15px;
+    margin-bottom:18px;
+}
+
+footer p{
+    color:rgba(255,255,255,.58);
+    font-size:13px;
+}
+
+.footer-links{
+    display:flex;
+    flex-direction:column;
+    gap:9px;
+}
+
+.footer-links a{
+    color:rgba(255,255,255,.60);
+    font-size:13px;
+    transition:.3s;
+}
+
+.footer-links a:hover{
+    color:white;
+    padding-left:4px;
+}
+
+.contact-line{
+    margin-bottom:10px;
+}
+
+.contact-line a{
+    color:rgba(255,255,255,.68);
+    font-size:13px;
+}
+
+.copyright{
+    padding-top:22px;
+    text-align:center;
+    color:rgba(255,255,255,.38);
+    font-size:12px;
+}
+
+/* ================= FLOAT BUTTONS ================= */
+
+.float-buttons{
+    position:fixed;
+    right:18px;
+    bottom:18px;
+    z-index:999;
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+}
+
+.float-btn{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:white;
+    font-size:20px;
+    box-shadow:0 8px 25px rgba(0,0,0,.20);
+    transition:.3s;
+}
+
+.float-btn:hover{
+    transform:scale(1.08);
+}
+
+.whatsapp{
+    background:#20bd68;
+}
+
+.call{
+    background:var(--green);
+}
+
+/* ================= ANIMATION ================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(25px);
+    animation:reveal .8s ease forwards;
+}
+
+@keyframes reveal{
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+/* ================= RESPONSIVE ================= */
+
+@media(max-width:1000px){
+
+    .nav-links{
+        position:absolute;
+        top:78px;
+        left:0;
+        width:100%;
+        padding:22px;
+        background:white;
+        display:none;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:18px;
+        box-shadow:0 15px 35px rgba(0,0,0,.10);
+    }
+
+    .nav-links.show{
+        display:flex;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .about-grid{
+        grid-template-columns:1fr;
+        gap:45px;
+    }
+
+    .why-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .facility-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .academic-grid{
+        grid-template-columns:1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:700px){
+
+    section{
+        padding:65px 0;
+    }
+
+    .hero{
+        min-height:650px;
+    }
+
+    .hero h1{
+        font-size:45px;
+    }
+
+    .hero p{
+        font-size:16px;
+    }
+
+    .trust-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .trust-item{
+        border-bottom:1px solid var(--border);
+    }
+
+    .why-grid{
+        grid-template-columns:1fr;
+    }
+
+    .facility-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr 1fr;
+        grid-auto-rows:170px;
+    }
+
+    .gallery-item:first-child{
+        grid-row:span 2;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+        gap:30px;
+    }
+
+    .about-image img{
+        height:380px;
+    }
+
+    .about-badge{
+        right:15px;
+    }
+}
+
+@media(max-width:480px){
+
+    .brand-text strong{
+        font-size:14px;
+    }
+
+    .brand-text span{
+        font-size:8px;
+    }
+
+    .hero h1{
+        font-size:39px;
+    }
+
+    .hero-buttons{
+        flex-direction:column;
+        align-items:stretch;
+    }
+
+    .btn{
+        width:100%;
+    }
+
+    .facility-grid{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-grid{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-item:first-child{
+        grid-row:span 1;
+    }
+
+    .stats-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+
+<!-- ================= HEADER ================= -->
+
+<header>
+
+<div class="container navbar">
+
+<a href="index.html" class="brand">
+
+<div class="logo">SR</div>
+
+<div class="brand-text">
+
+<strong>S.R. Public School</strong>
+
+<span>Orai • Jalaun</span>
+
+</div>
+
+</a>
+
+
+<button class="menu-btn" id="menuBtn">
+☰
+</button>
+
+
+<nav class="nav-links" id="navLinks">
+
+<a href="index.html" class="active">
+Home
+</a>
+
+<a href="about.html">
+About
+</a>
+
+<a href="academics.html">
+Academics
+</a>
+
+<a href="facilities.html">
+Facilities
+</a>
+
+<a href="gallery.html">
+Gallery
+</a>
+
+<a href="contact.html">
+Contact
+</a>
+
+<a href="admission.html" class="nav-admission">
+Admission Enquiry
+</a>
+
+</nav>
+
+</div>
+
+</header>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+<div class="container">
+
+<div class="hero-content reveal">
+
+<div class="eyebrow">
+Welcome to S.R. Public School
+</div>
+
+<h1>
+Shaping Young Minds for a
+<span>Brighter Tomorrow.</span>
+</h1>
+
+<p>
+A learning environment where knowledge, character,
+confidence and curiosity come together to help every
+student move towards a better future.
+</p>
+
+
+<div class="hero-buttons">
+
+<a href="admission.html" class="btn btn-green">
+Admission Enquiry →
+</a>
+
+<a href="about.html" class="btn btn-outline">
+Explore Our School
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= TRUST ================= -->
+
+<section class="trust">
+
+<div class="container trust-grid">
+
+<div class="trust-item">
+<strong>2011</strong>
+<span>Foundation Year</span>
+</div>
+
+<div class="trust-item">
+<strong>Senior</strong>
+<span>Secondary School</span>
+</div>
+
+<div class="trust-item">
+<strong>65+</strong>
+<span>Classrooms</span>
+</div>
+
+<div class="trust-item">
+<strong>Orai</strong>
+<span>Jalaun, Uttar Pradesh</span>
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ABOUT ================= -->
+
+<section class="about">
+
+<div class="container about-grid">
+
+<div class="about-image">
+
+<img
+src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1100&q=85"
+alt="Students in classroom">
+
+<div class="about-badge">
+
+<strong>2011</strong>
+
+<span>Established</span>
+
+</div>
+
+</div>
+
+
+<div class="about-content">
+
+<div class="eyebrow" style="color:#159a6c;">
+About Our School
+</div>
+
+<h2>
+Education That Goes Beyond the Classroom
+</h2>
+
+<p>
+S.R. Public School is a senior secondary school located
+on Kalpi Road, Orai, Jalaun, Uttar Pradesh.
+</p>
+
+<p>
+The school is focused on creating an environment that
+supports academic learning, discipline, confidence and
+the overall development of students.
+</p>
+
+<p>
+Our aim is to help students build strong foundations
+while developing the skills and values they need for
+their future.
+</p>
+
+<a href="about.html" class="read-more">
+Discover Our Story →
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= WHY CHOOSE US ================= -->
+
+<section class="why">
+
+<div class="container">
+
+<div class="section-title">
+
+<small>Why Choose Us</small>
+
+<h2>
+A Strong Foundation for Every Student
+</h2>
+
+<p>
+A balanced educational environment helps students grow
+with knowledge, confidence and responsibility.
+</p>
+
+</div>
+
+
+<div class="why-grid">
+
+
+<div class="card">
+
+<div class="card-icon">
+🎓
+</div>
+
+<h3>
+Academic Focus
+</h3>
+
+<p>
+We encourage students to develop strong academic
+foundations and a positive approach towards learning.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-icon">
+🌱
+</div>
+
+<h3>
+Holistic Development
+</h3>
+
+<p>
+Learning is supported by opportunities for creativity,
+skills, confidence and personal growth.
+</p>
+
+</div>
+
+
+<div class="card">
+
+<div class="card-icon">
+🤝
+</div>
+
+<h3>
+Values & Discipline
+</h3>
+
+<p>
+Respect, responsibility and discipline are important
+parts of a student's development.
+</p>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ACADEMICS ================= -->
+
+<section class="academics">
+
+<div class="container academic-grid">
+
+
+<div>
+
+<div class="section-title">
+
+<small style="color:#e6b85c;">
+Academics
+</small>
+
+<h2>
+Learning Designed for Tomorrow
+</h2>
+
+<p>
+We believe meaningful education should build knowledge,
+understanding, curiosity and confidence.
+</p>
+
+</div>
+
+<a href="academics.html" class="btn btn-green">
+Explore Academics →
+</a>
+
+</div>
+
+
+<div class="academic-list">
+
+
+<div class="academic-item">
+
+<div class="academic-number">
+01
+</div>
+
+<div>
+
+<h3>
+Strong Academic Foundation
+</h3>
+
+<p>
+Focused learning and conceptual understanding.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="academic-item">
+
+<div class="academic-number">
+02
+</div>
+
+<div>
+
+<h3>
+Learning Environment
+</h3>
+
+<p>
+A supportive atmosphere for student development.
+</p>
+
+</div>
+
+</div>
+
+
+<div class="academic-item">
+
+<div class="academic-number">
+03
+</div>
+
+<div>
+
+<h3>
+Beyond Textbooks
+</h3>
+
+<p>
+Encouraging curiosity, creativity and confidence.
+</p>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= FACILITIES ================= -->
+
+<section class="facilities">
+
+<div class="container">
+
+<div class="section-title">
+
+<small>Campus & Facilities</small>
+
+<h2>
+A Place to Learn, Explore & Grow
+</h2>
+
+<p>
+Explore the facilities and learning spaces available
+within the school environment.
+</p>
+
+</div>
+
+
+<div class="facility-grid">
+
+
+<div class="facility-card">
+
+<img
+src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=85"
+alt="School campus">
+
+<div class="facility-overlay">
+<h3>School Campus</h3>
+</div>
+
+</div>
+
+
+<div class="facility-card">
+
+<img
+src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=85"
+alt="Science laboratory">
+
+<div class="facility-overlay">
+<h3>Science Laboratories</h3>
+</div>
+
+</div>
+
+
+<div class="facility-card">
+
+<img
+src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&q=85"
+alt="Library">
+
+<div class="facility-overlay">
+<h3>Library</h3>
+</div>
+
+</div>
+
+
+<div class="facility-card">
+
+<img
+src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?auto=format&fit=crop&w=900&q=85"
+alt="Sports facility">
+
+<div class="facility-overlay">
+<h3>Sports & Activities</h3>
+</div>
+
+</div>
+
+
+</div>
+
+
+<div style="text-align:center;margin-top:30px;">
+
+<a href="facilities.html" class="read-more">
+View All Facilities →
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= STATS ================= -->
+
+<section class="stats">
+
+<div class="container">
+
+<div class="stats-grid">
+
+
+<div class="stat">
+
+<strong>2011</strong>
+
+<span>
+Year of Foundation
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong>65+</strong>
+
+<span>
+Classrooms
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong>4</strong>
+
+<span>
+Laboratories
+</span>
+
+</div>
+
+
+<div class="stat">
+
+<strong>1</strong>
+
+<span>
+Library
+</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= GALLERY ================= -->
+
+<section class="gallery">
+
+<div class="container">
+
+<div class="section-title">
+
+<small>School Life</small>
+
+<h2>
+Moments From Our Campus
+</h2>
+
+<p>
+Take a visual look at learning, campus spaces and
+school life.
+</p>
+
+</div>
+
+
+<div class="gallery-grid">
+
+
+<div class="gallery-item">
+
+<img
+src="https://images.unsplash.com/photo-1588072432836-e10032774350?auto=format&fit=crop&w=1000&q=85"
+alt="Students">
+
+</div>
+
+
+<div class="gallery-item">
+
+<img
+src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=900&q=85"
+alt="Classroom">
+
+</div>
+
+
+<div class="gallery-item">
+
+<img
+src="https://images.unsplash.com/photo-1562774053-701939374585?auto=format&fit=crop&w=900&q=85"
+alt="School">
+
+</div>
+
+
+<div class="gallery-item">
+
+<img
+src="https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=900&q=85"
+alt="Laboratory">
+
+</div>
+
+
+<div class="gallery-item">
+
+<img
+src="https://images.unsplash.com/photo-1507842217343-583bb7270b66?auto=format&fit=crop&w=900&q=85"
+alt="Library">
+
+</div>
+
+
+</div>
+
+
+<div style="text-align:center;margin-top:30px;">
+
+<a href="gallery.html" class="read-more">
+Open Full Gallery →
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ADMISSION CTA ================= -->
+
+<section class="admission-cta">
+
+<div class="container">
+
+<div class="cta-content">
+
+<small>
+Admissions
+</small>
+
+<h2>
+Give Your Child a Stronger Start
+</h2>
+
+<p>
+Interested in learning more about S.R. Public School?
+Send us an admission enquiry and connect with the school.
+</p>
+
+<a href="admission.html" class="btn btn-green">
+Start Admission Enquiry →
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer>
+
+<div class="container">
+
+<div class="footer-grid">
+
+
+<div>
+
+<div class="footer-brand">
+
+<div class="logo">
+SR
+</div>
+
+<strong>
+S.R. Public School
+</strong>
+
+</div>
+
+<p>
+Kalpi Road, Orai, Jalaun,<br>
+Uttar Pradesh — 285001
+</p>
+
+</div>
+
+
+<div>
+
+<h3>
+Quick Links
+</h3>
+
+<div class="footer-links">
+
+<a href="index.html">
+Home
+</a>
+
+<a href="about.html">
+About School
+</a>
+
+<a href="academics.html">
+Academics
+</a>
+
+<a href="facilities.html">
+Facilities
+</a>
+
+</div>
+
+</div>
+
+
+<div>
+
+<h3>
+Explore
+</h3>
+
+<div class="footer-links">
+
+<a href="gallery.html">
+Photo Gallery
+</a>
+
+<a href="contact.html">
+Contact
+</a>
+
+<a href="admission.html">
+Online Admission
+</a>
+
+<a href="https://www.cbse.gov.in/" target="_blank">
+CBSE
+</a>
+
+</div>
+
+</div>
+
+
+<div>
+
+<h3>
+Contact Us
+</h3>
+
+<div class="contact-line">
+
+<a href="tel:+919415592020">
+📞 +91-9415592020
+</a>
+
+</div>
+
+<div class="contact-line">
+
+<a href="tel:+919616572024">
+📞 +91-9616572024
+</a>
+
+</div>
+
+<div class="contact-line">
+
+<a href="mailto:srpublicschool.orai@gmail.com">
+✉ srpublicschool.orai@gmail.com
+</a>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div class="copyright">
+
+© 2026 S.R. Public School, Orai. All Rights Reserved.
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- ================= FLOAT BUTTONS ================= -->
+
+<div class="float-buttons">
+
+<a
+href="https://wa.me/919415592020"
+target="_blank"
+class="float-btn whatsapp"
+aria-label="WhatsApp">
+⌕
+</a>
+
+<a
+href="tel:+919415592020"
+class="float-btn call"
+aria-label="Call">
+☎
+</a>
+
+</div>
+
+
+<!-- ================= JAVASCRIPT ================= -->
+
+<script>
+
+const menuBtn = document.getElementById("menuBtn");
+const navLinks = document.getElementById("navLinks");
+
+menuBtn.addEventListener("click", function(){
+    navLinks.classList.toggle("show");
+});
+
+
+document.querySelectorAll(".nav-links a").forEach(function(link){
+
+    link.addEventListener("click", function(){
+        navLinks.classList.remove("show");
+    });
+
+});
+
+</script>
+
+</body>
+</html>

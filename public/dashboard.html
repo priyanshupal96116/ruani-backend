@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>RUANI — Dashboard</title>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at 10% 0%,rgba(108,70,255,.25),transparent 35%),
+    radial-gradient(circle at 90% 100%,rgba(0,140,255,.12),transparent 35%),
+    #050817;
+  color:#fff;min-height:100vh;
+}
+button,a{font:inherit}
+button{cursor:pointer}
+
+.topbar{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:18px 20px;position:relative;z-index:10;
+}
+.logo{font-size:28px;font-weight:900;letter-spacing:1px}
+.logo span{color:#855cff}
+.top-actions{display:flex;align-items:center;gap:10px}
+.status{
+  background:rgba(0,220,140,.10);
+  border:1px solid rgba(0,220,140,.25);
+  color:#69e8ae;padding:8px 13px;border-radius:30px;
+  font-size:11px;font-weight:bold;
+}
+.bell{
+  width:48px;height:48px;min-width:48px;
+  border:1px solid rgba(255,255,255,.18);
+  background:#17192b;border-radius:50%;color:#fff;
+  font-size:22px;position:relative;display:flex;
+  align-items:center;justify-content:center;
+  z-index:20;
+}
+.bell:active{transform:scale(.95)}
+.badge{
+  position:absolute;right:-2px;top:-4px;min-width:19px;height:19px;
+  border-radius:20px;background:#ff365f;font-size:10px;
+  display:flex;align-items:center;justify-content:center;font-weight:bold;
+}
+.container{width:min(1180px,94%);margin:auto;padding-bottom:50px}
+.hero{
+  background:linear-gradient(120deg,rgba(76,42,170,.35),rgba(23,27,44,.72));
+  border:1px solid rgba(255,255,255,.08);border-radius:24px;
+  padding:38px;margin-bottom:18px;
+}
+.hero h1{font-size:30px;margin-bottom:12px}
+.hero p{color:#9da3b9;margin-bottom:18px}
+.quote{color:#9275ff;font-size:11px;letter-spacing:3px;font-weight:bold}
+
+.stats{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:18px}
+.stat{
+  background:rgba(25,28,44,.82);border:1px solid rgba(255,255,255,.07);
+  border-radius:18px;padding:20px;
+}
+.stat small{color:#858ba2;font-size:11px}
+.stat strong{display:block;margin-top:13px;font-size:27px}
+
+.main-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.card{
+  background:rgba(20,23,37,.84);border:1px solid rgba(255,255,255,.07);
+  border-radius:22px;padding:22px;
+}
+.card h2{font-size:17px;margin-bottom:18px}
+.overview-row{
+  display:flex;justify-content:space-between;padding:14px 0;
+  border-bottom:1px solid rgba(255,255,255,.06);color:#9ba1b5;
+}
+.overview-row:last-child{border-bottom:0}
+.overview-row strong{color:#fff}
+
+.actions{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.action{
+  text-decoration:none;color:#fff;background:#1c1f2d;
+  border:1px solid rgba(255,255,255,.07);border-radius:17px;
+  padding:18px;transition:.2s;
+}
+.action:hover{transform:translateY(-2px);border-color:#7655ff}
+.action b{display:block;margin-bottom:7px}
+.action span{color:#858ba0;font-size:11px}
+
+.ai-box{
+  margin-top:18px;background:linear-gradient(120deg,rgba(70,35,160,.3),rgba(0,100,190,.14));
+  border:1px solid rgba(116,82,255,.3);border-radius:22px;padding:22px;
+}
+.ai-box p{color:#979db1;margin:8px 0 16px}
+.ai-btn{
+  width:100%;border:0;padding:14px;border-radius:12px;color:#fff;
+  font-weight:bold;background:linear-gradient(90deg,#744cff,#8b5cff);
+}
+.logout{
+  width:100%;margin-top:18px;padding:13px;border-radius:12px;
+  border:1px solid rgba(255,70,100,.25);background:rgba(70,10,25,.25);
+  color:#ff8b9e;
+}
+
+.notification-panel{
+  display:none;position:fixed;top:78px;right:15px;
+  width:min(370px,calc(100vw - 30px));max-height:72vh;overflow:auto;
+  z-index:100;background:#0d1020;border:1px solid rgba(255,255,255,.12);
+  border-radius:20px;box-shadow:0 25px 70px rgba(0,0,0,.55);padding:15px;
+}
+.notification-panel.show{display:block}
+.notification-head{
+  display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;
+}
+.notification-head small{color:#8d76ff}
+.notice{
+  padding:17px;border-radius:15px;background:#171a2a;margin-bottom:10px;
+  border-left:4px solid #ffbd45;
+}
+.notice.red{border-left-color:#ff4168}
+.notice.green{border-left-color:#4ee69b}
+.notice h3{font-size:14px;margin-bottom:7px}
+.notice p{color:#9da3b8;font-size:12px;line-height:1.5}
+.notice button{
+  margin-top:10px;border:0;border-radius:9px;padding:8px 11px;
+  background:#33275f;color:#c2b4ff;font-size:11px;
+}
+.permission-box{margin-top:12px;padding:13px;background:#171a2a;border-radius:13px}
+.permission-box p{color:#969cb0;font-size:11px;line-height:1.5}
+.permission-btn{
+  margin-top:10px;width:100%;border:0;padding:11px;border-radius:10px;
+  background:#7654ff;color:#fff;font-weight:bold;
+}
+.toast{
+  position:fixed;left:50%;bottom:25px;transform:translateX(-50%);
+  background:#171a2b;border:1px solid rgba(255,255,255,.1);color:#fff;
+  padding:13px 18px;border-radius:13px;z-index:200;display:none;font-size:13px;
+}
+
+@media(max-width:800px){
+  .stats{grid-template-columns:repeat(2,1fr)}
+  .stats .stat:last-child{grid-column:span 2}
+  .main-grid{grid-template-columns:1fr}
+  .hero{padding:28px 22px}
+  .hero h1{font-size:25px}
+  .topbar{padding:16px 15px}
+  .status{display:none}
+}
+@media(max-width:480px){
+  .container{width:94%}
+  .stats{grid-template-columns:1fr 1fr}
+  .actions{grid-template-columns:1fr 1fr}
+  .logo{font-size:25px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <div class="logo">RUANI<span>.</span></div>
+  <div class="top-actions">
+    <div class="status">● AI MANAGER READY</div>
+    <button class="bell" id="bellBtn" aria-label="Notifications">
+      🔔
+      <span class="badge" id="badge">0</span>
+    </button>
+  </div>
+</header>
+
+<div class="notification-panel" id="notificationPanel">
+  <div class="notification-head">
+    <b>🔔 Notifications</b>
+    <small>RUANI Alerts</small>
+  </div>
+
+  <div id="notificationsList"></div>
+
+  <div class="permission-box">
+    <p id="permissionText">
+      Phone push notifications enable karne ke liye permission allow karo.
+    </p>
+    <button class="permission-btn" id="enablePushBtn">
+      📱 Enable Phone Notifications
+    </button>
+  </div>
+</div>
+
+<main class="container">
+
+  <section class="hero">
+    <h1>Good Morning, Gym Owner 👋</h1>
+    <p>Your gym. Smarter. Faster. More organized.</p>
+    <div class="quote">DISCIPLINE BUILDS FREEDOM.</div>
+  </section>
+
+  <section class="stats">
+    <div class="stat"><small>TOTAL MEMBERS</small><strong id="totalMembers">0</strong></div>
+    <div class="stat"><small>ACTIVE MEMBERS</small><strong id="activeMembers">0</strong></div>
+    <div class="stat"><small>EXPIRED MEMBERS</small><strong id="expiredMembers">0</strong></div>
+    <div class="stat"><small>TODAY ATTENDANCE</small><strong id="todayAttendance">0</strong></div>
+    <div class="stat"><small>PENDING FEES</small><strong id="pendingFees">₹0</strong></div>
+  </section>
+
+  <section class="main-grid">
+    <div class="card">
+      <h2>Gym Overview</h2>
+      <div class="overview-row"><span>Total Members</span><strong id="overviewTotal">0</strong></div>
+      <div class="overview-row"><span>Active Members</span><strong id="overviewActive">0</strong></div>
+      <div class="overview-row"><span>Expired Members</span><strong id="overviewExpired">0</strong></div>
+      <div class="overview-row"><span>Expiring Soon</span><strong id="overviewExpiring">0</strong></div>
+    </div>
+
+    <div class="card">
+      <h2>Quick Actions</h2>
+      <div class="actions">
+        <a class="action" href="members.html"><b>👤 Members</b><span>Add & manage members</span></a>
+        <a class="action" href="attendance.html"><b>📷 QR Attendance</b><span>Scan member QR</span></a>
+        <a class="action" href="fees.html"><b>💰 Manage Fees</b><span>Payments & pending fees</span></a>
+        <a class="action" href="ai.html"><b>🤖 Ask RUANI</b><span>Your AI gym manager</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ai-box">
+    <b>🤖 RUANI AI Manager</b>
+    <p>Ask RUANI about members, attendance, fees and your gym.</p>
+    <a href="ai.html"><button class="ai-btn">Ask RUANI →</button></a>
+  </section>
+
+  <button class="logout" id="logoutBtn">Logout</button>
+</main>
+
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { auth, db } from "./firebase.js";
+
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+import {
+  collection,
+  query,
+  where,
+  getDocs
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+import {
+  getMessaging,
+  getToken,
+  onMessage
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js";
+
+import { getApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+const bellBtn = document.getElementById("bellBtn");
+const notificationPanel = document.getElementById("notificationPanel");
+const notificationsList = document.getElementById("notificationsList");
+const badge = document.getElementById("badge");
+const enablePushBtn = document.getElementById("enablePushBtn");
+const permissionText = document.getElementById("permissionText");
+const toast = document.getElementById("toast");
+
+const totalMembersEl = document.getElementById("totalMembers");
+const activeMembersEl = document.getElementById("activeMembers");
+const expiredMembersEl = document.getElementById("expiredMembers");
+const todayAttendanceEl = document.getElementById("todayAttendance");
+const pendingFeesEl = document.getElementById("pendingFees");
+
+const overviewTotal = document.getElementById("overviewTotal");
+const overviewActive = document.getElementById("overviewActive");
+const overviewExpired = document.getElementById("overviewExpired");
+const overviewExpiring = document.getElementById("overviewExpiring");
+
+let currentUser = null;
+let currentNotifications = [];
+let messaging = null;
+
+const VAPID_KEY =
+"Bjxsp0OCrNP9yeyAhTBklmGXHGxeCegk4YGEFoFgwpEINRDJTdfWECKSV_CR3XmgSp1fq2K_7NazPGd9gWzgu90";
+
+function showToast(message){
+  toast.textContent = message;
+  toast.style.display = "block";
+  setTimeout(()=>{ toast.style.display = "none"; },3500);
+}
+
+function money(value){
+  return "₹" + Number(value || 0).toLocaleString("en-IN");
+}
+
+function todayString(){
+  return new Date().toISOString().slice(0,10);
+}
+
+function daysUntil(dateString){
+  if(!dateString) return 9999;
+  const today = new Date();
+  today.setHours(0,0,0,0);
+  const target = new Date(dateString);
+  target.setHours(0,0,0,0);
+  return Math.ceil((target - today) / 86400000);
+}
+
+onAuthStateChanged(auth, async user=>{
+  if(!user){
+    window.location.href="login.html";
+    return;
+  }
+  currentUser=user;
+  await loadDashboard();
+  await prepareFCM();
+});
+
+async function loadDashboard(){
+  try{
+    const memberSnap=await getDocs(query(
+      collection(db,"members"),
+      where("ownerId","==",currentUser.uid)
+    ));
+
+    const feeSnap=await getDocs(query(
+      collection(db,"fees"),
+      where("ownerId","==",currentUser.uid)
+    ));
+
+    const attendanceSnap=await getDocs(query(
+      collection(db,"attendance"),
+      where("ownerId","==",currentUser.uid)
+    ));
+
+    const members=[];
+    memberSnap.forEach(d=>members.push({id:d.id,...d.data()}));
+
+    const fees=[];
+    feeSnap.forEach(d=>fees.push({id:d.id,...d.data()}));
+
+    const attendance=[];
+    attendanceSnap.forEach(d=>attendance.push({id:d.id,...d.data()}));
+
+    const activeMembers=members.filter(m=>{
+      if(m.status) return m.status==="active";
+      return daysUntil(m.endDate)>=0;
+    });
+
+    const expiredMembers=members.filter(m=>{
+      if(m.status) return m.status==="expired";
+      return daysUntil(m.endDate)<0;
+    });
+
+    const expiringMembers=members.filter(m=>{
+      const days=daysUntil(m.endDate);
+      return days>=0 && days<=7;
+    });
+
+    const today=todayString();
+    const todayAttendance=attendance.filter(a=>a.date===today);
+
+    const pendingFees=fees
+      .filter(f=>String(f.status).toLowerCase()!=="paid")
+      .reduce((sum,f)=>sum+Number(f.amount||0),0);
+
+    totalMembersEl.textContent=members.length;
+    activeMembersEl.textContent=activeMembers.length;
+    expiredMembersEl.textContent=expiredMembers.length;
+    todayAttendanceEl.textContent=todayAttendance.length;
+    pendingFeesEl.textContent=money(pendingFees);
+
+    overviewTotal.textContent=members.length;
+    overviewActive.textContent=activeMembers.length;
+    overviewExpired.textContent=expiredMembers.length;
+    overviewExpiring.textContent=expiringMembers.length;
+
+    buildNotifications(expiringMembers,fees,todayAttendance);
+  }catch(error){
+    console.error("Dashboard error:",error);
+    showToast("Dashboard data load nahi ho paya.");
+  }
+}
+
+function buildNotifications(expiringMembers,fees,todayAttendance){
+  currentNotifications=[];
+
+  expiringMembers.forEach(member=>{
+    const days=daysUntil(member.endDate);
+    currentNotifications.push({
+      type:"expiry",
+      title:"Membership Expiring",
+      text:`${member.name||"Member"} ki membership ${days} din mein expire ho rahi hai.`,
+      link:"members.html",
+      button:"View Members →"
+    });
+  });
+
+  const pending=fees.filter(
+    f=>String(f.status).toLowerCase()!=="paid"
+  );
+
+  const pendingAmount=pending.reduce(
+    (sum,f)=>sum+Number(f.amount||0),0
+  );
+
+  if(pending.length){
+    currentNotifications.push({
+      type:"fees",
+      title:"Pending Fees",
+      text:`${pending.length} fee pending hai. Total pending amount ${money(pendingAmount)} hai.`,
+      link:"fees.html",
+      button:"View Fees →"
+    });
+  }
+
+  if(todayAttendance.length===0){
+    currentNotifications.push({
+      type:"attendance",
+      title:"No Attendance Yet",
+      text:"Aaj abhi tak koi attendance check-in record nahi mila.",
+      link:"attendance.html",
+      button:"Open Attendance →"
+    });
+  }
+
+  renderNotifications();
+}
+
+function renderNotifications(){
+  notificationsList.innerHTML="";
+  badge.textContent=currentNotifications.length;
+
+  currentNotifications.forEach(item=>{
+    const div=document.createElement("div");
+    div.className="notice "+(item.type==="fees"?"red":"");
+
+    let emoji="🟠";
+    if(item.type==="fees") emoji="🔴";
+    if(item.type==="attendance") emoji="📊";
+
+    div.innerHTML=`
+      <h3>${emoji} ${item.title}</h3>
+      <p>${item.text}</p>
+      <button data-link="${item.link}">${item.button}</button>
+    `;
+    notificationsList.appendChild(div);
+  });
+
+  notificationsList.querySelectorAll("button[data-link]").forEach(btn=>{
+    btn.addEventListener("click",()=>{
+      window.location.href=btn.dataset.link;
+    });
+  });
+}
+
+bellBtn.addEventListener("click",()=>{
+  notificationPanel.classList.toggle("show");
+});
+
+document.addEventListener("click",event=>{
+  if(!notificationPanel.contains(event.target) && !bellBtn.contains(event.target)){
+    notificationPanel.classList.remove("show");
+  }
+});
+
+async function prepareFCM(){
+  try{
+    if(!("Notification" in window) || !("serviceWorker" in navigator)){
+      permissionText.textContent="Is browser me web notifications supported nahi hain.";
+      enablePushBtn.style.display="none";
+      return;
+    }
+
+    const registration=await navigator.serviceWorker.register(
+      "./firebase-messaging-sw.js"
+    );
+
+    messaging=getMessaging(getApp());
+
+    if(Notification.permission==="granted"){
+      await registerFCMToken(registration);
+    }else{
+      permissionText.textContent=
+        "Phone push notifications enable karne ke liye button dabao.";
+    }
+  }catch(error){
+    console.error("FCM setup error:",error);
+    permissionText.textContent="FCM setup complete nahi ho paya.";
+  }
+}
+
+async function registerFCMToken(registration){
+  try{
+    const token=await getToken(messaging,{
+      vapidKey:VAPID_KEY,
+      serviceWorkerRegistration:registration
+    });
+
+    if(token){
+      console.log("RUANI FCM TOKEN:",token);
+      permissionText.textContent="✅ Phone notifications enabled.";
+      enablePushBtn.textContent="✅ Notifications Enabled";
+      enablePushBtn.disabled=true;
+      localStorage.setItem("ruani_fcm_enabled","true");
+    }else{
+      permissionText.textContent="FCM token nahi mila.";
+    }
+  }catch(error){
+    console.error("FCM token error:",error);
+    permissionText.textContent="Notification permission/token error.";
+  }
+}
+
+enablePushBtn.addEventListener("click",async()=>{
+  try{
+    if(Notification.permission==="denied"){
+      alert("Notifications browser settings me blocked hain. Chrome site settings se Notifications → Allow karo.");
+      return;
+    }
+
+    const permission=await Notification.requestPermission();
+
+    if(permission!=="granted"){
+      permissionText.textContent="Notification permission allow nahi hui.";
+      return;
+    }
+
+    const registration=await navigator.serviceWorker.register(
+      "./firebase-messaging-sw.js"
+    );
+
+    if(!messaging) messaging=getMessaging(getApp());
+
+    await registerFCMToken(registration);
+    showToast("🔔 RUANI phone notifications enabled!");
+  }catch(error){
+    console.error("Enable push error:",error);
+    showToast("Notification enable nahi ho payi.");
+  }
+});
+
+function setupForegroundMessages(){
+  try{
+    if(!messaging) messaging=getMessaging(getApp());
+
+    onMessage(messaging,payload=>{
+      console.log("RUANI foreground message:",payload);
+
+      const title=payload?.notification?.title||"RUANI Alert";
+      const body=payload?.notification?.body||"New notification received.";
+
+      showToast(`🔔 ${title}: ${body}`);
+
+      if(Notification.permission==="granted"){
+        new Notification(title,{
+          body:body,
+          icon:"/icon-192.png"
+        });
+      }
+    });
+  }catch(error){
+    console.error("Foreground FCM error:",error);
+  }
+}
+
+document.getElementById("logoutBtn").addEventListener("click",async()=>{
+  await signOut(auth);
+  window.location.href="login.html";
+});
+
+setTimeout(setupForegroundMessages,1500);
+</script>
+</body>
+</html>

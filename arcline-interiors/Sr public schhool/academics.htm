@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Academics | S.R. Public School Orai</title>
+
+<meta name="description"
+content="Explore the academic approach and learning journey at S.R. Public School Orai.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+<style>
+:root{
+    --navy:#071735;
+    --navy2:#0d2450;
+    --green:#159a6c;
+    --green2:#20b57d;
+    --gold:#e6b85c;
+    --white:#fff;
+    --light:#f6f8f6;
+    --text:#172238;
+    --muted:#687286;
+    --border:#e4e9e5;
+    --shadow:0 20px 60px rgba(7,23,53,.12);
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+    font-family:"DM Sans",sans-serif;
+    color:var(--text);
+    background:#fff;
+    overflow-x:hidden;
+}
+
+a{
+    text-decoration:none;
+    color:inherit;
+}
+
+img{
+    width:100%;
+    display:block;
+}
+
+/* ================= HEADER ================= */
+
+.header{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    z-index:1000;
+    background:rgba(255,255,255,.95);
+    backdrop-filter:blur(18px);
+    border-bottom:1px solid rgba(0,0,0,.06);
+    transition:.3s;
+}
+
+.header.scrolled{
+    box-shadow:0 10px 35px rgba(0,0,0,.08);
+}
+
+.nav{
+    max-width:1200px;
+    height:82px;
+    padding:0 24px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+}
+
+.logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.logo-mark{
+    width:46px;
+    height:46px;
+    border-radius:14px;
+    background:linear-gradient(135deg,var(--green),var(--navy));
+    display:grid;
+    place-items:center;
+    color:#fff;
+    font-weight:800;
+    font-size:16px;
+    box-shadow:0 8px 25px rgba(21,154,108,.25);
+}
+
+.logo-text{
+    line-height:1.05;
+}
+
+.logo-text strong{
+    display:block;
+    font-size:16px;
+    color:var(--navy);
+    letter-spacing:.4px;
+}
+
+.logo-text span{
+    display:block;
+    margin-top:5px;
+    font-size:10px;
+    letter-spacing:1.5px;
+    font-weight:800;
+    color:var(--green);
+}
+
+.nav-links{
+    display:flex;
+    align-items:center;
+    gap:27px;
+}
+
+.nav-links a{
+    color:#465064;
+    font-size:13px;
+    font-weight:600;
+    transition:.25s;
+}
+
+.nav-links a:hover,
+.nav-links a.active{
+    color:var(--green);
+}
+
+.nav-links .nav-btn{
+    color:#fff;
+    background:var(--navy);
+    padding:13px 19px;
+    border-radius:50px;
+}
+
+.nav-links .nav-btn:hover{
+    color:#fff;
+    background:var(--green);
+}
+
+.menu-btn{
+    display:none;
+    width:45px;
+    height:45px;
+    border:0;
+    border-radius:12px;
+    background:var(--navy);
+    color:#fff;
+    font-size:22px;
+    cursor:pointer;
+}
+
+/* ================= MOBILE MENU ================= */
+
+.mobile-menu{
+    position:fixed;
+    top:82px;
+    left:0;
+    width:100%;
+    padding:18px 22px 25px;
+    background:#fff;
+    box-shadow:0 20px 40px rgba(0,0,0,.12);
+    transform:translateY(-130%);
+    transition:.35s ease;
+    z-index:999;
+}
+
+.mobile-menu.open{
+    transform:translateY(0);
+}
+
+.mobile-menu a{
+    display:block;
+    padding:15px 5px;
+    border-bottom:1px solid var(--border);
+    color:var(--navy);
+    font-weight:600;
+}
+
+.mobile-menu .mobile-admission{
+    margin-top:15px;
+    text-align:center;
+    border:0;
+    background:var(--green);
+    color:#fff;
+    border-radius:12px;
+}
+
+/* ================= HERO ================= */
+
+.hero{
+    min-height:555px;
+    padding:145px 24px 80px;
+    position:relative;
+    overflow:hidden;
+    background:
+        radial-gradient(circle at 85% 15%,rgba(21,154,108,.2),transparent 30%),
+        linear-gradient(135deg,#071735,#0d2450);
+    color:#fff;
+}
+
+.hero::before{
+    content:"";
+    position:absolute;
+    width:520px;
+    height:520px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:50%;
+    right:-210px;
+    top:-190px;
+}
+
+.hero::after{
+    content:"";
+    position:absolute;
+    width:330px;
+    height:330px;
+    border:1px solid rgba(255,255,255,.06);
+    border-radius:50%;
+    left:-180px;
+    bottom:-200px;
+}
+
+.hero-inner{
+    max-width:1120px;
+    margin:auto;
+    position:relative;
+    z-index:2;
+}
+
+.breadcrumb{
+    display:flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:27px;
+    color:rgba(255,255,255,.6);
+    font-size:12px;
+}
+
+.breadcrumb a{
+    color:#aee8d1;
+}
+
+.hero h1{
+    max-width:850px;
+    font-family:"Playfair Display",serif;
+    font-size:clamp(45px,7vw,78px);
+    line-height:1.02;
+    letter-spacing:-2px;
+}
+
+.hero h1 span{
+    color:#70d7ae;
+}
+
+.hero-description{
+    max-width:680px;
+    margin-top:25px;
+    color:rgba(255,255,255,.75);
+    font-size:17px;
+    line-height:1.8;
+}
+
+.hero-line{
+    width:75px;
+    height:4px;
+    margin-top:30px;
+    border-radius:20px;
+    background:var(--gold);
+}
+
+/* ================= GENERAL ================= */
+
+.section{
+    padding:100px 24px;
+}
+
+.container{
+    max-width:1120px;
+    margin:auto;
+}
+
+.eyebrow{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    margin-bottom:15px;
+    color:var(--green);
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1.7px;
+    text-transform:uppercase;
+}
+
+.eyebrow::before{
+    content:"";
+    width:25px;
+    height:2px;
+    background:var(--green);
+}
+
+.section-title{
+    color:var(--navy);
+    font-family:"Playfair Display",serif;
+    font-size:clamp(35px,5vw,55px);
+    line-height:1.12;
+    letter-spacing:-1px;
+}
+
+.section-intro{
+    max-width:680px;
+    margin-top:18px;
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.85;
+}
+
+/* ================= ACADEMIC INTRO ================= */
+
+.academic-intro{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:70px;
+    align-items:center;
+}
+
+.intro-image{
+    height:480px;
+    border-radius:30px;
+    overflow:hidden;
+    box-shadow:var(--shadow);
+    position:relative;
+}
+
+.intro-image img{
+    height:100%;
+    object-fit:cover;
+}
+
+.image-overlay{
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top,rgba(7,23,53,.6),transparent 55%);
+}
+
+.image-label{
+    position:absolute;
+    left:25px;
+    bottom:25px;
+    padding:13px 18px;
+    border:1px solid rgba(255,255,255,.25);
+    background:rgba(7,23,53,.55);
+    backdrop-filter:blur(12px);
+    border-radius:50px;
+    color:#fff;
+    font-size:12px;
+    font-weight:700;
+}
+
+.intro-copy p{
+    color:var(--muted);
+    font-size:15px;
+    line-height:1.85;
+    margin-top:18px;
+}
+
+.academic-points{
+    margin-top:27px;
+    display:grid;
+    gap:13px;
+}
+
+.point{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    font-size:13px;
+    font-weight:700;
+    color:#344055;
+}
+
+.point-icon{
+    width:23px;
+    height:23px;
+    flex:none;
+    display:grid;
+    place-items:center;
+    border-radius:50%;
+    background:#e5f7f0;
+    color:var(--green);
+    font-size:12px;
+}
+
+/* ================= LEVELS ================= */
+
+.levels{
+    background:var(--light);
+}
+
+.level-grid{
+    margin-top:50px;
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.level-card{
+    min-height:285px;
+    padding:30px 25px;
+    background:#fff;
+    border:1px solid var(--border);
+    border-radius:24px;
+    transition:.3s;
+    position:relative;
+    overflow:hidden;
+}
+
+.level-card::after{
+    content:"";
+    position:absolute;
+    width:100px;
+    height:100px;
+    right:-40px;
+    bottom:-45px;
+    border-radius:50%;
+    background:#e8f7f1;
+}
+
+.level-card:hover{
+    transform:translateY(-8px);
+    box-shadow:var(--shadow);
+}
+
+.level-number{
+    color:var(--green);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.level-icon{
+    width:50px;
+    height:50px;
+    margin:24px 0 22px;
+    border-radius:15px;
+    display:grid;
+    place-items:center;
+    background:#edf8f4;
+    color:var(--green);
+    font-size:21px;
+}
+
+.level-card h3{
+    color:var(--navy);
+    font-size:18px;
+    margin-bottom:11px;
+}
+
+.level-card p{
+    position:relative;
+    z-index:2;
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.75;
+}
+
+/* ================= LEARNING ================= */
+
+.learning-grid{
+    margin-top:50px;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.learning-card{
+    padding:34px 28px;
+    border-radius:24px;
+    background:var(--navy);
+    color:#fff;
+    transition:.3s;
+}
+
+.learning-card:nth-child(2){
+    background:#e9f7f1;
+    color:var(--navy);
+}
+
+.learning-card:nth-child(3){
+    background:#f5f0e5;
+    color:var(--navy);
+}
+
+.learning-card:hover{
+    transform:translateY(-7px);
+}
+
+.learning-icon{
+    width:50px;
+    height:50px;
+    border-radius:15px;
+    display:grid;
+    place-items:center;
+    margin-bottom:25px;
+    background:rgba(255,255,255,.1);
+    font-size:20px;
+}
+
+.learning-card:nth-child(2) .learning-icon,
+.learning-card:nth-child(3) .learning-icon{
+    background:#fff;
+}
+
+.learning-card h3{
+    font-family:"Playfair Display",serif;
+    font-size:25px;
+    margin-bottom:13px;
+}
+
+.learning-card p{
+    font-size:13px;
+    line-height:1.8;
+    opacity:.75;
+}
+
+/* ================= ACADEMIC SUPPORT ================= */
+
+.support{
+    background:var(--light);
+}
+
+.support-grid{
+    margin-top:50px;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.support-card{
+    background:#fff;
+    padding:30px;
+    border:1px solid var(--border);
+    border-radius:23px;
+    display:flex;
+    gap:20px;
+    transition:.3s;
+}
+
+.support-card:hover{
+    transform:translateY(-5px);
+    box-shadow:0 18px 40px rgba(7,23,53,.08);
+}
+
+.support-icon{
+    width:52px;
+    height:52px;
+    flex:none;
+    display:grid;
+    place-items:center;
+    border-radius:16px;
+    background:#e7f7f1;
+    color:var(--green);
+    font-size:21px;
+}
+
+.support-card h3{
+    color:var(--navy);
+    font-size:17px;
+    margin-bottom:8px;
+}
+
+.support-card p{
+    color:var(--muted);
+    font-size:13px;
+    line-height:1.7;
+}
+
+/* ================= CTA ================= */
+
+.cta{
+    padding:90px 24px;
+    background:
+        radial-gradient(circle at 90% 30%,rgba(32,181,125,.25),transparent 28%),
+        var(--navy);
+    color:#fff;
+}
+
+.cta-inner{
+    max-width:1000px;
+    margin:auto;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:35px;
+}
+
+.cta h2{
+    font-family:"Playfair Display",serif;
+    font-size:clamp(35px,5vw,52px);
+    line-height:1.15;
+}
+
+.cta p{
+    max-width:570px;
+    margin-top:13px;
+    color:rgba(255,255,255,.67);
+    line-height:1.7;
+}
+
+.cta-buttons{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+
+.btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    padding:15px 23px;
+    border-radius:50px;
+    font-size:13px;
+    font-weight:800;
+    transition:.3s;
+}
+
+.btn-green{
+    background:var(--green);
+    color:#fff;
+}
+
+.btn-green:hover{
+    background:var(--green2);
+    transform:translateY(-2px);
+}
+
+.btn-white{
+    background:#fff;
+    color:var(--navy);
+}
+
+.btn-white:hover{
+    transform:translateY(-2px);
+}
+
+/* ================= FOOTER ================= */
+
+.footer{
+    background:#041126;
+    color:#fff;
+    padding:70px 24px 25px;
+}
+
+.footer-grid{
+    max-width:1120px;
+    margin:auto;
+    display:grid;
+    grid-template-columns:1.5fr 1fr 1fr 1fr;
+    gap:50px;
+}
+
+.footer-logo{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:20px;
+}
+
+.footer-logo .logo-mark{
+    background:linear-gradient(135deg,var(--green),#0b4b42);
+}
+
+.footer-logo strong{
+    display:block;
+    font-size:15px;
+}
+
+.footer-logo span{
+    display:block;
+    color:#6dd5ad;
+    font-size:9px;
+    letter-spacing:1.5px;
+    margin-top:3px;
+}
+
+.footer-about{
+    max-width:350px;
+    color:rgba(255,255,255,.55);
+    font-size:13px;
+    line-height:1.8;
+}
+
+.footer h4{
+    margin-bottom:18px;
+    font-size:13px;
+}
+
+.footer-links{
+    display:grid;
+    gap:11px;
+}
+
+.footer-links a{
+    color:rgba(255,255,255,.55);
+    font-size:12px;
+    transition:.2s;
+}
+
+.footer-links a:hover{
+    color:#6dd5ad;
+}
+
+.footer-contact{
+    display:grid;
+    gap:13px;
+}
+
+.footer-contact div{
+    color:rgba(255,255,255,.55);
+    font-size:12px;
+    line-height:1.6;
+}
+
+.footer-bottom{
+    max-width:1120px;
+    margin:50px auto 0;
+    padding-top:22px;
+    border-top:1px solid rgba(255,255,255,.08);
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+    color:rgba(255,255,255,.4);
+    font-size:11px;
+}
+
+/* ================= FLOAT BUTTONS ================= */
+
+.float-actions{
+    position:fixed;
+    right:18px;
+    bottom:20px;
+    z-index:900;
+    display:grid;
+    gap:10px;
+}
+
+.float-btn{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    color:#fff;
+    font-size:19px;
+    box-shadow:0 12px 30px rgba(0,0,0,.2);
+    transition:.3s;
+}
+
+.float-btn:hover{
+    transform:scale(1.08);
+}
+
+.whatsapp{
+    background:#20b86b;
+}
+
+.call{
+    background:var(--navy);
+}
+
+/* ================= REVEAL ================= */
+
+.reveal{
+    opacity:0;
+    transform:translateY(30px);
+    transition:opacity .8s ease,transform .8s ease;
+}
+
+.reveal.show{
+    opacity:1;
+    transform:translateY(0);
+}
+
+/* ================= TABLET ================= */
+
+@media(max-width:950px){
+
+    .nav-links{
+        display:none;
+    }
+
+    .menu-btn{
+        display:block;
+    }
+
+    .academic-intro{
+        grid-template-columns:1fr;
+        gap:50px;
+    }
+
+    .level-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .learning-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .cta-inner{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+
+/* ================= MOBILE ================= */
+
+@media(max-width:600px){
+
+    .nav{
+        height:72px;
+        padding:0 17px;
+    }
+
+    .logo-mark{
+        width:40px;
+        height:40px;
+        border-radius:12px;
+        font-size:14px;
+    }
+
+    .logo-text strong{
+        font-size:13px;
+    }
+
+    .logo-text span{
+        font-size:8px;
+    }
+
+    .mobile-menu{
+        top:72px;
+    }
+
+    .hero{
+        min-height:auto;
+        padding:125px 20px 65px;
+    }
+
+    .hero h1{
+        font-size:44px;
+        letter-spacing:-1.5px;
+    }
+
+    .hero-description{
+        font-size:14px;
+        line-height:1.75;
+    }
+
+    .section{
+        padding:72px 20px;
+    }
+
+    .section-title{
+        font-size:36px;
+    }
+
+    .intro-image{
+        height:330px;
+        border-radius:22px;
+    }
+
+    .level-grid{
+        grid-template-columns:1fr;
+        gap:14px;
+    }
+
+    .level-card{
+        min-height:auto;
+    }
+
+    .learning-grid{
+        grid-template-columns:1fr;
+    }
+
+    .support-grid{
+        grid-template-columns:1fr;
+    }
+
+    .support-card{
+        padding:24px;
+    }
+
+    .cta{
+        padding:70px 20px;
+    }
+
+    .cta-buttons{
+        width:100%;
+    }
+
+    .btn{
+        width:100%;
+    }
+
+    .footer{
+        padding:55px 20px 20px;
+    }
+
+    .footer-grid{
+        grid-template-columns:1fr;
+        gap:35px;
+    }
+
+    .footer-bottom{
+        flex-direction:column;
+        margin-top:35px;
+    }
+
+    .float-actions{
+        right:14px;
+        bottom:15px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+
+<header class="header" id="header">
+
+<nav class="nav">
+
+<a href="index.html" class="logo">
+
+<div class="logo-mark">SR</div>
+
+<div class="logo-text">
+<strong>S.R. PUBLIC SCHOOL</strong>
+<span>ORAI • JALAUN</span>
+</div>
+
+</a>
+
+<div class="nav-links">
+
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="academics.html" class="active">Academics</a>
+<a href="facilities.html">Facilities</a>
+<a href="gallery.html">Gallery</a>
+<a href="contact.html">Contact</a>
+
+<a href="admission.html" class="nav-btn">
+Admission Enquiry
+</a>
+
+</div>
+
+<button class="menu-btn" id="menuBtn">☰</button>
+
+</nav>
+
+</header>
+
+
+<!-- ================= MOBILE MENU ================= -->
+
+<div class="mobile-menu" id="mobileMenu">
+
+<a href="index.html">Home</a>
+<a href="about.html">About</a>
+<a href="academics.html">Academics</a>
+<a href="facilities.html">Facilities</a>
+<a href="gallery.html">Gallery</a>
+<a href="contact.html">Contact</a>
+
+<a href="admission.html" class="mobile-admission">
+Admission Enquiry
+</a>
+
+</div>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+<div class="hero-inner reveal">
+
+<div class="breadcrumb">
+<a href="index.html">Home</a>
+<span>›</span>
+<span>Academics</span>
+</div>
+
+<h1>
+Learning that builds <span>strong foundations.</span>
+</h1>
+
+<p class="hero-description">
+An academic environment designed to encourage curiosity,
+understanding, discipline and confidence at every stage
+of a student's learning journey.
+</p>
+
+<div class="hero-line"></div>
+
+</div>
+
+</section>
+
+
+<!-- ================= INTRO ================= -->
+
+<section class="section">
+
+<div class="container academic-intro">
+
+<div class="intro-image reveal">
+
+<img
+src="https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=1100&q=85"
+alt="Students learning in classroom"
+>
+
+<div class="image-overlay"></div>
+
+<div class="image-label">
+Learning • Growth • Excellence
+</div>
+
+</div>
+
+
+<div class="intro-copy reveal">
+
+<div class="eyebrow">Academic Approach</div>
+
+<h2 class="section-title">
+Education with purpose.
+</h2>
+
+<p>
+At S.R. Public School, academic learning is viewed as an
+important foundation for a student's wider development.
+</p>
+
+<p>
+The aim is to help students understand concepts, develop
+good learning habits and build the confidence to approach
+new challenges.
+</p>
+
+<div class="academic-points">
+
+<div class="point">
+<div class="point-icon">✓</div>
+<span>Concept-focused learning</span>
+</div>
+
+<div class="point">
+<div class="point-icon">✓</div>
+<span>Academic discipline and consistency</span>
+</div>
+
+<div class="point">
+<div class="point-icon">✓</div>
+<span>Development of confidence and curiosity</span>
+</div>
+
+<div class="point">
+<div class="point-icon">✓</div>
+<span>Preparation for future learning</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= ACADEMIC LEVELS ================= -->
+
+<section class="section levels">
+
+<div class="container">
+
+<div class="reveal">
+
+<div class="eyebrow">Learning Journey</div>
+
+<h2 class="section-title">
+A journey that grows with the student.
+</h2>
+
+<p class="section-intro">
+Different stages of education require different learning
+needs. The academic journey can progressively build
+knowledge, confidence and independence.
+</p>
+
+</div>
+
+
+<div class="level-grid">
+
+<div class="level-card reveal">
+
+<div class="level-number">01 — FOUNDATION</div>
+
+<div class="level-icon">✦</div>
+
+<h3>Early Learning</h3>
+
+<p>
+A supportive beginning where curiosity, communication,
+basic concepts and positive learning habits can develop.
+</p>
+
+</div>
+
+
+<div class="level-card reveal">
+
+<div class="level-number">02 — PRIMARY</div>
+
+<div class="level-icon">◇</div>
+
+<h3>Primary Years</h3>
+
+<p>
+Students strengthen their fundamentals while developing
+reading, reasoning, communication and creative thinking.
+</p>
+
+</div>
+
+
+<div class="level-card reveal">
+
+<div class="level-number">03 — MIDDLE</div>
+
+<div class="level-icon">◎</div>
+
+<h3>Middle School</h3>
+
+<p>
+Learning becomes broader and deeper, encouraging students
+to understand concepts and develop independent thinking.
+</p>
+
+</div>
+
+
+<div class="level-card reveal">
+
+<div class="level-number">04 — SENIOR</div>
+
+<div class="level-icon">◆</div>
+
+<h3>Secondary & Senior Secondary</h3>
+
+<p>
+A more focused academic stage supporting subject knowledge,
+discipline and preparation for future academic pathways.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= LEARNING PILLARS ================= -->
+
+<section class="section">
+
+<div class="container">
+
+<div class="reveal">
+
+<div class="eyebrow">Learning Priorities</div>
+
+<h2 class="section-title">
+What meaningful learning should build.
+</h2>
+
+</div>
+
+
+<div class="learning-grid">
+
+<div class="learning-card reveal">
+
+<div class="learning-icon">01</div>
+
+<h3>Understanding</h3>
+
+<p>
+Learning becomes stronger when students understand
+concepts rather than simply memorising information.
+</p>
+
+</div>
+
+
+<div class="learning-card reveal">
+
+<div class="learning-icon">02</div>
+
+<h3>Confidence</h3>
+
+<p>
+Students should feel encouraged to ask questions,
+express ideas and participate actively in learning.
+</p>
+
+</div>
+
+
+<div class="learning-card reveal">
+
+<div class="learning-icon">03</div>
+
+<h3>Responsibility</h3>
+
+<p>
+Good academic habits can help students become more
+disciplined, organised and responsible learners.
+</p>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= SUPPORT ================= -->
+
+<section class="section support">
+
+<div class="container">
+
+<div class="reveal">
+
+<div class="eyebrow">Beyond The Classroom</div>
+
+<h2 class="section-title">
+A broader learning experience.
+</h2>
+
+<p class="section-intro">
+Academic development works best when students have
+opportunities to learn, explore and develop different
+skills alongside classroom education.
+</p>
+
+</div>
+
+
+<div class="support-grid">
+
+<div class="support-card reveal">
+
+<div class="support-icon">▣</div>
+
+<div>
+<h3>Practical Learning</h3>
+
+<p>
+Opportunities to connect classroom concepts with
+practical understanding and exploration.
+</p>
+</div>
+
+</div>
+
+
+<div class="support-card reveal">
+
+<div class="support-icon">✦</div>
+
+<div>
+<h3>Creative Development</h3>
+
+<p>
+Encouraging students to explore creativity, ideas and
+different ways of expressing themselves.
+</p>
+</div>
+
+</div>
+
+
+<div class="support-card reveal">
+
+<div class="support-icon">◎</div>
+
+<div>
+<h3>Communication</h3>
+
+<p>
+Building confidence in communication, participation
+and collaboration.
+</p>
+</div>
+
+</div>
+
+
+<div class="support-card reveal">
+
+<div class="support-icon">◆</div>
+
+<div>
+<h3>Future Preparation</h3>
+
+<p>
+Helping students develop habits and skills that support
+their next stage of education.
+</p>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= CTA ================= -->
+
+<section class="cta">
+
+<div class="cta-inner">
+
+<div class="reveal">
+
+<h2>
+Ready to explore the school?
+</h2>
+
+<p>
+Learn more about S.R. Public School, explore its facilities
+and get information about admissions.
+</p>
+
+</div>
+
+<div class="cta-buttons reveal">
+
+<a href="admission.html" class="btn btn-green">
+Admission Enquiry →
+</a>
+
+<a href="facilities.html" class="btn btn-white">
+Explore Facilities
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+<div class="footer-grid">
+
+<div>
+
+<div class="footer-logo">
+
+<div class="logo-mark">SR</div>
+
+<div>
+<strong>S.R. PUBLIC SCHOOL</strong>
+<span>ORAI • JALAUN</span>
+</div>
+
+</div>
+
+<p class="footer-about">
+A CBSE-affiliated senior secondary school focused on
+learning, development and preparing students for the
+future.
+</p>
+
+</div>
+
+
+<div>
+
+<h4>Explore</h4>
+
+<div class="footer-links">
+
+<a href="index.html">Home</a>
+<a href="about.html">About Us</a>
+<a href="academics.html">Academics</a>
+<a href="facilities.html">Facilities</a>
+
+</div>
+
+</div>
+
+
+<div>
+
+<h4>Quick Links</h4>
+
+<div class="footer-links">
+
+<a href="gallery.html">Photo Gallery</a>
+<a href="admission.html">Online Admission</a>
+<a href="contact.html">Contact Us</a>
+
+<a
+href="https://saras.cbse.gov.in/"
+target="_blank">
+CBSE
+</a>
+
+</div>
+
+</div>
+
+
+<div>
+
+<h4>Contact</h4>
+
+<div class="footer-contact">
+
+<div>
+📍 Kalpi Road, Orai, Jalaun, Uttar Pradesh – 285001
+</div>
+
+<div>
+📞 +91 9415592020
+</div>
+
+<div>
+📞 +91 9616572024
+</div>
+
+<div>
+✉️ srpublicschool.orai@gmail.com
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="footer-bottom">
+
+<span>
+© <span id="year"></span> S.R. Public School. All Rights Reserved.
+</span>
+
+<span>
+Orai • Jalaun • Uttar Pradesh
+</span>
+
+</div>
+
+</footer>
+
+
+<!-- ================= FLOATING BUTTONS ================= -->
+
+<div class="float-actions">
+
+<a
+href="https://wa.me/919415592020"
+target="_blank"
+class="float-btn whatsapp"
+aria-label="WhatsApp">
+☘
+</a>
+
+<a
+href="tel:+919415592020"
+class="float-btn call"
+aria-label="Call">
+☎
+</a>
+
+</div>
+
+
+<script>
+
+/* HEADER */
+
+const header = document.getElementById("header");
+
+window.addEventListener("scroll", () => {
+
+    if(window.scrollY > 20){
+        header.classList.add("scrolled");
+    }else{
+        header.classList.remove("scrolled");
+    }
+
+});
+
+
+/* MOBILE MENU */
+
+const menuBtn = document.getElementById("menuBtn");
+const mobileMenu = document.getElementById("mobileMenu");
+
+menuBtn.addEventListener("click", () => {
+
+    mobileMenu.classList.toggle("open");
+
+    if(mobileMenu.classList.contains("open")){
+        menuBtn.innerHTML = "✕";
+    }else{
+        menuBtn.innerHTML = "☰";
+    }
+
+});
+
+
+/* CLOSE MENU */
+
+document.querySelectorAll(".mobile-menu a").forEach(link => {
+
+    link.addEventListener("click", () => {
+
+        mobileMenu.classList.remove("open");
+        menuBtn.innerHTML = "☰";
+
+    });
+
+});
+
+
+/* REVEAL ANIMATION */
+
+const observer = new IntersectionObserver((entries) => {
+
+    entries.forEach(entry => {
+
+        if(entry.isIntersecting){
+
+            entry.target.classList.add("show");
+
+            observer.unobserve(entry.target);
+
+        }
+
+    });
+
+},{
+    threshold:.12
+});
+
+
+document.querySelectorAll(".reveal").forEach(element => {
+
+    observer.observe(element);
+
+});
+
+
+/* YEAR */
+
+document.getElementById("year").textContent =
+new Date().getFullYear();
+
+</script>
+
+</body>
+</html>

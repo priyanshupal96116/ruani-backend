@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RUANI AI Manager</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{min-height:100vh;font-family:Arial,sans-serif;color:#fff;background:radial-gradient(circle at top left,#202743 0%,#0b0d15 45%,#030405 100%)}
+.header{height:72px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;border-bottom:1px solid rgba(255,255,255,.08);background:rgba(5,7,12,.65);backdrop-filter:blur(18px)}
+.logo{font-size:25px;font-weight:900;letter-spacing:3px}.logo span{color:#7c5cff}
+.header-right{display:flex;align-items:center;gap:14px}.dashboard-btn{color:#aaa;text-decoration:none;font-size:13px}.dashboard-btn:hover{color:#fff}
+.status{padding:8px 13px;border-radius:30px;font-size:12px;color:#ffd35a;background:rgba(255,210,80,.08);border:1px solid rgba(255,210,80,.18)}
+.container{width:min(1000px,94%);margin:25px auto 40px}
+.hero,.panel,.chat{border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.035);box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.hero{padding:28px;border-radius:25px;background:linear-gradient(135deg,rgba(124,92,255,.18),rgba(255,255,255,.035))}
+.hero h1{font-size:31px;margin-bottom:10px}.hero p{color:#aeb5c5;line-height:1.6;font-size:15px}
+.notification-btn{margin-top:18px;padding:13px 18px;border:none;border-radius:14px;background:linear-gradient(135deg,#7c5cff,#5436d4);color:white;font-weight:800;cursor:pointer;font-size:14px}
+.notification-btn:hover{opacity:.9}.notification-btn:disabled{opacity:.6;cursor:not-allowed}
+.suggestions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.suggestion{border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.05);color:#ddd;padding:10px 14px;border-radius:20px;cursor:pointer}
+.suggestion:hover{background:rgba(124,92,255,.2);border-color:rgba(124,92,255,.4)}
+.alerts{margin-top:18px}.section-title{font-size:18px;font-weight:800;margin-bottom:12px}
+.alert-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px}
+.alert{padding:16px;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045)}
+.alert .icon{font-size:22px}.alert h3{font-size:14px;margin:7px 0 5px}.alert p{font-size:13px;color:#aeb5c5;line-height:1.5}.alert strong{color:#fff}.alert.ok{border-color:rgba(60,220,140,.18)}
+.summary{margin-top:18px;display:grid;grid-template-columns:repeat(5,1fr);gap:10px}
+.stat{padding:16px;border-radius:18px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.045)}
+.stat .num{font-size:24px;font-weight:900;margin-top:7px}.stat .label{font-size:11px;color:#858c9b}
+.chat{margin-top:18px;min-height:430px;max-height:600px;overflow-y:auto;padding:20px;border-radius:25px}
+.message{display:flex;margin-bottom:18px}.message.user{justify-content:flex-end}
+.bubble{max-width:82%;padding:14px 17px;border-radius:18px;line-height:1.6;font-size:15px;white-space:normal}
+.message.ai .bubble{background:rgba(255,255,255,.07);color:#e9ebf2;border-top-left-radius:6px}
+.message.ai .bubble strong{color:#fff;font-weight:800}
+.message.user .bubble{background:linear-gradient(135deg,#7c5cff,#5436d4);color:#fff;border-top-right-radius:6px}
+.input-area{display:flex;gap:10px;margin-top:15px}
+.question{flex:1;min-width:0;padding:16px;border-radius:16px;outline:none;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.06);color:#fff;font-size:15px}
+.question:focus{border-color:#7c5cff}.question::placeholder{color:#777d8d}
+.send-btn{border:none;padding:0 24px;border-radius:16px;background:linear-gradient(135deg,#7c5cff,#5436d4);color:#fff;font-weight:bold;cursor:pointer}
+.send-btn:disabled{opacity:.5;cursor:not-allowed}.info{margin-top:12px;text-align:center;color:#6f7685;font-size:12px}
+.error-box{display:none;margin-top:18px;padding:15px;border-radius:16px;color:#ffaaaa;background:rgba(255,50,50,.1);border:1px solid rgba(255,70,70,.25);font-size:13px;line-height:1.6}
+@media(max-width:700px){.summary{grid-template-columns:repeat(2,1fr)}.alert-grid{grid-template-columns:1fr}.dashboard-btn{display:none}.hero{padding:22px}.hero h1{font-size:25px}.chat{min-height:380px;padding:14px}.bubble{max-width:90%}.input-area{gap:7px}.send-btn{padding:0 17px}}
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo">R<span>U</span>ANI</div>
+  <div class="header-right">
+    <a href="dashboard.html" class="dashboard-btn">← Dashboard</a>
+    <div id="status" class="status">🟡 Connecting...</div>
+  </div>
+</header>
+
+<main class="container">
+<section class="hero">
+  <h1>🤖 RUANI AI Manager</h1>
+  <p>AI gym manager jo tumhare real Firebase data se daily situation, fees, attendance aur important alerts samajhta hai.</p>
+
+  <button id="enableNotifications" class="notification-btn">🔔 Enable Phone Notifications</button>
+
+  <div class="suggestions">
+    <button class="suggestion" data-question="Aaj gym ki complete situation kya hai?">Today's Summary</button>
+    <button class="suggestion" data-question="Kaunsi important alerts hain?">Smart Alerts</button>
+    <button class="suggestion" data-question="Kitni fees pending hai?">Pending Fees</button>
+    <button class="suggestion" data-question="Aaj kitni attendance hui hai?">Today's Attendance</button>
+  </div>
+</section>
+
+<div id="summaryArea" class="summary"></div>
+
+<section class="alerts">
+  <div class="section-title">🔔 Smart Alerts</div>
+  <div id="alertGrid" class="alert-grid"></div>
+</section>
+
+<div id="errorBox" class="error-box"></div>
+
+<section id="chat" class="chat">
+  <div class="message ai">
+    <div class="bubble">
+      👋 Hello! Main <strong>RUANI</strong> hoon, tumhara AI Gym Manager.
+      <br><br>
+      Main tumhare real gym data se daily summary aur smart alerts bhi bata sakta hoon.
+      <br><br>
+      Example: <strong>"Aaj gym ki complete situation kya hai?"</strong>
+    </div>
+  </div>
+</section>
+
+<div class="input-area">
+  <input id="question" class="question" type="text" placeholder="Ask RUANI anything..." autocomplete="off">
+  <button id="sendBtn" class="send-btn">Send</button>
+</div>
+
+<div class="info">RUANI uses your Firebase gym data to answer.</div>
+</main>
+
+<script type="module">
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { collection,getDocs,query,where } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import { initializeAppCheck,ReCaptchaEnterpriseProvider } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app-check.js";
+import { getAI,getGenerativeModel,GoogleAIBackend } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-ai.js";
+import { getMessaging,getToken,onMessage } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js";
+import { auth,db } from "./firebase.js";
+
+const status=document.getElementById("status");
+const errorBox=document.getElementById("errorBox");
+const chat=document.getElementById("chat");
+const question=document.getElementById("question");
+const sendBtn=document.getElementById("sendBtn");
+const summaryArea=document.getElementById("summaryArea");
+const alertGrid=document.getElementById("alertGrid");
+const enableNotifications=document.getElementById("enableNotifications");
+
+let currentUser=null;
+let aiModel=null;
+let members=[];
+let fees=[];
+let attendance=[];
+let ruaniReady=false;
+let messaging=null;
+
+/*
+ IMPORTANT:
+ Paste your PUBLIC reCAPTCHA Enterprise SITE KEY here.
+ Do NOT paste the secret key.
+*/
+const RECAPTCHA_SITE_KEY="6LcxLt4tAAAAAHwZKl1vRPKxmisSX5gYCOJolcMN";
+
+const VAPID_KEY="BJxsp0OCrNP9yeyAhTBklmGXHGxeCegk4YGEFoFgwpEINRDJTdfWECKSV_CR3XmgSp1fq2K_7NazPGd9gWzgu90";
+
+function showError(message){
+  errorBox.style.display="block";
+  errorBox.textContent="⚠️ "+message;
+}
+function hideError(){
+  errorBox.style.display="none";
+  errorBox.textContent="";
+}
+function getToday(){
+  return new Date().toISOString().split("T")[0];
+}
+function daysUntil(date){
+  if(!date)return 9999;
+  const a=new Date();
+  a.setHours(0,0,0,0);
+  const b=new Date(date+"T00:00:00");
+  return Math.ceil((b-a)/86400000);
+}
+function money(n){
+  return "₹"+Number(n||0).toLocaleString("en-IN");
+}
+
+function buildSummary(){
+  const today=getToday();
+  let active=0,expired=0,expiring=0;
+
+  members.forEach(m=>{
+    const d=daysUntil(m.endDate);
+    if(m.status==="expired"||d<0) expired++;
+    else{
+      active++;
+      if(d>=0&&d<=7)expiring++;
+    }
+  });
+
+  let pendingAmount=0,paidAmount=0,pendingCount=0,paidCount=0;
+  fees.forEach(f=>{
+    const amount=Number(f.amount)||0;
+    const s=String(f.status||"").toLowerCase();
+    if(s==="pending"){pendingAmount+=amount;pendingCount++}
+    if(s==="paid"){paidAmount+=amount;paidCount++}
+  });
+
+  const todayAttendance=attendance.filter(a=>a.date===today);
+  const attendedIds=new Set(todayAttendance.map(a=>a.memberId));
+
+  return {
+    totalMembers:members.length,
+    activeMembers:active,
+    expiredMembers:expired,
+    expiringSoon:expiring,
+    todayAttendance:todayAttendance.length,
+    totalAttendance:attendance.length,
+    pendingFees:pendingAmount,
+    paidFees:paidAmount,
+    pendingFeeRecords:pendingCount,
+    paidFeeRecords:paidCount,
+    notAttendedToday:members.filter(m=>!attendedIds.has(m.id)&&m.status!=="expired").length
+  };
+}
+
+function renderSummary(){
+  const s=buildSummary();
+  summaryArea.innerHTML=[
+    ["👥",s.totalMembers,"Members"],
+    ["✅",s.activeMembers,"Active"],
+    ["📅",s.todayAttendance,"Today Attendance"],
+    ["💰",money(s.pendingFees),"Pending Fees"],
+    ["⏰",s.expiringSoon,"Expiring ≤ 7 Days"]
+  ].map(x=>`
+    <div class="stat">
+      <div>${x[0]}</div>
+      <div class="num">${x[1]}</div>
+      <div class="label">${x[2]}</div>
+    </div>
+  `).join("");
+}
+
+function renderAlerts(){
+  const today=getToday();
+  const s=buildSummary();
+
+  const pending=fees.filter(f=>String(f.status||"").toLowerCase()==="pending");
+  const expiring=members.filter(m=>{
+    const d=daysUntil(m.endDate);
+    return d>=0&&d<=7;
+  });
+  const stale=members.filter(m=>
+    m.status!=="expired" &&
+    !attendance.some(a=>a.memberId===m.id&&a.date===today)
+  );
+
+  let html="";
+
+  if(pending.length){
+    html+=`
+      <div class="alert">
+        <div class="icon">💰</div>
+        <h3>Pending Fees</h3>
+        <p><strong>${money(s.pendingFees)}</strong> pending across <strong>${s.pendingFeeRecords}</strong> fee record(s).</p>
+      </div>`;
+  }
+
+  if(expiring.length){
+    html+=`
+      <div class="alert">
+        <div class="icon">⏰</div>
+        <h3>Membership Expiry</h3>
+        <p><strong>${expiring.length}</strong> membership(s) expire within 7 days.
+        ${expiring.slice(0,3).map(m=>m.name||"Member").join(", ")}</p>
+      </div>`;
+  }
+
+  if(stale.length){
+    html+=`
+      <div class="alert">
+        <div class="icon">💤</div>
+        <h3>Today's Attendance</h3>
+        <p><strong>${stale.length}</strong> active member(s) have not checked in today.</p>
+      </div>`;
+  }
+
+  if(!html){
+    html=`
+      <div class="alert ok">
+        <div class="icon">✅</div>
+        <h3>All Clear</h3>
+        <p>No major alerts detected from the current Firebase data.</p>
+      </div>`;
+  }
+
+  alertGrid.innerHTML=html;
+}
+
+async function loadMembers(){
+  const q=query(collection(db,"members"),where("ownerId","==",currentUser.uid));
+  const snap=await getDocs(q);
+  members=[];
+  snap.forEach(d=>members.push({id:d.id,...d.data()}));
+}
+async function loadFees(){
+  const q=query(collection(db,"fees"),where("ownerId","==",currentUser.uid));
+  const snap=await getDocs(q);
+  fees=[];
+  snap.forEach(d=>fees.push({id:d.id,...d.data()}));
+}
+async function loadAttendance(){
+  const q=query(collection(db,"attendance"),where("ownerId","==",currentUser.uid));
+  const snap=await getDocs(q);
+  attendance=[];
+  snap.forEach(d=>attendance.push({id:d.id,...d.data()}));
+}
+
+function formatAIText(text){
+  let safe=String(text)
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+  safe=safe.replace(/\*\*(.+?)\*\*/g,"<strong>$1</strong>");
+  safe=safe.replace(/^\s*\*\s+/gm,"• ");
+  safe=safe.replace(/^\s*-\s+/gm,"• ");
+  safe=safe.replace(/^\s*#+\s+(.+)$/gm,"<strong>$1</strong>");
+  return safe.replace(/\n/g,"<br>");
+}
+
+function addUserMessage(t){
+  const m=document.createElement("div");
+  m.className="message user";
+  const b=document.createElement("div");
+  b.className="bubble";
+  b.textContent=t;
+  m.appendChild(b);
+  chat.appendChild(m);
+  scrollChat();
+}
+function addAIMessage(t){
+  const m=document.createElement("div");
+  m.className="message ai";
+  const b=document.createElement("div");
+  b.className="bubble";
+  b.innerHTML=formatAIText(t);
+  m.appendChild(b);
+  chat.appendChild(m);
+  scrollChat();
+}
+function scrollChat(){
+  chat.scrollTop=chat.scrollHeight;
+}
+
+function createPrompt(userQuestion){
+  const summary=buildSummary();
+  return `
+You are RUANI, an AI manager for a gym owner.
+
+Answer using ONLY the Firebase data provided below.
+Never invent data.
+If unavailable, say so clearly.
+
+Match the owner's language:
+Hindi/Hinglish questions get Hindi/Hinglish answers.
+English questions get English answers.
+
+Be concise for simple questions.
+Use ₹ for money.
+Give exact counts when possible.
+Use **bold** for important numbers, names and headings.
+Use bullets for lists.
+
+GYM SUMMARY:
+${JSON.stringify(summary,null,2)}
+
+MEMBERS:
+${JSON.stringify(members,null,2)}
+
+FEES:
+${JSON.stringify(fees,null,2)}
+
+ATTENDANCE:
+${JSON.stringify(attendance,null,2)}
+
+SMART ALERT DATA:
+- Pending fees: ${money(summary.pendingFees)}
+- Expiring within 7 days: ${summary.expiringSoon}
+- Active members not checked in today: ${summary.notAttendedToday}
+- Today's attendance: ${summary.todayAttendance}
+
+OWNER QUESTION:
+${userQuestion}
+
+Answer now as a helpful gym manager.
+`;
+}
+
+async function enablePhoneNotifications(){
+  if(!currentUser){alert("Pehle login karo.");return}
+  if(!("Notification" in window)){alert("Is browser mein notifications supported nahi hain.");return}
+  if(!("serviceWorker" in navigator)){alert("Is browser mein Service Worker supported nahi hai.");return}
+
+  try{
+    enableNotifications.disabled=true;
+    enableNotifications.textContent="🔄 Enabling...";
+
+    const registration=await navigator.serviceWorker.register("./firebase-messaging-sw.js");
+    await navigator.serviceWorker.ready;
+
+    const permission=await Notification.requestPermission();
+
+    if(permission!=="granted"){
+      enableNotifications.disabled=false;
+      enableNotifications.textContent="🔔 Enable Phone Notifications";
+      alert("Notification permission allow karo.");
+      return;
+    }
+
+    messaging=getMessaging(auth.app);
+
+    const token=await getToken(messaging,{
+      vapidKey:VAPID_KEY,
+      serviceWorkerRegistration:registration
+    });
+
+    if(!token)throw new Error("FCM token nahi mila.");
+
+    console.log("RUANI FCM TOKEN:",token);
+    localStorage.setItem("ruani_fcm_token",token);
+
+    enableNotifications.textContent="✅ Notifications Enabled";
+    enableNotifications.style.background="linear-gradient(135deg,#16a34a,#15803d)";
+    alert("🔔 RUANI phone notifications enabled!");
+
+    onMessage(messaging,payload=>{
+      const title=payload.notification?.title||"RUANI";
+      const body=payload.notification?.body||"RUANI mein naya alert hai.";
+      if(Notification.permission==="granted"){
+        new Notification(title,{body});
+      }
+    });
+  }catch(error){
+    console.error("FCM ERROR:",error);
+    enableNotifications.disabled=false;
+    enableNotifications.textContent="🔔 Enable Phone Notifications";
+    showError("Phone notification setup error: "+(error.message||error));
+  }
+}
+
+async function startRUANI(){
+  try{
+    hideError();
+    status.textContent="🟡 Starting RUANI...";
+
+    if(!RECAPTCHA_SITE_KEY || RECAPTCHA_SITE_KEY==="YOUR_RECAPTCHA_SITE_KEY"){
+      throw new Error("RUANI App Check site key missing hai.");
+    }
+
+    initializeAppCheck(auth.app,{
+      provider:new ReCaptchaEnterpriseProvider(RECAPTCHA_SITE_KEY),
+      isTokenAutoRefreshEnabled:true
+    });
+
+    console.log("App Check initialized");
+
+    const ai=getAI(auth.app,{
+  backend:new GoogleAIBackend()
+});
+
+console.log("Firebase AI Logic initialized:", ai);
+
+    aiModel=getGenerativeModel(ai,{
+      model:"gemini-3.8-flash"
+    });
+
+    console.log("Gemini model initialized");
+
+    await Promise.all([
+      loadMembers(),
+      loadFees(),
+      loadAttendance()
+    ]);
+
+    console.log("Members loaded:",members.length);
+    console.log("Fees loaded:",fees.length);
+    console.log("Attendance loaded:",attendance.length);
+
+    renderSummary();
+    renderAlerts();
+
+    ruaniReady=true;
+    status.textContent="🟢 RUANI Ready";
+    console.log("RUANI READY");
+  }catch(e){
+    console.error("RUANI START ERROR:",e);
+    ruaniReady=false;
+    status.textContent="🔴 Error";
+    showError(e.message||"RUANI start nahi ho paya.");
+  }
+}
+
+onAuthStateChanged(auth,async user=>{
+  if(!user){
+    window.location.href="login.html";
+    return;
+  }
+  currentUser=user;
+  await startRUANI();
+});
+
+async function askRUANI(text){
+  const q=text.trim();
+  if(!q)return;
+
+  if(!ruaniReady){
+    addAIMessage("RUANI abhi ready nahi hai. Thoda wait karo.");
+    return;
+  }
+
+  hideError();
+  addUserMessage(q);
+  question.value="";
+  sendBtn.disabled=true;
+  sendBtn.textContent="Thinking...";
+
+  try{
+    const result=await aiModel.generateContent(createPrompt(q));
+    const answer=result.response.text();
+    addAIMessage(answer||"Mujhe iska answer nahi mila.");
+  }catch(e){
+    console.error("GEMINI ERROR:",e);
+    showError(e.message||"Unknown AI error");
+    addAIMessage("Sorry, RUANI abhi answer nahi de pa raha.");
+  }
+
+  sendBtn.disabled=false;
+  sendBtn.textContent="Send";
+}
+
+sendBtn.addEventListener("click",()=>askRUANI(question.value));
+
+question.addEventListener("keydown",e=>{
+  if(e.key==="Enter"){
+    e.preventDefault();
+    askRUANI(question.value);
+  }
+});
+
+document.querySelectorAll(".suggestion").forEach(button=>{
+  button.addEventListener("click",()=>{
+    question.value=button.dataset.question;
+    askRUANI(question.value);
+  });
+});
+
+enableNotifications.addEventListener("click",enablePhoneNotifications);
+</script>
+</body>
+</html>

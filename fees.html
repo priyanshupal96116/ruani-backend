@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>RUANI — Fees</title>
+
+<style>
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  font-family:Arial,sans-serif;
+}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at top left,#24135c,transparent 35%),
+    radial-gradient(circle at bottom right,#082d4f,transparent 35%),
+    #070914;
+  color:#fff;
+}
+
+.container{
+  max-width:1100px;
+  margin:auto;
+  padding:20px;
+}
+
+.topbar{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:22px;
+}
+
+.logo{
+  font-size:28px;
+  font-weight:900;
+  letter-spacing:2px;
+}
+
+.logo span{
+  color:#8b5cf6;
+}
+
+.back{
+  color:#fff;
+  text-decoration:none;
+  padding:10px 15px;
+  border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+}
+
+.card{
+  background:rgba(255,255,255,.055);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:20px;
+  padding:20px;
+  margin-bottom:18px;
+  backdrop-filter:blur(16px);
+}
+
+h1{
+  font-size:28px;
+  margin-bottom:7px;
+}
+
+.sub{
+  color:#9ca3b5;
+  margin-bottom:20px;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+}
+
+.stat{
+  padding:18px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+}
+
+.stat small{
+  color:#9ca3b5;
+}
+
+.stat b{
+  display:block;
+  font-size:26px;
+  margin-top:8px;
+}
+
+.form{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+}
+
+input,
+select{
+  width:100%;
+  padding:14px;
+  border-radius:12px;
+  border:1px solid rgba(255,255,255,.1);
+  background:#101322;
+  color:#fff;
+  outline:none;
+}
+
+.add-btn{
+  grid-column:1/-1;
+  padding:14px;
+  border-radius:12px;
+  background:#7c5cff;
+  color:#fff;
+  font-weight:bold;
+  border:0;
+  cursor:pointer;
+}
+
+.search{
+  margin-bottom:15px;
+}
+
+.fee{
+  padding:18px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.07);
+  margin-bottom:12px;
+}
+
+.fee-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+}
+
+.fee h3{
+  font-size:18px;
+}
+
+.badge{
+  padding:6px 10px;
+  border-radius:20px;
+  font-size:11px;
+  font-weight:bold;
+}
+
+.paid{
+  color:#71f0a6;
+  background:rgba(30,220,120,.12);
+}
+
+.pending{
+  color:#ffcc70;
+  background:rgba(255,190,50,.12);
+}
+
+.info{
+  color:#aeb4c7;
+  font-size:13px;
+  line-height:1.8;
+  margin-top:10px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:13px;
+  flex-wrap:wrap;
+}
+
+.action{
+  padding:9px 12px;
+  border-radius:10px;
+  color:#fff;
+  background:rgba(124,92,255,.15);
+  border:1px solid rgba(124,92,255,.25);
+  cursor:pointer;
+}
+
+.delete{
+  color:#ff8888;
+  background:rgba(255,60,60,.1);
+  border-color:rgba(255,60,60,.2);
+}
+
+.empty{
+  text-align:center;
+  color:#9299ad;
+  padding:30px;
+}
+
+@media(max-width:600px){
+
+  .container{
+    padding:14px;
+  }
+
+  .stats{
+    grid-template-columns:1fr 1fr;
+  }
+
+  .form{
+    grid-template-columns:1fr;
+  }
+
+  .add-btn{
+    grid-column:auto;
+  }
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+  <div class="topbar">
+
+    <div class="logo">
+      RUANI<span>.</span>
+    </div>
+
+    <a href="dashboard.html" class="back">
+      ← Dashboard
+    </a>
+
+  </div>
+
+
+  <div class="card">
+
+    <h1>Fees Management</h1>
+
+    <p class="sub">
+      Manage member payments and pending fees
+    </p>
+
+
+    <div class="stats">
+
+      <div class="stat">
+        <small>Total Fees</small>
+        <b id="totalFees">₹0</b>
+      </div>
+
+      <div class="stat">
+        <small>Paid</small>
+        <b id="paidFees">₹0</b>
+      </div>
+
+      <div class="stat">
+        <small>Pending</small>
+        <b id="pendingFees">₹0</b>
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <h2 style="margin-bottom:15px">
+      Add Fee
+    </h2>
+
+    <div class="form">
+
+      <select id="memberSelect">
+
+        <option value="">
+          Select Member
+        </option>
+
+      </select>
+
+
+      <input
+        id="amount"
+        type="number"
+        placeholder="Amount ₹"
+      >
+
+
+      <input
+        id="dueDate"
+        type="date"
+      >
+
+
+      <select id="status">
+
+        <option value="pending">
+          Pending
+        </option>
+
+        <option value="paid">
+          Paid
+        </option>
+
+      </select>
+
+
+      <button
+        class="add-btn"
+        id="addFeeBtn"
+      >
+        + Add Fee
+      </button>
+
+    </div>
+
+  </div>
+
+
+  <div class="card">
+
+    <input
+      class="search"
+      id="search"
+      type="search"
+      placeholder="Search member or fee..."
+    >
+
+
+    <div id="feesList">
+
+      <div class="empty">
+        Loading fees...
+      </div>
+
+    </div>
+
+  </div>
+
+</div>
+
+
+<script type="module">
+
+import { auth, db } from "./firebase.js";
+
+
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
+
+import {
+  collection,
+  addDoc,
+  getDocs,
+  query,
+  where,
+  updateDoc,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+
+let currentUser = null;
+
+let members = [];
+
+let fees = [];
+
+
+const memberSelect =
+  document.getElementById("memberSelect");
+
+const amountInput =
+  document.getElementById("amount");
+
+const dueDateInput =
+  document.getElementById("dueDate");
+
+const statusInput =
+  document.getElementById("status");
+
+const searchInput =
+  document.getElementById("search");
+
+const feesList =
+  document.getElementById("feesList");
+
+
+function escapeHtml(value){
+
+  return String(value || "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&#039;");
+
+}
+
+
+function loadMemberOptions(){
+
+  memberSelect.innerHTML =
+    `<option value="">
+      Select Member
+    </option>`;
+
+
+  members.forEach(member => {
+
+    const option =
+      document.createElement("option");
+
+    option.value = member.id;
+
+    option.textContent =
+      member.name || "Member";
+
+    memberSelect.appendChild(option);
+
+  });
+
+}
+
+
+function render(){
+
+  const term =
+    searchInput.value
+      .trim()
+      .toLowerCase();
+
+
+  let filtered = fees.filter(fee => {
+
+    return String(fee.memberName || "")
+      .toLowerCase()
+      .includes(term);
+
+  });
+
+
+  let total = 0;
+  let paid = 0;
+  let pending = 0;
+
+
+  fees.forEach(fee => {
+
+    const amount =
+      Number(fee.amount) || 0;
+
+    total += amount;
+
+
+    if(
+      String(fee.status)
+        .toLowerCase() === "paid"
+    ){
+
+      paid += amount;
+
+    }else{
+
+      pending += amount;
+
+    }
+
+  });
+
+
+  document.getElementById(
+    "totalFees"
+  ).textContent =
+    "₹" + total.toLocaleString("en-IN");
+
+
+  document.getElementById(
+    "paidFees"
+  ).textContent =
+    "₹" + paid.toLocaleString("en-IN");
+
+
+  document.getElementById(
+    "pendingFees"
+  ).textContent =
+    "₹" + pending.toLocaleString("en-IN");
+
+
+  if(filtered.length === 0){
+
+    feesList.innerHTML =
+      `<div class="empty">
+        No fees found.
+      </div>`;
+
+    return;
+
+  }
+
+
+  filtered.sort((a,b) =>
+    String(b.createdAt || "")
+      .localeCompare(
+        String(a.createdAt || "")
+      )
+  );
+
+
+  feesList.innerHTML =
+    filtered.map(fee => {
+
+      const isPaid =
+        String(fee.status)
+          .toLowerCase() === "paid";
+
+
+      return `
+
+        <div class="fee">
+
+          <div class="fee-top">
+
+            <h3>
+              ${escapeHtml(
+                fee.memberName || "Member"
+              )}
+            </h3>
+
+            <span class="badge ${
+              isPaid ? "paid" : "pending"
+            }">
+
+              ${
+                isPaid
+                ? "PAID"
+                : "PENDING"
+              }
+
+            </span>
+
+          </div>
+
+
+          <div class="info">
+
+            💰 Amount:
+            ₹${Number(fee.amount || 0)
+              .toLocaleString("en-IN")}<br>
+
+            📅 Due:
+            ${escapeHtml(fee.dueDate || "-")}<br>
+
+            ${
+              fee.paidAt
+              ? "✅ Paid: " +
+                new Date(fee.paidAt)
+                  .toLocaleDateString("en-IN")
+              : ""
+            }
+
+          </div>
+
+
+          <div class="actions">
+
+            ${
+              !isPaid
+              ? `
+                <button
+                  class="action"
+                  onclick="markPaid('${fee.id}')"
+                >
+                  ✓ Mark Paid
+                </button>
+              `
+              : ""
+            }
+
+
+            <button
+              class="action delete"
+              onclick="deleteFee('${fee.id}')"
+            >
+              Delete
+            </button>
+
+          </div>
+
+        </div>
+
+      `;
+
+    }).join("");
+
+}
+
+
+async function loadMembers(){
+
+  const q =
+    query(
+      collection(db,"members"),
+      where(
+        "ownerId",
+        "==",
+        currentUser.uid
+      )
+    );
+
+
+  const snap =
+    await getDocs(q);
+
+
+  members = [];
+
+
+  snap.forEach(item => {
+
+    members.push({
+      id:item.id,
+      ...item.data()
+    });
+
+  });
+
+
+  loadMemberOptions();
+
+}
+
+
+async function loadFees(){
+
+  const q =
+    query(
+      collection(db,"fees"),
+      where(
+        "ownerId",
+        "==",
+        currentUser.uid
+      )
+    );
+
+
+  const snap =
+    await getDocs(q);
+
+
+  fees = [];
+
+
+  snap.forEach(item => {
+
+    fees.push({
+      id:item.id,
+      ...item.data()
+    });
+
+  });
+
+
+  render();
+
+}
+
+
+document.getElementById(
+  "addFeeBtn"
+).addEventListener(
+  "click",
+  async()=>{
+
+    const memberId =
+      memberSelect.value;
+
+    const amount =
+      Number(amountInput.value);
+
+    const dueDate =
+      dueDateInput.value;
+
+    const status =
+      statusInput.value;
+
+
+    if(!memberId){
+
+      alert("Member select karo.");
+
+      return;
+
+    }
+
+
+    if(!amount || amount <= 0){
+
+      alert("Valid amount enter karo.");
+
+      return;
+
+    }
+
+
+    if(!dueDate){
+
+      alert("Due date select karo.");
+
+      return;
+
+    }
+
+
+    const member =
+      members.find(
+        m => m.id === memberId
+      );
+
+
+    if(!member){
+
+      alert("Member nahi mila.");
+
+      return;
+
+    }
+
+
+    try{
+
+      await addDoc(
+        collection(db,"fees"),
+        {
+          ownerId:currentUser.uid,
+          memberId:member.id,
+          memberName:
+            member.name || "Member",
+          amount:amount,
+          dueDate:dueDate,
+          status:status,
+          createdAt:
+            new Date().toISOString()
+        }
+      );
+
+
+      memberSelect.value="";
+      amountInput.value="";
+      dueDateInput.value="";
+      statusInput.value="pending";
+
+
+      await loadFees();
+
+
+      alert("Fee added successfully!");
+
+    }catch(error){
+
+      console.error(error);
+
+      alert(
+        "Fee add nahi hui: " +
+        error.message
+      );
+
+    }
+
+  }
+);
+
+
+window.markPaid =
+async function(id){
+
+  try{
+
+    await updateDoc(
+      doc(db,"fees",id),
+      {
+        status:"paid",
+        paidAt:
+          new Date().toISOString()
+      }
+    );
+
+
+    await loadFees();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Fee update nahi hui: " +
+      error.message
+    );
+
+  }
+
+};
+
+
+window.deleteFee =
+async function(id){
+
+  const ok =
+    confirm(
+      "Is fee record ko delete karna hai?"
+    );
+
+
+  if(!ok) return;
+
+
+  try{
+
+    await deleteDoc(
+      doc(db,"fees",id)
+    );
+
+
+    fees =
+      fees.filter(
+        fee => fee.id !== id
+      );
+
+
+    render();
+
+
+  }catch(error){
+
+    console.error(error);
+
+    alert(
+      "Delete failed: " +
+      error.message
+    );
+
+  }
+
+};
+
+
+searchInput.addEventListener(
+  "input",
+  render
+);
+
+
+onAuthStateChanged(
+  auth,
+  async user => {
+
+    if(!user){
+
+      window.location.href =
+        "login.html";
+
+      return;
+
+    }
+
+
+    currentUser = user;
+
+
+    try{
+
+      await loadMembers();
+
+      await loadFees();
+
+    }catch(error){
+
+      console.error(error);
+
+      feesList.innerHTML =
+        `<div class="empty">
+          Data load nahi hua.
+        </div>`;
+
+    }
+
+  }
+);
+
+</script>
+
+</body>
+</html>
