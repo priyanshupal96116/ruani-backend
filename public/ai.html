@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
@@ -26,10 +27,6 @@
       min-height: 100vh;
     }
 
-    /* =========================
-       HEADER
-    ========================= */
-
     header {
       height: 72px;
       display: flex;
@@ -48,7 +45,12 @@
       font-size: 25px;
       font-weight: 900;
       letter-spacing: 3px;
-      background: linear-gradient(90deg, #ffffff, #9b6cff, #6f5cff);
+      background: linear-gradient(
+        90deg,
+        #ffffff,
+        #9b6cff,
+        #6f5cff
+      );
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
@@ -79,10 +81,6 @@
       background: #39e879;
       box-shadow: 0 0 12px #39e879;
     }
-
-    /* =========================
-       MAIN
-    ========================= */
 
     .container {
       width: min(1180px, 94%);
@@ -130,10 +128,15 @@
     .notify-btn {
       padding: 12px 18px;
       border-radius: 12px;
-      background: linear-gradient(135deg, #7347ff, #5b39d9);
+      background: linear-gradient(
+        135deg,
+        #7347ff,
+        #5b39d9
+      );
       color: #fff;
       font-weight: 700;
       box-shadow: 0 8px 25px rgba(111, 76, 255, 0.25);
+      transition: 0.2s ease;
     }
 
     .notify-btn:hover {
@@ -154,11 +157,13 @@
       border-radius: 25px;
       padding: 9px 14px;
       font-size: 12px;
+      transition: 0.2s ease;
     }
 
-    /* =========================
-       STATS
-    ========================= */
+    .quick-btn:hover {
+      background: rgba(255,255,255,0.10);
+      transform: translateY(-1px);
+    }
 
     .stats {
       display: grid;
@@ -191,10 +196,6 @@
       font-size: 11px;
       margin-top: 3px;
     }
-
-    /* =========================
-       ALERTS
-    ========================= */
 
     .section-title {
       font-size: 17px;
@@ -232,10 +233,6 @@
       color: #9ea2b1;
     }
 
-    /* =========================
-       ERROR
-    ========================= */
-
     .error-box {
       display: none;
       padding: 13px 15px;
@@ -245,11 +242,8 @@
       color: #ffb4bc;
       font-size: 12px;
       margin-bottom: 15px;
+      line-height: 1.5;
     }
-
-    /* =========================
-       CHAT
-    ========================= */
 
     .chat-box {
       min-height: 360px;
@@ -259,6 +253,7 @@
       border-radius: 22px 22px 0 0;
       background: rgba(14, 16, 25, 0.9);
       border: 1px solid rgba(255,255,255,0.08);
+      scroll-behavior: smooth;
     }
 
     .message {
@@ -268,7 +263,8 @@
       border-radius: 16px;
       line-height: 1.6;
       font-size: 13px;
-      white-space: pre-wrap;
+      word-wrap: break-word;
+      overflow-wrap: anywhere;
     }
 
     .assistant {
@@ -278,7 +274,11 @@
     }
 
     .user {
-      background: linear-gradient(135deg, #7449ff, #5b42e5);
+      background: linear-gradient(
+        135deg,
+        #7449ff,
+        #5b42e5
+      );
       margin-left: auto;
       border-bottom-right-radius: 5px;
     }
@@ -288,9 +288,10 @@
       font-style: italic;
     }
 
-    /* =========================
-       INPUT
-    ========================= */
+    .message strong {
+      color: #ffffff;
+      font-weight: 800;
+    }
 
     .input-area {
       display: flex;
@@ -315,6 +316,11 @@
       font-size: 14px;
     }
 
+    #questionInput:focus {
+      border-color: #8b6cff;
+      box-shadow: 0 0 0 2px rgba(123,76,255,0.12);
+    }
+
     #questionInput::placeholder {
       color: #686d7e;
     }
@@ -322,9 +328,18 @@
     #sendBtn {
       width: 70px;
       border-radius: 13px;
-      background: linear-gradient(135deg, #7b4cff, #5e3ae5);
+      background: linear-gradient(
+        135deg,
+        #7b4cff,
+        #5e3ae5
+      );
       color: white;
       font-weight: 700;
+      transition: 0.2s ease;
+    }
+
+    #sendBtn:hover:not(:disabled) {
+      transform: translateY(-1px);
     }
 
     #sendBtn:disabled {
@@ -339,11 +354,42 @@
       padding-top: 9px;
     }
 
-    /* =========================
-       MOBILE
-    ========================= */
+    .loading-dots {
+      display: inline-flex;
+      gap: 4px;
+      margin-left: 5px;
+    }
+
+    .loading-dots span {
+      width: 5px;
+      height: 5px;
+      border-radius: 50%;
+      background: #9d8cff;
+      animation: typingDot 1.2s infinite ease-in-out;
+    }
+
+    .loading-dots span:nth-child(2) {
+      animation-delay: 0.15s;
+    }
+
+    .loading-dots span:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes typingDot {
+      0%, 60%, 100% {
+        opacity: 0.25;
+        transform: translateY(0);
+      }
+
+      30% {
+        opacity: 1;
+        transform: translateY(-3px);
+      }
+    }
 
     @media (max-width: 800px) {
+
       .stats {
         grid-template-columns: repeat(2, 1fr);
       }
@@ -362,6 +408,7 @@
     }
 
     @media (max-width: 520px) {
+
       header {
         padding: 0 14px;
         height: 62px;
@@ -369,6 +416,10 @@
 
       .logo {
         font-size: 21px;
+      }
+
+      .back-btn {
+        font-size: 11px;
       }
 
       .ready {
@@ -400,6 +451,12 @@
 
       .chat-box {
         min-height: 390px;
+        padding: 13px;
+      }
+
+      .message {
+        font-size: 13px;
+        padding: 13px 14px;
       }
 
       .input-area {
@@ -409,44 +466,58 @@
       #sendBtn {
         width: 62px;
       }
+
+      .notify-btn {
+        width: 100%;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- =========================
-       HEADER
-  ========================= -->
-
   <header>
-    <div class="logo">RUANI</div>
+
+    <div class="logo">
+      RUANI
+    </div>
 
     <div>
-      <a class="back-btn" href="dashboard.html">← Dashboard</a>
+
+      <a
+        class="back-btn"
+        href="dashboard.html"
+      >
+        ← Dashboard
+      </a>
 
       <span class="ready">
+
         <span class="ready-dot"></span>
+
         RUANI Ready
+
       </span>
+
     </div>
+
   </header>
 
-
-  <!-- =========================
-       MAIN
-  ========================= -->
 
   <main class="container">
 
     <section class="hero">
 
-      <h1>🤖 RUANI AI Manager</h1>
+      <h1>
+        👩🏻‍💼 RUANI AI Manager
+      </h1>
 
       <p>
-        AI gym manager jo tumhare real Firebase data se daily situation,
-        fees, attendance aur important alerts samajhta hai.
+        RUANI tumhare real Firebase gym data ko samajhkar
+        members, fees, attendance aur important business alerts
+        ke baare mein smart suggestions deti hai.
       </p>
+
 
       <div class="hero-actions">
 
@@ -459,6 +530,7 @@
         </button>
 
       </div>
+
 
       <div class="quick-buttons">
 
@@ -495,71 +567,132 @@
     </section>
 
 
-    <!-- =========================
-         STATS
-    ========================= -->
-
     <section class="stats">
 
       <div class="stat-card">
-        <div class="stat-icon">👥</div>
-        <div class="stat-value" id="totalMembers">0</div>
-        <div class="stat-label">Members</div>
+
+        <div class="stat-icon">
+          👥
+        </div>
+
+        <div
+          class="stat-value"
+          id="totalMembers"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Members
+        </div>
+
       </div>
 
-      <div class="stat-card">
-        <div class="stat-icon">✅</div>
-        <div class="stat-value" id="activeMembers">0</div>
-        <div class="stat-label">Active</div>
-      </div>
 
       <div class="stat-card">
-        <div class="stat-icon">📅</div>
-        <div class="stat-value" id="todayAttendance">0</div>
-        <div class="stat-label">Today Attendance</div>
+
+        <div class="stat-icon">
+          ✅
+        </div>
+
+        <div
+          class="stat-value"
+          id="activeMembers"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Active
+        </div>
+
       </div>
 
-      <div class="stat-card">
-        <div class="stat-icon">💰</div>
-        <div class="stat-value" id="pendingFees">₹0</div>
-        <div class="stat-label">Pending Fees</div>
-      </div>
 
       <div class="stat-card">
-        <div class="stat-icon">⏰</div>
-        <div class="stat-value" id="expiringMembers">0</div>
-        <div class="stat-label">Expiring ≤ 7 Days</div>
+
+        <div class="stat-icon">
+          📅
+        </div>
+
+        <div
+          class="stat-value"
+          id="todayAttendance"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Today Attendance
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          💰
+        </div>
+
+        <div
+          class="stat-value"
+          id="pendingFees"
+        >
+          ₹0
+        </div>
+
+        <div class="stat-label">
+          Pending Fees
+        </div>
+
+      </div>
+
+
+      <div class="stat-card">
+
+        <div class="stat-icon">
+          ⏰
+        </div>
+
+        <div
+          class="stat-value"
+          id="expiringMembers"
+        >
+          0
+        </div>
+
+        <div class="stat-label">
+          Expiring ≤ 7 Days
+        </div>
+
       </div>
 
     </section>
 
 
-    <!-- =========================
-         SMART ALERTS
-    ========================= -->
+    <h2 class="section-title">
+      🔔 Smart Alerts
+    </h2>
 
-    <h2 class="section-title">🔔 Smart Alerts</h2>
 
-    <section class="alerts" id="alertsContainer">
+    <section
+      class="alerts"
+      id="alertsContainer"
+    >
+
       <div class="alert-card empty-alert">
         RUANI alerts load ho rahe hain...
       </div>
+
     </section>
 
-
-    <!-- =========================
-         ERROR
-    ========================= -->
 
     <div
       class="error-box"
       id="errorBox"
     ></div>
 
-
-    <!-- =========================
-         CHAT
-    ========================= -->
 
     <section>
 
@@ -569,11 +702,26 @@
       >
 
         <div class="message assistant">
-          👋 Hello! Main <b>RUANI</b> hoon, tumhara AI Gym Manager.
 
-          Main tumhare real gym data se daily summary aur smart alerts bhi bata sakta hoon.
+          👋 Hello!
 
-          Example: <b>"Aaj mere gym ki complete situation kya hai?"</b>
+          Main <strong>RUANI</strong> hoon,
+          tumhari AI Gym Business Manager.
+
+          <br><br>
+
+          Main tumhare real gym data ko analyze karke
+          members, fees, attendance aur important actions
+          ke baare mein bata sakti hoon.
+
+          <br><br>
+
+          Example:
+
+          <strong>
+            "Aaj mere gym ki complete situation kya hai?"
+          </strong>
+
         </div>
 
       </div>
@@ -597,6 +745,7 @@
 
       </div>
 
+
       <div class="footer-note">
         RUANI uses your Firebase gym data to answer.
       </div>
@@ -606,15 +755,12 @@
   </main>
 
 
-  <!-- =========================
-       FIREBASE + RUANI SCRIPT
-  ========================= -->
-
   <script type="module">
 
     import {
       onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+
 
     import {
       collection,
@@ -626,11 +772,13 @@
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
+
     import {
       getMessaging,
       getToken,
       isSupported
     } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-messaging.js";
+
 
     import {
       auth,
@@ -642,7 +790,8 @@
        RUANI BACKEND
     ========================================================= */
 
-    const BACKEND_URL = "https://ruani.onrender.com";
+    const BACKEND_URL =
+      "https://ruani.onrender.com";
 
 
     /* =========================================================
@@ -714,6 +863,7 @@
 
       errorBox.textContent =
         "⚠️ " + message;
+
     }
 
 
@@ -722,6 +872,7 @@
       errorBox.style.display = "none";
 
       errorBox.textContent = "";
+
     }
 
 
@@ -733,15 +884,21 @@
 
       const now = new Date();
 
-      const year = now.getFullYear();
+      const year =
+        now.getFullYear();
 
       const month =
-        String(now.getMonth() + 1).padStart(2, "0");
+        String(
+          now.getMonth() + 1
+        ).padStart(2, "0");
 
       const day =
-        String(now.getDate()).padStart(2, "0");
+        String(
+          now.getDate()
+        ).padStart(2, "0");
 
       return `${year}-${month}-${day}`;
+
     }
 
 
@@ -751,6 +908,7 @@
         return null;
       }
 
+
       if (
         typeof value === "string" &&
         /^\d{4}-\d{2}-\d{2}$/.test(value)
@@ -759,7 +917,9 @@
         return new Date(
           value + "T00:00:00"
         );
+
       }
+
 
       if (
         value &&
@@ -767,38 +927,57 @@
       ) {
 
         return value.toDate();
+
       }
+
 
       if (value instanceof Date) {
         return value;
       }
 
+
       return null;
+
     }
 
 
     function daysFromToday(dateValue) {
 
-      const date = parseDate(dateValue);
+      const date =
+        parseDate(dateValue);
 
       if (!date) {
         return Infinity;
       }
 
+
       const today =
         new Date();
 
-      today.setHours(0, 0, 0, 0);
+      today.setHours(
+        0,
+        0,
+        0,
+        0
+      );
+
 
       const target =
         new Date(date);
 
-      target.setHours(0, 0, 0, 0);
+      target.setHours(
+        0,
+        0,
+        0,
+        0
+      );
+
 
       return Math.ceil(
         (target - today) /
         (1000 * 60 * 60 * 24)
       );
+
     }
 
 
@@ -809,6 +988,7 @@
 
       return "₹" +
         number.toLocaleString("en-IN");
+
     }
 
 
@@ -819,71 +999,109 @@
     async function loadGymData() {
 
       if (!currentUser) {
-        throw new Error("User login nahi hai.");
+
+        throw new Error(
+          "User login nahi hai."
+        );
+
       }
+
 
       const ownerId =
         currentUser.uid;
 
 
-      /* -------------------------
-         MEMBERS
-      ------------------------- */
+      /* MEMBERS */
 
       const membersQuery =
         query(
-          collection(db, "members"),
-          where("ownerId", "==", ownerId)
+          collection(
+            db,
+            "members"
+          ),
+          where(
+            "ownerId",
+            "==",
+            ownerId
+          )
         );
 
+
       const membersSnapshot =
-        await getDocs(membersQuery);
+        await getDocs(
+          membersQuery
+        );
+
 
       gymData.members =
-        membersSnapshot.docs.map(docSnap => ({
-          id: docSnap.id,
-          ...docSnap.data()
-        }));
+        membersSnapshot.docs.map(
+          docSnap => ({
+            id: docSnap.id,
+            ...docSnap.data()
+          })
+        );
 
 
-      /* -------------------------
-         FEES
-      ------------------------- */
+      /* FEES */
 
       const feesQuery =
         query(
-          collection(db, "fees"),
-          where("ownerId", "==", ownerId)
+          collection(
+            db,
+            "fees"
+          ),
+          where(
+            "ownerId",
+            "==",
+            ownerId
+          )
         );
 
+
       const feesSnapshot =
-        await getDocs(feesQuery);
+        await getDocs(
+          feesQuery
+        );
+
 
       gymData.fees =
-        feesSnapshot.docs.map(docSnap => ({
-          id: docSnap.id,
-          ...docSnap.data()
-        }));
+        feesSnapshot.docs.map(
+          docSnap => ({
+            id: docSnap.id,
+            ...docSnap.data()
+          })
+        );
 
 
-      /* -------------------------
-         ATTENDANCE
-      ------------------------- */
+      /* ATTENDANCE */
 
       const attendanceQuery =
         query(
-          collection(db, "attendance"),
-          where("ownerId", "==", ownerId)
+          collection(
+            db,
+            "attendance"
+          ),
+          where(
+            "ownerId",
+            "==",
+            ownerId
+          )
         );
 
+
       const attendanceSnapshot =
-        await getDocs(attendanceQuery);
+        await getDocs(
+          attendanceQuery
+        );
+
 
       gymData.attendance =
-        attendanceSnapshot.docs.map(docSnap => ({
-          id: docSnap.id,
-          ...docSnap.data()
-        }));
+        attendanceSnapshot.docs.map(
+          docSnap => ({
+            id: docSnap.id,
+            ...docSnap.data()
+          })
+        );
 
 
       updateDashboard();
@@ -906,61 +1124,97 @@
 
 
       const activeMembers =
-        gymData.members.filter(member => {
+        gymData.members.filter(
+          member => {
 
-          const days =
-            daysFromToday(member.endDate);
+            const days =
+              daysFromToday(
+                member.endDate
+              );
 
-          return days >= 0;
+            return days >= 0;
 
-        });
+          }
+        );
 
 
       const expiringMembers =
-        activeMembers.filter(member => {
+        activeMembers.filter(
+          member => {
 
-          const days =
-            daysFromToday(member.endDate);
+            const days =
+              daysFromToday(
+                member.endDate
+              );
 
-          return days >= 0 && days <= 7;
+            return (
+              days >= 0 &&
+              days <= 7
+            );
 
-        });
+          }
+        );
 
 
       const todayAttendance =
-        gymData.attendance.filter(record => {
+        gymData.attendance.filter(
+          record => {
 
-          return record.date === today;
+            return (
+              record.date === today ||
+              record.attendanceDate === today ||
+              record.day === today
+            );
 
-        });
+          }
+        );
 
 
       const pendingFees =
-        gymData.fees.filter(fee => {
+        gymData.fees.filter(
+          fee => {
 
-          return String(fee.status || "")
-            .toLowerCase() === "pending";
+            return (
+              String(
+                fee.status || ""
+              ).toLowerCase() === "pending"
+            );
 
-        });
+          }
+        );
 
 
       const pendingAmount =
         pendingFees.reduce(
-          (total, fee) =>
-            total + Number(fee.amount || 0),
+          (
+            total,
+            fee
+          ) =>
+            total +
+            Number(
+              fee.amount || 0
+            ),
           0
         );
 
 
       const absentActiveMembers =
-        activeMembers.filter(member => {
+        activeMembers.filter(
+          member => {
 
-          return !todayAttendance.some(
-            attendance =>
-              attendance.memberId === member.id
-          );
+            return !todayAttendance.some(
+              attendance => {
 
-        });
+                return (
+                  attendance.memberId ===
+                  member.id
+                );
+
+              }
+            );
+
+          }
+        );
 
 
       return {
@@ -999,7 +1253,9 @@
 
 
       pendingFeesEl.textContent =
-        formatMoney(data.pendingAmount);
+        formatMoney(
+          data.pendingAmount
+        );
 
 
       expiringMembersEl.textContent =
@@ -1019,19 +1275,23 @@
 
       alertsContainer.innerHTML = "";
 
-
       let alertCount = 0;
 
 
-      /* Pending fees */
+      /* PENDING FEES */
 
-      if (data.pendingAmount > 0) {
+      if (
+        data.pendingAmount > 0
+      ) {
 
         const card =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         card.className =
           "alert-card";
+
 
         card.innerHTML = `
           <div class="alert-title">
@@ -1039,34 +1299,48 @@
           </div>
 
           <div class="alert-text">
-            ${formatMoney(data.pendingAmount)}
+            ${formatMoney(
+              data.pendingAmount
+            )}
             pending across
             ${data.pendingFees.length}
             fee record(s).
           </div>
         `;
 
-        alertsContainer.appendChild(card);
+
+        alertsContainer.appendChild(
+          card
+        );
 
         alertCount++;
 
       }
 
 
-      /* Expiry */
+      /* EXPIRY */
 
-      if (data.expiringMembers.length > 0) {
+      if (
+        data.expiringMembers.length > 0
+      ) {
 
         const names =
           data.expiringMembers
-            .map(member => member.name)
+            .map(
+              member =>
+                member.name || "Member"
+            )
             .join(", ");
 
+
         const card =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         card.className =
           "alert-card";
+
 
         card.innerHTML = `
           <div class="alert-title">
@@ -1080,22 +1354,30 @@
           </div>
         `;
 
-        alertsContainer.appendChild(card);
+
+        alertsContainer.appendChild(
+          card
+        );
 
         alertCount++;
 
       }
 
 
-      /* Attendance */
+      /* ATTENDANCE */
 
-      if (data.absentActiveMembers.length > 0) {
+      if (
+        data.absentActiveMembers.length > 0
+      ) {
 
         const card =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         card.className =
           "alert-card";
+
 
         card.innerHTML = `
           <div class="alert-title">
@@ -1108,27 +1390,38 @@
           </div>
         `;
 
-        alertsContainer.appendChild(card);
+
+        alertsContainer.appendChild(
+          card
+        );
 
         alertCount++;
 
       }
 
 
-      /* No alerts */
+      /* NO ALERTS */
 
-      if (alertCount === 0) {
+      if (
+        alertCount === 0
+      ) {
 
         const card =
-          document.createElement("div");
+          document.createElement(
+            "div"
+          );
 
         card.className =
           "alert-card empty-alert";
 
+
         card.innerHTML =
           "✅ RUANI ko abhi koi major alert nahi mila.";
 
-        alertsContainer.appendChild(card);
+
+        alertsContainer.appendChild(
+          card
+        );
 
       }
 
@@ -1136,13 +1429,12 @@
 
 
     /* =========================================================
-       🔐 SECURE BACKEND REQUEST
-       
-       IMPORTANT:
-       Token is freshly generated every request.
+       SECURE BACKEND REQUEST
     ========================================================= */
 
-    async function askBackend(userQuestion) {
+    async function askBackend(
+      userQuestion
+    ) {
 
       if (!currentUser) {
 
@@ -1153,15 +1445,10 @@
       }
 
 
-      /*
-        IMPORTANT FIX
-
-        Firebase se fresh ID token.
-        true = force refresh.
-      */
-
       const idToken =
-        await currentUser.getIdToken(true);
+        await currentUser.getIdToken(
+          true
+        );
 
 
       if (!idToken) {
@@ -1171,12 +1458,6 @@
         );
 
       }
-
-
-      console.log(
-        "🔐 Firebase token ready:",
-        idToken ? "YES" : "NO"
-      );
 
 
       const response =
@@ -1194,7 +1475,8 @@
             },
 
             body: JSON.stringify({
-              question: userQuestion
+              question:
+                userQuestion
             })
           }
         );
@@ -1228,18 +1510,78 @@
       }
 
 
-      if (!data || !data.success) {
+      if (
+        !data ||
+        !data.success
+      ) {
 
         throw new Error(
           data?.error ||
           data?.answer ||
-          "RUANI answer generate nahi kar paya."
+          "RUANI answer generate nahi kar payi."
         );
 
       }
 
 
       return data.answer;
+
+    }
+
+
+    /* =========================================================
+       SIMPLE MARKDOWN FORMATTER
+       AI ke **bold** text ko clean display karega.
+    ========================================================= */
+
+    function escapeHTML(text) {
+
+      return String(text)
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    function formatAIText(text) {
+
+      let safe =
+        escapeHTML(text);
+
+
+      safe =
+        safe.replace(
+          /\*\*(.*?)\*\*/g,
+          "<strong>$1</strong>"
+        );
+
+
+      safe =
+        safe.replace(
+          /\n/g,
+          "<br>"
+        );
+
+
+      return safe;
 
     }
 
@@ -1254,18 +1596,36 @@
     ) {
 
       const message =
-        document.createElement("div");
+        document.createElement(
+          "div"
+        );
+
 
       message.className =
         `message ${type}`;
 
-      message.textContent =
-        text;
 
-      chatBox.appendChild(message);
+      if (type === "assistant") {
+
+        message.innerHTML =
+          formatAIText(text);
+
+      } else {
+
+        message.textContent =
+          text;
+
+      }
+
+
+      chatBox.appendChild(
+        message
+      );
+
 
       chatBox.scrollTop =
         chatBox.scrollHeight;
+
 
       return message;
 
@@ -1315,10 +1675,14 @@
           "assistant"
         );
 
-      typing.classList.add("typing");
+
+      typing.classList.add(
+        "typing"
+      );
 
 
-      sendBtn.disabled = true;
+      sendBtn.disabled =
+        true;
 
 
       try {
@@ -1353,7 +1717,7 @@
 
 
         addMessage(
-          "Sorry, RUANI abhi answer nahi de pa raha.",
+          "Sorry, RUANI abhi answer nahi de pa rahi. Thodi der baad dobara try karo.",
           "assistant"
         );
 
@@ -1374,22 +1738,29 @@
     ========================================================= */
 
     document
-      .querySelectorAll(".quick-btn")
-      .forEach(button => {
+      .querySelectorAll(
+        ".quick-btn"
+      )
+      .forEach(
+        button => {
 
-        button.addEventListener(
-          "click",
-          () => {
+          button.addEventListener(
+            "click",
+            () => {
 
-            const question =
-              button.dataset.question;
+              const question =
+                button.dataset.question;
 
-            askRUANI(question);
 
-          }
-        );
+              askRUANI(
+                question
+              );
 
-      });
+            }
+          );
+
+        }
+      );
 
 
     /* =========================================================
@@ -1451,7 +1822,9 @@
 
       try {
 
-        if (!("Notification" in window)) {
+        if (
+          !("Notification" in window)
+        ) {
 
           throw new Error(
             "Is browser mein notifications supported nahi hain."
@@ -1462,6 +1835,7 @@
 
         const supported =
           await isSupported();
+
 
         if (!supported) {
 
@@ -1476,7 +1850,9 @@
           await Notification.requestPermission();
 
 
-        if (permission !== "granted") {
+        if (
+          permission !== "granted"
+        ) {
 
           throw new Error(
             "Notification permission allow nahi hui."
@@ -1486,13 +1862,17 @@
 
 
         const messaging =
-          getMessaging(auth.app);
+          getMessaging(
+            auth.app
+          );
 
 
         const registration =
-          await navigator.serviceWorker.register(
-            "./firebase-messaging-sw.js"
-          );
+          await navigator
+            .serviceWorker
+            .register(
+              "./firebase-messaging-sw.js"
+            );
 
 
         const token =
@@ -1661,13 +2041,9 @@
           );
 
 
-          /*
-            Token ko pehle refresh karte hain.
-            Isse /ask ke time stale token issue
-            ke chances kam hote hain.
-          */
-
-          await currentUser.getIdToken(true);
+          await currentUser.getIdToken(
+            true
+          );
 
 
           await loadGymData();
@@ -1686,7 +2062,7 @@
 
           showError(
             error.message ||
-            "RUANI data load nahi kar paya."
+            "RUANI data load nahi kar payi."
           );
 
         }
