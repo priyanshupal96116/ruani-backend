@@ -1,5 +1,5 @@
 // ======================================================
-// RUANI AI + FCM BACKEND
+// RUANI AI 2.0 + FCM BACKEND
 // ======================================================
 
 import express from "express";
@@ -45,11 +45,18 @@ app.use(
   cors({
     origin: true,
     methods: ["GET", "POST", "OPTIONS"],
-    allowedHeaders: ["Content-Type", "Authorization"]
+    allowedHeaders: [
+      "Content-Type",
+      "Authorization"
+    ]
   })
 );
 
-app.use(express.json({ limit: "2mb" }));
+app.use(
+  express.json({
+    limit: "2mb"
+  })
+);
 
 
 // ======================================================
@@ -59,16 +66,15 @@ app.use(express.json({ limit: "2mb" }));
 let firebaseReady = false;
 let db = null;
 let messaging = null;
+let adminApp = null;
 
 try {
 
   let serviceAccount;
 
-  // ----------------------------------------------------
-  // RENDER / PRODUCTION
-  // ----------------------------------------------------
-
-  if (process.env.FIREBASE_SERVICE_ACCOUNT_JSON) {
+  if (
+    process.env.FIREBASE_SERVICE_ACCOUNT_JSON
+  ) {
 
     serviceAccount = JSON.parse(
       process.env.FIREBASE_SERVICE_ACCOUNT_JSON
@@ -78,18 +84,14 @@ try {
       "☁️ Firebase service account loaded from environment"
     );
 
-  }
-
-  // ----------------------------------------------------
-  // LOCAL DEVELOPMENT
-  // ----------------------------------------------------
-
-  else {
+  } else {
 
     const serviceAccountPath =
       "./firebase-service-account.json";
 
-    if (!fs.existsSync(serviceAccountPath)) {
+    if (
+      !fs.existsSync(serviceAccountPath)
+    ) {
 
       throw new Error(
         "Firebase service account credentials not found."
@@ -110,11 +112,8 @@ try {
 
   }
 
-  // ----------------------------------------------------
-  // INITIALIZE FIREBASE
-  // ----------------------------------------------------
 
-  initializeApp({
+  adminApp = initializeApp({
     credential: cert(serviceAccount)
   });
 
@@ -171,8 +170,7 @@ if (GEMINI_API_KEY) {
     "🧠 Gemini enabled"
   );
 
-}
-else {
+} else {
 
   console.log(
     "⚠️ GEMINI_API_KEY missing"
@@ -182,55 +180,172 @@ else {
 
 
 // ======================================================
+// AUTH HELPER
+// ======================================================
+
+async function verifyFirebaseUser(
+  req
+) {
+
+  if (!firebaseReady || !adminApp) {
+
+    throw new Error(
+      "Firebase Admin is not available."
+    );
+
+  }
+
+
+  const authorization =
+    req.headers.authorization || "";
+
+
+  if (
+    !authorization.startsWith(
+      "Bearer "
+    )
+  ) {
+
+    const error =
+      new Error(
+        "Authentication token missing."
+      );
+
+    error.status = 401;
+
+    throw error;
+
+  }
+
+
+  const idToken =
+    authorization
+      .substring(7)
+      .trim();
+
+
+  if (!idToken) {
+
+    const error =
+      new Error(
+        "Authentication token missing."
+      );
+
+    error.status = 401;
+
+    throw error;
+
+  }
+
+
+  try {
+
+    // Firebase Admin SDK dynamically exposes
+    // verifyIdToken through the auth service.
+
+    const {
+      getAuth
+    } = await import(
+      "firebase-admin/auth"
+    );
+
+    const decodedToken =
+      await getAuth(
+        adminApp
+      ).verifyIdToken(
+        idToken
+      );
+
+
+    return decodedToken;
+
+  }
+  catch (error) {
+
+    const authError =
+      new Error(
+        "Invalid or expired authentication token."
+      );
+
+    authError.status = 401;
+
+    throw authError;
+
+  }
+
+}
+
+
+// ======================================================
 // HOME
 // ======================================================
 
-app.get("/", (req, res) => {
+app.get(
+  "/",
+  (req, res) => {
 
-  res.json({
-    success: true,
-    app: "RUANI AI + FCM Backend",
-    status: "running",
-    firebase: firebaseReady,
-    gemini: !!ai
-  });
+    res.json({
 
-});
+      success: true,
+
+      app:
+        "RUANI AI 2.0 + FCM Backend",
+
+      status:
+        "running",
+
+      firebase:
+        firebaseReady,
+
+      gemini:
+        !!ai
+
+    });
+
+  }
+);
 
 
 // ======================================================
-// HEALTH CHECK
+// HEALTH
 // ======================================================
 
-app.get("/health", (req, res) => {
+app.get(
+  "/health",
+  (req, res) => {
 
-  res.json({
+    res.json({
 
-    success: true,
+      success: true,
 
-    status: "healthy",
+      status:
+        "healthy",
 
-    firebaseAdmin:
-      firebaseReady,
+      firebaseAdmin:
+        firebaseReady,
 
-    gemini:
-      !!ai,
+      gemini:
+        !!ai,
 
-    fcm:
-      !!messaging,
+      fcm:
+        !!messaging,
 
-    primaryModel:
-      PRIMARY_MODEL,
+      primaryModel:
+        PRIMARY_MODEL,
 
-    fallbackModel:
-      FALLBACK_MODEL,
+      fallbackModel:
+        FALLBACK_MODEL,
 
-    time:
-      new Date().toISOString()
+      aiVersion:
+        "2.0",
 
-  });
+      time:
+        new Date().toISOString()
 
-});
+    });
+
+  }
+);
 
 
 // ======================================================
@@ -251,7 +366,7 @@ async function generateAIResponse(
 
 
   // ----------------------------------------------------
-  // PRIMARY MODEL
+  // PRIMARY
   // ----------------------------------------------------
 
   try {
@@ -263,11 +378,14 @@ async function generateAIResponse(
     const response =
       await ai.models.generateContent({
 
-        model: PRIMARY_MODEL,
+        model:
+          PRIMARY_MODEL,
 
-        contents: prompt
+        contents:
+          prompt
 
       });
+
 
     return (
       response.text ||
@@ -275,7 +393,6 @@ async function generateAIResponse(
     );
 
   }
-
   catch (primaryError) {
 
     console.error(
@@ -290,7 +407,7 @@ async function generateAIResponse(
 
 
   // ----------------------------------------------------
-  // FALLBACK MODEL
+  // FALLBACK
   // ----------------------------------------------------
 
   try {
@@ -302,11 +419,14 @@ async function generateAIResponse(
     const response =
       await ai.models.generateContent({
 
-        model: FALLBACK_MODEL,
+        model:
+          FALLBACK_MODEL,
 
-        contents: prompt
+        contents:
+          prompt
 
       });
+
 
     return (
       response.text ||
@@ -314,7 +434,6 @@ async function generateAIResponse(
     );
 
   }
-
   catch (fallbackError) {
 
     console.error(
@@ -335,123 +454,6 @@ async function generateAIResponse(
 
 
 // ======================================================
-// ASK RUANI
-// ======================================================
-
-app.post("/ask", async (req, res) => {
-
-  try {
-
-    const question =
-      String(
-        req.body?.question || ""
-      ).trim();
-
-    const gymData =
-      req.body?.gymData || {};
-
-
-    if (!question) {
-
-      return res.status(400).json({
-
-        success: false,
-
-        error:
-          "Question is required."
-
-      });
-
-    }
-
-
-    if (!ai) {
-
-      return res.status(503).json({
-
-        success: false,
-
-        error:
-          "Gemini AI is not configured."
-
-      });
-
-    }
-
-
-    const prompt = `
-You are RUANI, an intelligent AI gym management assistant.
-
-Your job is to help gym owners understand their gym business,
-members, fees, attendance, memberships and alerts.
-
-IMPORTANT RULES:
-
-1. Answer based primarily on the provided gym data.
-2. Never invent member names, fees, dates or attendance.
-3. If information is missing, clearly say that it is unavailable.
-4. Give practical and useful advice.
-5. Keep answers easy to understand.
-6. Use Hindi/Hinglish when the user asks in Hindi/Hinglish.
-7. You can provide business suggestions when asked.
-8. For numerical questions, calculate carefully.
-9. Do not expose API keys, credentials or internal system details.
-10. You are talking directly to a gym owner.
-
-CURRENT GYM DATA:
-
-${JSON.stringify(gymData, null, 2)}
-
-GYM OWNER QUESTION:
-
-${question}
-
-Give the best possible RUANI response.
-`;
-
-
-    const answer =
-      await generateAIResponse(
-        prompt
-      );
-
-
-    return res.json({
-
-      success: true,
-
-      answer
-
-    });
-
-  }
-
-  catch (error) {
-
-    console.error(
-      "❌ /ask error:"
-    );
-
-    console.error(
-      error
-    );
-
-    return res.status(500).json({
-
-      success: false,
-
-      error:
-        error.message ||
-        "RUANI AI could not answer."
-
-    });
-
-  }
-
-});
-
-
-// ======================================================
 // DATE HELPERS
 // ======================================================
 
@@ -469,18 +471,39 @@ function daysFromToday(
 ) {
 
   if (!dateString) {
+
     return null;
+
   }
 
+
   const today =
-    new Date(todayString());
+    new Date(
+      todayString()
+    );
+
 
   const target =
-    new Date(dateString);
+    new Date(
+      dateString
+    );
+
+
+  if (
+    Number.isNaN(
+      target.getTime()
+    )
+  ) {
+
+    return null;
+
+  }
+
 
   const difference =
     target.getTime() -
     today.getTime();
+
 
   return Math.ceil(
     difference /
@@ -488,6 +511,778 @@ function daysFromToday(
   );
 
 }
+
+
+// ======================================================
+// LOAD OWNER DATA
+// ======================================================
+
+async function loadOwnerGymData(
+  ownerId
+) {
+
+  if (
+    !firebaseReady ||
+    !db
+  ) {
+
+    throw new Error(
+      "Firebase database is unavailable."
+    );
+
+  }
+
+
+  // ----------------------------------------------------
+  // MEMBERS
+  // ----------------------------------------------------
+
+  const membersSnapshot =
+    await db
+      .collection("members")
+      .where(
+        "ownerId",
+        "==",
+        ownerId
+      )
+      .get();
+
+
+  const members =
+    membersSnapshot.docs.map(
+      doc => ({
+
+        id:
+          doc.id,
+
+        ...doc.data()
+
+      })
+    );
+
+
+  // ----------------------------------------------------
+  // FEES
+  // ----------------------------------------------------
+
+  const feesSnapshot =
+    await db
+      .collection("fees")
+      .where(
+        "ownerId",
+        "==",
+        ownerId
+      )
+      .get();
+
+
+  const fees =
+    feesSnapshot.docs.map(
+      doc => ({
+
+        id:
+          doc.id,
+
+        ...doc.data()
+
+      })
+    );
+
+
+  // ----------------------------------------------------
+  // ATTENDANCE
+  // ----------------------------------------------------
+
+  const attendanceSnapshot =
+    await db
+      .collection("attendance")
+      .where(
+        "ownerId",
+        "==",
+        ownerId
+      )
+      .get();
+
+
+  const attendance =
+    attendanceSnapshot.docs.map(
+      doc => ({
+
+        id:
+          doc.id,
+
+        ...doc.data()
+
+      })
+    );
+
+
+  return {
+    members,
+    fees,
+    attendance
+  };
+
+}
+
+
+// ======================================================
+// BUILD AI BUSINESS INTELLIGENCE
+// ======================================================
+
+function buildBusinessIntelligence(
+  data
+) {
+
+  const {
+    members = [],
+    fees = [],
+    attendance = []
+  } = data;
+
+
+  const today =
+    todayString();
+
+
+  // ----------------------------------------------------
+  // MEMBERS
+  // ----------------------------------------------------
+
+  const activeMembers =
+    members.filter(
+      member => {
+
+        const endDate =
+          member.endDate ||
+          member.expiryDate ||
+          member.membershipExpiry;
+
+
+        if (!endDate) {
+
+          return true;
+
+        }
+
+
+        const days =
+          daysFromToday(
+            endDate
+          );
+
+
+        return (
+          days !== null &&
+          days >= 0
+        );
+
+      }
+    );
+
+
+  const expiredMembers =
+    members.filter(
+      member => {
+
+        const endDate =
+          member.endDate ||
+          member.expiryDate ||
+          member.membershipExpiry;
+
+
+        if (!endDate) {
+
+          return false;
+
+        }
+
+
+        const days =
+          daysFromToday(
+            endDate
+          );
+
+
+        return (
+          days !== null &&
+          days < 0
+        );
+
+      }
+    );
+
+
+  const expiring7Days =
+    members.filter(
+      member => {
+
+        const endDate =
+          member.endDate ||
+          member.expiryDate ||
+          member.membershipExpiry;
+
+
+        const days =
+          daysFromToday(
+            endDate
+          );
+
+
+        return (
+          days !== null &&
+          days >= 0 &&
+          days <= 7
+        );
+
+      }
+    );
+
+
+  const expiring30Days =
+    members.filter(
+      member => {
+
+        const endDate =
+          member.endDate ||
+          member.expiryDate ||
+          member.membershipExpiry;
+
+
+        const days =
+          daysFromToday(
+            endDate
+          );
+
+
+        return (
+          days !== null &&
+          days >= 0 &&
+          days <= 30
+        );
+
+      }
+    );
+
+
+  // ----------------------------------------------------
+  // ATTENDANCE
+  // ----------------------------------------------------
+
+  const todayAttendance =
+    attendance.filter(
+      record =>
+        record.date === today
+    );
+
+
+  const todayAttendanceMemberIds =
+    new Set(
+      todayAttendance.map(
+        record =>
+          record.memberId
+      )
+    );
+
+
+  const inactiveMembers =
+    activeMembers.filter(
+      member =>
+        !todayAttendanceMemberIds.has(
+          member.id
+        )
+    );
+
+
+  // ----------------------------------------------------
+  // FEES
+  // ----------------------------------------------------
+
+  const pendingFees =
+    fees.filter(
+      fee =>
+        fee.status === "pending" ||
+        fee.status === "unpaid" ||
+        fee.paid === false
+    );
+
+
+  const paidFees =
+    fees.filter(
+      fee =>
+        fee.status === "paid" ||
+        fee.paid === true
+    );
+
+
+  const pendingAmount =
+    pendingFees.reduce(
+      (total, fee) =>
+        total +
+        Number(
+          fee.amount || 0
+        ),
+      0
+    );
+
+
+  const paidAmount =
+    paidFees.reduce(
+      (total, fee) =>
+        total +
+        Number(
+          fee.amount || 0
+        ),
+      0
+    );
+
+
+  // ----------------------------------------------------
+  // SMART PRIORITIES
+  // ----------------------------------------------------
+
+  const priorities = [];
+
+
+  if (
+    pendingAmount > 0
+  ) {
+
+    priorities.push({
+
+      priority:
+        "HIGH",
+
+      type:
+        "fees",
+
+      message:
+        `₹${pendingAmount} fees pending hain.`
+
+    });
+
+  }
+
+
+  if (
+    expiring7Days.length > 0
+  ) {
+
+    priorities.push({
+
+      priority:
+        "HIGH",
+
+      type:
+        "renewal",
+
+      message:
+        `${expiring7Days.length} membership 7 din ke andar expire hogi.`
+
+    });
+
+  }
+
+
+  if (
+    inactiveMembers.length > 0
+  ) {
+
+    priorities.push({
+
+      priority:
+        "MEDIUM",
+
+      type:
+        "attendance",
+
+      message:
+        `${inactiveMembers.length} active members ne aaj attendance nahi ki.`
+
+    });
+
+  }
+
+
+  if (
+    expiring30Days.length > 0
+  ) {
+
+    priorities.push({
+
+      priority:
+        "MEDIUM",
+
+      type:
+        "future_renewal",
+
+      message:
+        `${expiring30Days.length} memberships next 30 days mein expire hongi.`
+
+    });
+
+  }
+
+
+  return {
+
+    summary: {
+
+      totalMembers:
+        members.length,
+
+      activeMembers:
+        activeMembers.length,
+
+      expiredMembers:
+        expiredMembers.length,
+
+      todayAttendance:
+        todayAttendance.length,
+
+      totalAttendanceRecords:
+        attendance.length,
+
+      inactiveActiveMembersToday:
+        inactiveMembers.length,
+
+      pendingFeeRecords:
+        pendingFees.length,
+
+      pendingFeeAmount:
+        pendingAmount,
+
+      paidFeeRecords:
+        paidFees.length,
+
+      paidFeeAmount:
+        paidAmount,
+
+      expiryWithin7Days:
+        expiring7Days.length,
+
+      expiryWithin30Days:
+        expiring30Days.length
+
+    },
+
+
+    priorities,
+
+    members: members.map(
+      member => ({
+
+        id:
+          member.id,
+
+        name:
+          member.name || "",
+
+        phone:
+          member.phone || "",
+
+        plan:
+          member.plan || "",
+
+        startDate:
+          member.startDate || "",
+
+        endDate:
+          member.endDate ||
+          member.expiryDate ||
+          member.membershipExpiry ||
+          "",
+
+        daysUntilExpiry:
+          daysFromToday(
+            member.endDate ||
+            member.expiryDate ||
+            member.membershipExpiry
+          ),
+
+        attendedToday:
+          todayAttendanceMemberIds.has(
+            member.id
+          )
+
+      })
+    ),
+
+
+    fees: fees.map(
+      fee => ({
+
+        id:
+          fee.id,
+
+        memberId:
+          fee.memberId || "",
+
+        memberName:
+          fee.memberName || "",
+
+        amount:
+          Number(
+            fee.amount || 0
+          ),
+
+        dueDate:
+          fee.dueDate || "",
+
+        status:
+          fee.status || ""
+
+      })
+    ),
+
+
+    attendance: attendance.map(
+      record => ({
+
+        memberId:
+          record.memberId || "",
+
+        memberName:
+          record.memberName || "",
+
+        date:
+          record.date || "",
+
+        timestamp:
+          record.timestamp || ""
+
+      })
+    )
+
+  };
+
+}
+
+
+// ======================================================
+// ASK RUANI — AI 2.0
+// ======================================================
+
+app.post(
+  "/ask",
+  async (req, res) => {
+
+    try {
+
+      // ------------------------------------------------
+      // AUTHENTICATION
+      // ------------------------------------------------
+
+      const user =
+        await verifyFirebaseUser(
+          req
+        );
+
+
+      const ownerId =
+        user.uid;
+
+
+      // ------------------------------------------------
+      // QUESTION
+      // ------------------------------------------------
+
+      const question =
+        String(
+          req.body?.question || ""
+        ).trim();
+
+
+      if (!question) {
+
+        return res.status(400).json({
+
+          success: false,
+
+          error:
+            "Question is required."
+
+        });
+
+      }
+
+
+      if (!ai) {
+
+        return res.status(503).json({
+
+          success: false,
+
+          error:
+            "Gemini AI is not configured."
+
+        });
+
+      }
+
+
+      // ------------------------------------------------
+      // LOAD REAL FIRESTORE DATA
+      // ------------------------------------------------
+
+      const rawData =
+        await loadOwnerGymData(
+          ownerId
+        );
+
+
+      // ------------------------------------------------
+      // BUILD INTELLIGENCE
+      // ------------------------------------------------
+
+      const intelligence =
+        buildBusinessIntelligence(
+          rawData
+        );
+
+
+      // ------------------------------------------------
+      // AI PROMPT
+      // ------------------------------------------------
+
+      const prompt = `
+
+You are RUANI — an AI Business Manager built specifically
+for gym owners.
+
+You are NOT a generic chatbot.
+
+Your job is to understand the gym owner's actual business
+and help them make better decisions.
+
+TODAY:
+${todayString()}
+
+==================================================
+GYM BUSINESS INTELLIGENCE
+==================================================
+
+${JSON.stringify(
+  intelligence,
+  null,
+  2
+)}
+
+==================================================
+IMPORTANT RULES
+==================================================
+
+1. Use ONLY the provided gym data.
+2. Never invent members, amounts, dates or records.
+3. Never expose private credentials or internal security details.
+4. If data is missing, clearly say it is unavailable.
+5. Calculate numbers carefully.
+6. If the owner asks a simple question, answer directly.
+7. If the owner asks for analysis, provide useful business insights.
+8. Prioritize urgent issues first.
+9. For fees, mention amount and useful recovery actions.
+10. For memberships, identify upcoming expiry risk.
+11. For attendance, identify members who may need engagement.
+12. For business questions, provide practical actions.
+13. Do not overwhelm the owner with unnecessary information.
+14. Use Hindi/Hinglish if the owner asks in Hindi/Hinglish.
+15. Keep the tone professional, friendly and confident.
+16. Never claim an action was performed if RUANI only suggested it.
+
+==================================================
+RUANI AI 2.0 CAPABILITIES
+==================================================
+
+You can help with:
+
+• Daily gym situation
+• Pending fee recovery
+• Membership renewal
+• Expiring memberships
+• Member inactivity
+• Attendance trends
+• Business priorities
+• Daily action plan
+• Revenue-related observations
+• Member retention suggestions
+
+==================================================
+OWNER QUESTION
+==================================================
+
+${question}
+
+==================================================
+RESPONSE STYLE
+==================================================
+
+Give a clear answer.
+
+When useful, structure it as:
+
+📊 Situation
+⚠️ Important Issues
+🎯 What You Should Do
+💡 RUANI Suggestion
+
+Do not use all sections when they are unnecessary.
+
+Answer the gym owner directly.
+`;
+
+
+      // ------------------------------------------------
+      // GENERATE
+      // ------------------------------------------------
+
+      const answer =
+        await generateAIResponse(
+          prompt
+        );
+
+
+      return res.json({
+
+        success:
+          true,
+
+        answer
+
+      });
+
+    }
+    catch (error) {
+
+      console.error(
+        "❌ /ask error:"
+      );
+
+      console.error(
+        error
+      );
+
+
+      const status =
+        error.status || 500;
+
+
+      return res.status(
+        status
+      ).json({
+
+        success:
+          false,
+
+        error:
+          error.message ||
+          "RUANI AI could not answer."
+
+      });
+
+    }
+
+  }
+);
 
 
 // ======================================================
@@ -519,27 +1314,46 @@ async function sendNotification(
       token,
 
       notification: {
+
         title,
+
         body
+
       },
 
+
       data: {
+
         ...Object.fromEntries(
-          Object.entries(data).map(
+
+          Object.entries(
+            data
+          ).map(
             ([key, value]) => [
+
               key,
+
               String(value)
+
             ]
           )
+
         )
+
       },
+
 
       webpush: {
 
         notification: {
+
           title,
+
           body,
-          icon: "/logo.png"
+
+          icon:
+            "/logo.png"
+
         }
 
       }
@@ -550,7 +1364,6 @@ async function sendNotification(
     return true;
 
   }
-
   catch (error) {
 
     console.error(
@@ -581,11 +1394,13 @@ app.post(
       const token =
         req.body?.token;
 
+
       if (!token) {
 
         return res.status(400).json({
 
-          success: false,
+          success:
+            false,
 
           error:
             "FCM token is required."
@@ -605,7 +1420,10 @@ app.post(
           "RUANI notifications are working!",
 
           {
-            type: "test"
+
+            type:
+              "test"
+
           }
 
         );
@@ -613,17 +1431,18 @@ app.post(
 
       return res.json({
 
-        success: sent
+        success:
+          sent
 
       });
 
     }
-
     catch (error) {
 
       return res.status(500).json({
 
-        success: false,
+        success:
+          false,
 
         error:
           error.message
@@ -642,7 +1461,10 @@ app.post(
 
 async function checkRUANIAlerts() {
 
-  if (!firebaseReady || !db) {
+  if (
+    !firebaseReady ||
+    !db
+  ) {
 
     console.log(
       "⚠️ Firebase not ready. Skipping alerts."
@@ -666,7 +1488,9 @@ async function checkRUANIAlerts() {
         .get();
 
 
-    if (tokenSnapshot.empty) {
+    if (
+      tokenSnapshot.empty
+    ) {
 
       console.log(
         "ℹ️ No registered FCM devices found."
@@ -685,15 +1509,22 @@ async function checkRUANIAlerts() {
       const tokenData =
         tokenDoc.data();
 
+
       const ownerId =
         tokenData.ownerId;
+
 
       const token =
         tokenData.token;
 
 
-      if (!ownerId || !token) {
+      if (
+        !ownerId ||
+        !token
+      ) {
+
         continue;
+
       }
 
 
@@ -715,8 +1546,12 @@ async function checkRUANIAlerts() {
       const members =
         membersSnapshot.docs.map(
           doc => ({
-            id: doc.id,
+
+            id:
+              doc.id,
+
             ...doc.data()
+
           })
         );
 
@@ -739,8 +1574,12 @@ async function checkRUANIAlerts() {
       const fees =
         feesSnapshot.docs.map(
           doc => ({
-            id: doc.id,
+
+            id:
+              doc.id,
+
             ...doc.data()
+
           })
         );
 
@@ -759,6 +1598,7 @@ async function checkRUANIAlerts() {
           member.membershipExpiry ||
           member.endDate;
 
+
         const daysLeft =
           daysFromToday(
             expiryDate
@@ -766,17 +1606,26 @@ async function checkRUANIAlerts() {
 
 
         if (
+
           daysLeft !== null &&
+
           daysLeft >= 0 &&
+
           daysLeft <= 3
+
         ) {
 
           const message =
-            `${member.name || "Member"} membership ${
+            `${
+              member.name ||
+              "Member"
+            } membership ${
               daysLeft === 0
                 ? "aaj expire ho rahi hai"
                 : `${daysLeft} din me expire hogi`
             }.`;
+
+
 
           await sendNotification(
 
@@ -787,6 +1636,7 @@ async function checkRUANIAlerts() {
             message,
 
             {
+
               type:
                 "membership_expiry",
 
@@ -809,8 +1659,13 @@ async function checkRUANIAlerts() {
       const pendingFees =
         fees.filter(
           fee =>
-            fee.status === "pending" ||
-            fee.status === "unpaid" ||
+
+            fee.status ===
+              "pending" ||
+
+            fee.status ===
+              "unpaid" ||
+
             fee.paid === false
         );
 
@@ -825,13 +1680,16 @@ async function checkRUANIAlerts() {
 
           "Pending Fees 💰",
 
-          `${pendingFees.length} fee record${
+          `${
+            pendingFees.length
+          } fee record${
             pendingFees.length > 1
               ? "s"
               : ""
           } pending hai.`,
 
           {
+
             type:
               "pending_fees",
 
@@ -847,7 +1705,6 @@ async function checkRUANIAlerts() {
     }
 
   }
-
   catch (error) {
 
     console.error(
@@ -897,12 +1754,13 @@ app.listen(
   () => {
 
     console.log("");
+
     console.log(
       "======================================"
     );
 
     console.log(
-      "🚀 RUANI AI + FCM BACKEND STARTED"
+      "🚀 RUANI AI 2.0 + FCM BACKEND STARTED"
     );
 
     console.log(
@@ -943,6 +1801,10 @@ app.listen(
           ? "ENABLED"
           : "DISABLED"
       }`
+    );
+
+    console.log(
+      "🧠 AI Intelligence: ENABLED"
     );
 
     console.log(
